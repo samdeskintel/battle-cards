@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMDesk Competitor Battle Cards</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f4f0;color:#1a1a18;padding:2rem 1.5rem;min-height:100vh}
+h1{font-size:20px;font-weight:500;color:#1a1a18;margin-bottom:.25rem}
+.subtitle{font-size:13px;color:#888780;margin-bottom:1.5rem}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem}
+.tab{padding:6px 14px;border:0.5px solid #b4b2a9;border-radius:8px;font-size:13px;cursor:pointer;background:#fff;color:#5f5e5a;transition:all .15s;font-family:inherit}
+.tab:hover{border-color:#5f5e5a;color:#1a1a18}
+.tab.active{background:#1a1a18;color:#fff;border-color:#1a1a18;font-weight:500}
+.card{display:none;background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;overflow:hidden}
+.card.active{display:block}
+.card-header{padding:1.25rem 1.5rem;border-bottom:0.5px solid #d3d1c7;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.comp-name{font-size:22px;font-weight:500;color:#1a1a18}
+.comp-type{font-size:12px;color:#888780;margin-top:3px}
+.snapshot{display:flex;gap:16px;flex-wrap:wrap}
+.snap-item{font-size:12px;color:#888780}
+.snap-item strong{color:#1a1a18;font-weight:500;display:block;font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr}
+.section{padding:1.25rem 1.5rem;border-bottom:0.5px solid #d3d1c7}
+.section:last-child{border-bottom:none}
+.section-right{border-left:0.5px solid #d3d1c7}
+.kill-shot{background:#f5f4f0;padding:1.25rem 1.5rem;border-bottom:0.5px solid #d3d1c7}
+.kill-label{font-size:11px;font-weight:500;letter-spacing:.06em;color:#993c1d;text-transform:uppercase;margin-bottom:.75rem}
+.kill-shot blockquote{font-size:15px;line-height:1.6;color:#1a1a18;border-left:2px solid #d85a30;padding-left:1rem;font-style:italic}
+.section-label{font-size:11px;font-weight:500;letter-spacing:.06em;color:#888780;text-transform:uppercase;margin-bottom:.75rem}
+.landmine{display:flex;flex-direction:column;gap:.6rem}
+.lm-item{padding:.6rem .75rem;border:0.5px solid #d3d1c7;border-radius:8px;font-size:13px;line-height:1.5;color:#5f5e5a}
+.lm-item strong{color:#1a1a18;font-weight:500;display:block;margin-bottom:2px;font-size:12px}
+.obj-item{margin-bottom:.75rem}
+.obj-q{font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:3px}
+.obj-a{font-size:13px;color:#5f5e5a;line-height:1.55;padding-left:.75rem;border-left:2px solid #d3d1c7}
+.win-header{display:flex;font-size:11px;font-weight:500;padding-bottom:6px;border-bottom:0.5px solid #b4b2a9;margin-bottom:4px;color:#888780}
+.win-row{display:flex;font-size:12px;padding:5px 0;border-bottom:0.5px solid #f1efe8}
+.win-row:last-child{border-bottom:none}
+.win-label{color:#5f5e5a;flex:1}
+.win-them{text-align:center;width:60px;color:#a32d2d}
+.win-us{text-align:center;width:60px;color:#3b6d11}
+.updated{font-size:11px;color:#b4b2a9;padding:.75rem 1.5rem;border-top:0.5px solid #f1efe8;text-align:right}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.section-right{border-left:none}.card-header{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<h1>Competitor Battle Cards</h1>
+<p class="subtitle">SAMDesk / ADAR — Internal Sales Use Only &nbsp;·&nbsp; Last updated March 2026</p>
+
+<div class="tabs" id="tabs"></div>
+<div id="cards"></div>
+
+<script>
+const competitors = [
+{
+  name:"Dataminr",
+  type:"AI threat detection & intelligence",
+  snap:{HQ:"New York, NY",Founded:"2009",Employees:"~800",Revenue:"~$200M",Customers:"Fortune 50/100, gov agencies"},
+  killShot:`"Dataminr tells you the building is on fire. SAMDesk tells you which of your people are inside, what the exits are, and has already started calling them — before you've opened the alert."`,
+  landmines:[
+    {q:"Alert workflow",a:`"After Dataminr sends an alert, walk me through what happens next in your workflow. The real challenge today is time-to-decision and time-to-influence-outcome."`},
+    {q:"Has speed ever cost you?",a:`"Has there been a situation where you got an alert but weren't able to act fast enough? What they lack is trust and faster understanding."`},
+    {q:"Alert overload",a:`"The biggest complaint we hear about alert tools is overload and manual triage — time spent validating alerts instead of acting on them."`},
+    {q:"Agentic reality check",a:`"They use the word agentic — can you walk me through what their agent actually does autonomously for you today, without a human in the loop?"`},
+  ],
+  objections:[
+    {q:`"We're happy with Dataminr."`,a:`"Most of our customers were too before they looked at what they were spending downstream. How much manual analysis does your team do after getting a Dataminr alert? On average, our customers save 6 hours of analysis per incident. What would your team do with that time?"`},
+    {q:`"Dataminr also has AI agents now."`,a:`"They've announced an agentic roadmap — the question is what's live today. Our Impact Agents are in production running detect-to-resolve workflows right now. Are they showing you a live demo of autonomous action, or a vision slide?"`},
+    {q:`"We've already invested in Dataminr."`,a:`"We complement or replace depending on your workflow. The question isn't whether Dataminr is good at detection — it's whether detection alone solves your problem, or whether you need the system to do more of the work."`},
+  ],
+  wins:[["Detection speed","✓","✓"],["Analyst-free triage","✗","✓"],["Agentic response (live)","✗","✓"],["Org impact mapping","✗","✓"],["Traveler profile-aware","~","✓"],["Detect → resolve workflow","✗","✓"]]
+},
+{
+  name:"Everbridge",
+  type:"Critical event management & mass notification",
+  snap:{HQ:"Boston, MA",Founded:"2002",Employees:"~1,000",Product:"Everbridge 360™",Customers:"6,500+"},
+  killShot:`"Everbridge is the best tool for getting a message out once you've already decided to send it. The question is: what decided the message was needed, who it should go to, and what it should say? That's the ADAR problem — and Everbridge doesn't touch it."`,
+  landmines:[
+    {q:"Intelligence source",a:`"When an alert fires in Everbridge, where did that intelligence come from — is it native AI or a third-party feed?"`},
+    {q:"Steps before notification",a:`"How many manual steps happen between the alert and the notification going out? Who owns each one?"`},
+    {q:"Travel risk depth",a:`"Is Travel Protector giving you pre-travel risk briefs, or primarily used for in-incident traveler location and notification?"`},
+    {q:"Module utilization",a:`"How many of the Everbridge modules you're licensed for are actively used versus shelfware?"`},
+  ],
+  objections:[
+    {q:`"We use Everbridge for everything."`,a:`"The question isn't whether Everbridge does a lot — it's whether you're getting genuine intelligence or just notifications. Are your teams anticipating threats, or reacting to alerts? Those are different problems."`},
+    {q:`"Everbridge has travel risk built in."`,a:`"Travel Protector is solid for locating and notifying travelers once something happens. It doesn't build a tailored risk picture for each traveler before they go — that's the gap ADAR fills."`},
+    {q:`"They're a Forrester Wave Leader."`,a:`"Proven for CEM and notifications — no argument. But Forrester's CEM Wave isn't evaluating what we do. Make sure your intelligence layer is as strong as your comms layer. They're different categories."`},
+  ],
+  wins:[["Mass notification & comms","✓","~"],["Native AI threat intelligence","✗","✓"],["Agentic automation","✗","✓"],["Org impact mapping","✗","✓"],["GSOC security workflow","~","✓"],["Proactive threat anticipation","✗","✓"]]
+},
+{
+  name:"Factal",
+  type:"Human-verified breaking news intelligence",
+  snap:{HQ:"Seattle, WA",Founded:"2018",Employees:"~50",Funding:"Series A $3.3M",Heritage:"NBC BreakingNews founders"},
+  killShot:`"If you find out accurately but late, your security team can document what happened. If you find out early enough, your security team can change what happens. Factal chose accuracy. ADAR chose both."`,
+  landmines:[
+    {q:"Verification latency",a:`"How much time passes between an event occurring and the verified alert reaching your team? That gap is exactly when the window to influence outcome is open."`},
+    {q:"The 'on fire' problem",a:`"If a tweet says 'Steph Curry is on fire' and another says 'town hall is on fire' — how long does it take your team to determine which is real? An AI model does that disambiguation in milliseconds, across every language, simultaneously."`},
+    {q:"Scale ceiling",a:`"There are roughly 1 million disruptions globally every day. How does a newsroom of human analysts keep pace with that volume — and what's being filtered out before it reaches you?"`},
+    {q:"Post-alert workflow",a:`"When a Factal alert comes in, what does your response workflow look like? Who owns the handoff and how automated is that process?"`},
+  ],
+  objections:[
+    {q:`"We trust Factal because a human verifies every alert."`,a:`"That trust is well-earned. The question isn't whether Factal's alerts are accurate — it's whether accurate-but-later is the right trade-off. Journalists need verified facts before they publish. Security teams need early signals before the window to act closes."`},
+    {q:`"Pure AI platforms produce too much noise."`,a:`"That was true of first-generation tools. ADAR is purpose-built to solve the disambiguation problem at a scale no human team can match. The question is whether the AI is built for security intelligence, or just a raw feed."`},
+    {q:`"Factal has an International SOS integration."`,a:`"It does — and it tells you something about the model. ISOS is a reactive human-services firm. Factal's natural partner responds after the fact. ADAR's natural partner is a team that wants to prevent the call to ISOS in the first place."`},
+  ],
+  wins:[["Detection speed","✓","✓"],["Scale (~1M signals/day)","✗","✓"],["AI disambiguation","✗","✓"],["Agentic response","✗","✓"],["Org impact mapping","✗","✓"],["Traveler profile-aware","✗","✓"]]
+},
+{
+  name:"Seerist",
+  type:"Strategic risk intelligence (owned by Control Risks)",
+  snap:{HQ:"Reston, VA",Ownership:"Control Risks",Customers:"400+ Global 2000","Gov clients":"50 agencies","Key AI":"PulseAI, DiscoverAI"},
+  killShot:`"Seerist tells you the weather forecast for the season. SAMDesk tells you lightning is about to strike your building right now — and starts moving your people before you ask."`,
+  landmines:[
+    {q:"Real-time gap",a:`"When something happens in real time — not a trend, an actual incident — how does your team find out? Is that coming from Seerist, or somewhere else?"`},
+    {q:"From intelligence to action",a:`"When a Seerist report is relevant to your people on the ground, how long does it take from intelligence to action?"`},
+    {q:"Org-specific impact",a:`"Does your setup tell you not just that a region is high-risk, but specifically which of your employees or travelers are impacted by a live event right now?"`},
+    {q:"Consulting dependency",a:`"Has your team found that Seerist intelligence led you to need more Control Risks consulting time to act on it? That relationship is by design."`},
+  ],
+  objections:[
+    {q:`"We use Seerist for strategic risk — it's a different use case."`,a:`"Completely agree — and that's exactly our point. Strategic foresight and real-time operational intelligence are different disciplines. What happens when that strategic risk materializes into an actual event affecting your people at 2am? That's the gap ADAR fills."`},
+    {q:`"Control Risks is world-class expertise."`,a:`"No argument. The question is whether consultancy-grade strategic analysis is the right tool for operational security decisions that happen in real time at scale. We complement Seerist — adding the operational layer underneath."`},
+    {q:`"Seerist gives us everything in one place."`,a:`"It consolidates strategic intelligence well. But does it show what's happening right now at the building level, processed against your traveler profiles, triggering your response workflow automatically? Those are architecturally different problems."`},
+  ],
+  wins:[["Strategic geopolitical foresight","✓","~"],["Real-time operational detection","~","✓"],["Signal volume (~1M/day)","✗","✓"],["Org-specific impact (auto)","~","✓"],["Agentic automation","✗","✓"],["Speed to operational action","~","✓"]]
+},
+{
+  name:"AlertMedia",
+  type:"Emergency communications & response coordination",
+  snap:{HQ:"Austin, TX",Founded:"2013","Employees protected":"8M+",Countries:"150+",Note:"Borrowing our narrative"},
+  killShot:`"AlertMedia makes the fire drill faster and more organized. ADAR detects the smoke before the alarm goes off — and starts moving people before anyone pulls the handle."`,
+  landmines:[
+    {q:"Intelligence source",a:`"Where does AlertMedia's threat intelligence come from — is it generated natively, or curated from external feeds?"`},
+    {q:"Who decides the notification?",a:`"AlertMedia's AI drafts messages faster. But what decided the draft was needed? Who or what determined the event was relevant to your people?"`},
+    {q:"Autonomous action test",a:`"AlertMedia says they solve the gap between alert and response. Can you walk me through a scenario where their platform took autonomous action without a human initiating it?"`},
+    {q:"Travel risk depth",a:`"Is AlertMedia telling your team about risks before travelers depart, or primarily used to locate and notify after something has happened?"`},
+  ],
+  objections:[
+    {q:`"AlertMedia also covers the gap between alert and response."`,a:`"They've identified the right problem. The question is whether connecting your response workflow in a cleaner UI is the same as AI that detects the event, maps which of your people are impacted, and triggers response automatically. AlertMedia addresses handoffs between humans. ADAR reduces how many human handoffs the process requires."`},
+    {q:`"We already have AlertMedia for notifications."`,a:`"AlertMedia is a great notification engine — we'd probably keep it. The question is what's feeding it. When AlertMedia sends a notification, what decided it was necessary? That upstream intelligence and decision layer is what ADAR replaces."`},
+    {q:`"AlertMedia has AI too."`,a:`"Their AI Assistant helps your team move faster once they're already working on a problem. Useful — but it's a productivity tool. ADAR's Impact Agents run 24/7 whether your team is watching the dashboard or not."`},
+  ],
+  wins:[["Mass notification & comms","✓","~"],["Native AI threat intelligence","✗","✓"],["Agentic automation","✗","✓"],["Org impact mapping","✗","✓"],["Traveler profile-aware","~","✓"],["Autonomous 24/7 coverage","✗","✓"]]
+},
+{
+  name:"Crisis24",
+  type:"End-to-end security services + CEM platform (GardaWorld)",
+  snap:{HQ:"Global",Ownership:"GardaWorld",Analysts:"200+",Platform:"TopoONE + Horizon",Customers:"Fortune 500, NGOs, universities"},
+  killShot:`"Crisis24's answer to the analyst shortage is to rent you their analysts. ADAR's answer is to build AI that means you need fewer analysts in the first place — and the ones you have are working on decisions, not triage."`,
+  landmines:[
+    {q:"Platform vs. services split",a:`"Of your current Crisis24 engagement, how much is platform software versus embedded services? How do you see that balance evolving over the next two years?"`},
+    {q:"Analyst time on triage",a:`"When your embedded Crisis24 analysts are monitoring TopoONE, what percentage of their time is triage and filtering versus actual decision-making?"`},
+    {q:"Org impact automation",a:`"How does TopoONE determine which events are relevant to your specific people and assets — is that automated or operator-driven?"`},
+    {q:"Vendor independence",a:`"Is the platform built to make you independent, or to make you dependent on their people? Every capability gap in the software is a potential consulting engagement."`},
+  ],
+  objections:[
+    {q:`"Crisis24 gives us everything — software, analysts, medevac — in one place."`,a:`"That's genuinely valuable for organizations that need all those services. The question is whether you're optimizing for vendor consolidation, or for the best outcome in each layer. Crisis24's platform is built to support their services model. ADAR is built to reduce your dependency on any services model."`},
+    {q:`"We have Crisis24 analysts embedded in our GSOC."`,a:`"Strong setup for today. The agentic layer — automated detection, impact assessment, response triggering — is what frees your embedded analysts to work on the judgment-intensive problems they're trained for. ADAR doesn't replace your people; it handles the volume so your people handle the decisions."`},
+    {q:`"Crisis24 has AI with AiiA."`,a:`"Worth understanding what AiiA does in your deployment. Our read is it accelerates analyst work — a productivity tool. The distinction is whether the AI speeds up a human's task, or performs the task autonomously. Is AiiA doing anything without a human initiating it?"`},
+  ],
+  wins:[["End-to-end security services","✓","~"],["SOC staffing & setup","✓","~"],["AI-native signal detection","~","✓"],["Agentic automation","✗","✓"],["Builds client independence","✗","✓"],["Org-specific impact (auto)","~","✓"]]
+},
+{
+  name:"International SOS",
+  type:"Human-led travel risk & medical assistance services",
+  snap:{HQ:"London / Singapore",Founded:"1985",Employees:"13,000+",Model:"Services + subscription",Customers:"Fortune 500, multinationals, NGOs"},
+  killShot:`"International SOS is great at getting people out after something goes wrong. SAMDesk is what keeps your people from being in the wrong place to begin with — and when things do go wrong, your team is already in the queue, not calling a hotline."`,
+  landmines:[
+    {q:"Reactive vs. proactive",a:`"When you think about the last time ISOS was activated, was it because something had already happened — or because your team saw it coming and got ahead of it?"`},
+    {q:"Personalization at scale",a:`"How does ISOS take your specific travelers' profiles into account — their role, their risk history, their destinations — when they send a risk advisory?"`},
+    {q:"Speed of intelligence",a:`"When a situation escalates in a destination city, how long before your travelers are notified? Is that based on real-time data, or a scheduled advisory cycle?"`},
+    {q:"Quarterly vs. real-time",a:`"ISOS puts out quarterly risk briefings. What happens on day 47 of the quarter when a situation changes overnight? Who's monitoring that in real time for your organization?"`},
+  ],
+  objections:[
+    {q:`"We have a duty of care contract with ISOS — we're covered."`,a:`"ISOS is excellent at fulfilling duty of care after an incident. The question is whether your obligation ends at 'we have a contract' or extends to 'we knew about the risk early enough to prevent the incident.' That's a different standard — the one your executive team will be held to."`},
+    {q:`"ISOS has 13,000 people worldwide — that's real infrastructure."`,a:`"Absolutely — and when you need an evac plane or a hospital bed, nobody beats them. But 13,000 people cannot monitor a million daily global signals in real time and map them to your specific travelers. That's what AI does. Do you want to be proactive or reactive? ISOS is structurally built for the latter."`},
+    {q:`"Our travelers trust ISOS and know the number to call."`,a:`"That trust is valuable and worth preserving. ADAR doesn't replace ISOS — it reduces how often your travelers need to make that call, because the intelligence and response happened upstream. Organizations using SAMDesk alongside ISOS report getting into the evac queue faster because they knew earlier."`},
+  ],
+  wins:[["Medical evacuation & response","✓","~"],["On-the-ground human assistance","✓","~"],["Real-time AI signal detection","✗","✓"],["Proactive traveler risk profiling","✗","✓"],["Agentic response automation","✗","✓"],["Real-time org impact mapping","✗","✓"]]
+}
+];
+
+const tabsEl = document.getElementById('tabs');
+const cardsEl = document.getElementById('cards');
+
+competitors.forEach((c,i)=>{
+  const t = document.createElement('button');
+  t.className='tab'+(i===0?' active':'');
+  t.textContent=c.name;
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.card').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('card-'+i).classList.add('active');
+  };
+  tabsEl.appendChild(t);
+
+  const snapHtml=Object.entries(c.snap).map(([k,v])=>`<div class="snap-item"><strong>${v}</strong>${k}</div>`).join('');
+  const lmHtml=c.landmines.map(l=>`<div class="lm-item"><strong>${l.q}</strong>${l.a}</div>`).join('');
+  const objHtml=c.objections.map(o=>`<div class="obj-item"><div class="obj-q">${o.q}</div><div class="obj-a">${o.a}</div></div>`).join('');
+  const winRows=c.wins.map(([label,them,us])=>`<div class="win-row"><span class="win-label">${label}</span><span class="win-them">${them}</span><span class="win-us">${us}</span></div>`).join('');
+
+  const card=document.createElement('div');
+  card.className='card'+(i===0?' active':'');
+  card.id='card-'+i;
+  card.innerHTML=`
+    <div class="card-header">
+      <div><div class="comp-name">${c.name}</div><div class="comp-type">${c.type}</div></div>
+      <div class="snapshot">${snapHtml}</div>
+    </div>
+    <div class="kill-shot">
+      <div class="kill-label">Kill shot</div>
+      <blockquote>${c.killShot}</blockquote>
+    </div>
+    <div class="grid">
+      <div class="section">
+        <div class="section-label">Landmines to lay</div>
+        <div class="landmine">${lmHtml}</div>
+      </div>
+      <div class="section section-right">
+        <div class="section-label">Objection handling</div>
+        ${objHtml}
+      </div>
+      <div class="section">
+        <div class="section-label">Head to head</div>
+        <div class="win-header"><span style="flex:1">Dimension</span><span style="width:60px;text-align:center">Them</span><span style="width:60px;text-align:center">Us</span></div>
+        ${winRows}
+      </div>
+      <div class="section section-right">
+        <div class="section-label">Snapshot</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">${snapHtml}</div>
+      </div>
+    </div>
+    <div class="updated">SAMDesk / ADAR — Internal use only · March 2026</div>`;
+  cardsEl.appendChild(card);
+});
+</script>
+</body>
+</html>
