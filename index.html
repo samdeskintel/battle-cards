@@ -52,8 +52,14 @@ h1{font-size:20px;font-weight:500;color:#1a1a18;margin-bottom:.25rem}
 </head>
 <body>
 
+<!-- Nav -->
+<div style="display:flex;gap:8px;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:0.5px solid #d3d1c7">
+  <a href="index.html" style="padding:6px 14px;border:0.5px solid #1a1a18;border-radius:8px;font-size:13px;background:#1a1a18;color:#fff;text-decoration:none">Battle Cards</a>
+  <a href="competitive-map.html" style="padding:6px 14px;border:0.5px solid #b4b2a9;border-radius:8px;font-size:13px;background:#fff;color:#5f5e5a;text-decoration:none">Competitive Map</a>
+</div>
+
 <h1>Competitor Battle Cards</h1>
-<p class="subtitle">Samdesk — Internal Sales Use Only &nbsp;·&nbsp; Last updated March 2026</p>
+<p class="subtitle">SAMDesk / ADAR — Internal Sales Use Only &nbsp;·&nbsp; Last updated March 2026</p>
 
 <div class="tabs" id="tabs"></div>
 <div id="cards"></div>
@@ -64,7 +70,7 @@ const competitors = [
   name:"Dataminr",
   type:"AI threat detection & intelligence",
   snap:{HQ:"New York, NY",Founded:"2009",Employees:"~800",Revenue:"~$200M",Customers:"Fortune 50/100, gov agencies"},
-  killShot:`"Dataminr tells you the building is on fire. Samdesk tells you which of your people are inside, what the exits are, and has already started calling them — before you've opened the alert."`,
+  killShot:`"Dataminr tells you the building is on fire. SAMDesk tells you which of your people are inside, what the exits are, and has already started calling them — before you've opened the alert."`,
   landmines:[
     {q:"Alert workflow",a:`"After Dataminr sends an alert, walk me through what happens next in your workflow. The real challenge today is time-to-decision and time-to-influence-outcome."`},
     {q:"Has speed ever cost you?",a:`"Has there been a situation where you got an alert but weren't able to act fast enough? What they lack is trust and faster understanding."`},
@@ -89,7 +95,7 @@ const competitors = [
   name:"Everbridge",
   type:"Critical event management & mass notification",
   snap:{HQ:"Boston, MA",Founded:"2002",Employees:"~1,000",Product:"Everbridge 360™",Customers:"6,500+"},
-  killShot:`"Everbridge is the best tool for getting a message out once you've already decided to send it. The question is: what decided the message was needed, who it should go to, and what it should say? That's samdesk's ADAR problem — and Everbridge doesn't touch it."`,
+  killShot:`"Everbridge is the best tool for getting a message out once you've already decided to send it. The question is: what decided the message was needed, who it should go to, and what it should say? That's the ADAR problem — and Everbridge doesn't touch it."`,
   landmines:[
     {q:"Intelligence source",a:`"When an alert fires in Everbridge, where did that intelligence come from — is it native AI or a third-party feed?"`},
     {q:"Steps before notification",a:`"How many manual steps happen between the alert and the notification going out? Who owns each one?"`},
@@ -114,7 +120,7 @@ const competitors = [
   name:"Factal",
   type:"Human-verified breaking news intelligence",
   snap:{HQ:"Seattle, WA",Founded:"2018",Employees:"~50",Funding:"Series A $3.3M",Heritage:"NBC BreakingNews founders"},
-  killShot:`"If you find out accurately but late, your security team can document what happened. If you find out early enough, your security team can change what happens. Factal chose accuracy. Samdesk chose both."`,
+  killShot:`"If you find out accurately but late, your security team can document what happened. If you find out early enough, your security team can change what happens. Factal chose accuracy. ADAR chose both."`,
   landmines:[
     {q:"Verification latency",a:`"How much time passes between an event occurring and the verified alert reaching your team? That gap is exactly when the window to influence outcome is open."`},
     {q:"The 'on fire' problem",a:`"If a tweet says 'Steph Curry is on fire' and another says 'town hall is on fire' — how long does it take your team to determine which is real? An AI model does that disambiguation in milliseconds, across every language, simultaneously."`},
@@ -123,8 +129,8 @@ const competitors = [
   ],
   objections:[
     {q:`"We trust Factal because a human verifies every alert."`,a:`"That trust is well-earned. The question isn't whether Factal's alerts are accurate — it's whether accurate-but-later is the right trade-off. Journalists need verified facts before they publish. Security teams need early signals before the window to act closes."`},
-    {q:`"Pure AI platforms produce too much noise."`,a:`"That was true of first-generation tools. Samdesk is purpose-built to solve the disambiguation problem at a scale no human team can match. The question is whether the AI is built for security intelligence, or just a raw feed."`},
-    {q:`"Factal has an International SOS integration."`,a:`"It does — and it tells you something about the model. ISOS is a reactive human-services firm. Factal's natural partner responds after the fact. Samdesk's natural partner is a team that wants to prevent the call to ISOS in the first place."`},
+    {q:`"Pure AI platforms produce too much noise."`,a:`"That was true of first-generation tools. ADAR is purpose-built to solve the disambiguation problem at a scale no human team can match. The question is whether the AI is built for security intelligence, or just a raw feed."`},
+    {q:`"Factal has an International SOS integration."`,a:`"It does — and it tells you something about the model. ISOS is a reactive human-services firm. Factal's natural partner responds after the fact. ADAR's natural partner is a team that wants to prevent the call to ISOS in the first place."`},
   ],
   discovery:[
     "When a Factal alert fires, how much time typically passes before your team takes action on it?",
@@ -147,7 +153,7 @@ const competitors = [
     {q:"Consulting dependency",a:`"Has your team found that Seerist intelligence led you to need more Control Risks consulting time to act on it? That relationship is by design."`},
   ],
   objections:[
-    {q:`"We use Seerist for strategic risk — it's a different use case."`,a:`"Completely agree — and that's exactly our point. Strategic foresight and real-time operational intelligence are different disciplines. What happens when that strategic risk materializes into an actual event affecting your people at 2am? That's the gap samdesk's ADAR fills."`},
+    {q:`"We use Seerist for strategic risk — it's a different use case."`,a:`"Completely agree — and that's exactly our point. Strategic foresight and real-time operational intelligence are different disciplines. What happens when that strategic risk materializes into an actual event affecting your people at 2am? That's the gap ADAR fills."`},
     {q:`"Control Risks is world-class expertise."`,a:`"No argument. The question is whether consultancy-grade strategic analysis is the right tool for operational security decisions that happen in real time at scale. We complement Seerist — adding the operational layer underneath."`},
     {q:`"Seerist gives us everything in one place."`,a:`"It consolidates strategic intelligence well. But does it show what's happening right now at the building level, processed against your traveler profiles, triggering your response workflow automatically? Those are architecturally different problems."`},
   ],
@@ -172,9 +178,9 @@ const competitors = [
     {q:"Travel risk depth",a:`"Is AlertMedia telling your team about risks before travelers depart, or primarily used to locate and notify after something has happened?"`},
   ],
   objections:[
-    {q:`"AlertMedia also covers the gap between alert and response."`,a:`"They've identified the right problem. The question is whether connecting your response workflow in a cleaner UI is the same as AI that detects the event, maps which of your people are impacted, and triggers response automatically. AlertMedia addresses handoffs between humans. Samdesk reduces how many human handoffs the process requires."`},
-    {q:`"We already have AlertMedia for notifications."`,a:`"AlertMedia is a great notification engine — we'd probably keep it. The question is what's feeding it. When AlertMedia sends a notification, what decided it was necessary? That upstream intelligence and decision layer is what samdesk replaces."`},
-    {q:`"AlertMedia has AI too."`,a:`"Their AI Assistant helps your team move faster once they're already working on a problem. Useful — but it's a productivity tool. Samdesk's Impact Agents run 24/7 whether your team is watching the dashboard or not."`},
+    {q:`"AlertMedia also covers the gap between alert and response."`,a:`"They've identified the right problem. The question is whether connecting your response workflow in a cleaner UI is the same as AI that detects the event, maps which of your people are impacted, and triggers response automatically. AlertMedia addresses handoffs between humans. ADAR reduces how many human handoffs the process requires."`},
+    {q:`"We already have AlertMedia for notifications."`,a:`"AlertMedia is a great notification engine — we'd probably keep it. The question is what's feeding it. When AlertMedia sends a notification, what decided it was necessary? That upstream intelligence and decision layer is what ADAR replaces."`},
+    {q:`"AlertMedia has AI too."`,a:`"Their AI Assistant helps your team move faster once they're already working on a problem. Useful — but it's a productivity tool. ADAR's Impact Agents run 24/7 whether your team is watching the dashboard or not."`},
   ],
   discovery:[
     "When AlertMedia surfaces a threat alert, where did that intelligence originate — and how do you know it's relevant to your specific people and assets?",
@@ -189,7 +195,7 @@ const competitors = [
   name:"Crisis24",
   type:"End-to-end security services + CEM platform (GardaWorld)",
   snap:{HQ:"Global",Ownership:"GardaWorld",Analysts:"200+",Platform:"TopoONE + Horizon",Customers:"Fortune 500, NGOs, universities"},
-  killShot:`"Crisis24's answer to the analyst shortage is to rent you their analysts. Samdesk's answer is to build AI that means you need fewer analysts in the first place — and the ones you have are working on decisions, not triage."`,
+  killShot:`"Crisis24's answer to the analyst shortage is to rent you their analysts. ADAR's answer is to build AI that means you need fewer analysts in the first place — and the ones you have are working on decisions, not triage."`,
   landmines:[
     {q:"Platform vs. services split",a:`"Of your current Crisis24 engagement, how much is platform software versus embedded services? How do you see that balance evolving over the next two years?"`},
     {q:"Analyst time on triage",a:`"When your embedded Crisis24 analysts are monitoring TopoONE, what percentage of their time is triage and filtering versus actual decision-making?"`},
@@ -197,8 +203,8 @@ const competitors = [
     {q:"Vendor independence",a:`"Is the platform built to make you independent, or to make you dependent on their people? Every capability gap in the software is a potential consulting engagement."`},
   ],
   objections:[
-    {q:`"Crisis24 gives us everything — software, analysts, medevac — in one place."`,a:`"That's genuinely valuable for organizations that need all those services. The question is whether you're optimizing for vendor consolidation, or for the best outcome in each layer. Crisis24's platform is built to support their services model. Samdesk is built to reduce your dependency on any services model."`},
-    {q:`"We have Crisis24 analysts embedded in our GSOC."`,a:`"Strong setup for today. The agentic layer — automated detection, impact assessment, response triggering — is what frees your embedded analysts to work on the judgment-intensive problems they're trained for. Samdesk doesn't replace your people; it handles the volume so your people handle the decisions."`},
+    {q:`"Crisis24 gives us everything — software, analysts, medevac — in one place."`,a:`"That's genuinely valuable for organizations that need all those services. The question is whether you're optimizing for vendor consolidation, or for the best outcome in each layer. Crisis24's platform is built to support their services model. ADAR is built to reduce your dependency on any services model."`},
+    {q:`"We have Crisis24 analysts embedded in our GSOC."`,a:`"Strong setup for today. The agentic layer — automated detection, impact assessment, response triggering — is what frees your embedded analysts to work on the judgment-intensive problems they're trained for. ADAR doesn't replace your people; it handles the volume so your people handle the decisions."`},
     {q:`"Crisis24 has AI with AiiA."`,a:`"Worth understanding what AiiA does in your deployment. Our read is it accelerates analyst work — a productivity tool. The distinction is whether the AI speeds up a human's task, or performs the task autonomously. Is AiiA doing anything without a human initiating it?"`},
   ],
   discovery:[
@@ -224,7 +230,7 @@ const competitors = [
   objections:[
     {q:`"We have a duty of care contract with ISOS — we're covered."`,a:`"ISOS is excellent at fulfilling duty of care after an incident. The question is whether your obligation ends at 'we have a contract' or extends to 'we knew about the risk early enough to prevent the incident.' That's a different standard — the one your executive team will be held to."`},
     {q:`"ISOS has 13,000 people worldwide — that's real infrastructure."`,a:`"Absolutely — and when you need an evac plane or a hospital bed, nobody beats them. But 13,000 people cannot monitor a million daily global signals in real time and map them to your specific travelers. That's what AI does. Do you want to be proactive or reactive? ISOS is structurally built for the latter."`},
-    {q:`"Our travelers trust ISOS and know the number to call."`,a:`"That trust is valuable and worth preserving. Samdesk doesn't replace ISOS — it reduces how often your travelers need to make that call, because the intelligence and response happened upstream. Organizations using SAMDesk alongside ISOS report getting into the evac queue faster because they knew earlier."`},
+    {q:`"Our travelers trust ISOS and know the number to call."`,a:`"That trust is valuable and worth preserving. ADAR doesn't replace ISOS — it reduces how often your travelers need to make that call, because the intelligence and response happened upstream. Organizations using SAMDesk alongside ISOS report getting into the evac queue faster because they knew earlier."`},
   ],
   discovery:[
     "When you think about the last time ISOS was activated, was it because something had already happened — or because your team saw it coming and got ahead of it?",
@@ -296,7 +302,7 @@ competitors.forEach((c,i)=>{
         </div>
       </div>
     </div>
-    <div class="updated">Samdesk  — Internal use only · March 2026</div>`;
+    <div class="updated">SAMDesk / ADAR — Internal use only · March 2026</div>`;
   cardsEl.appendChild(card);
 });
 </script>
