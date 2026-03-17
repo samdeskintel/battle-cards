@@ -6,11 +6,14 @@
 <title>SAMDesk Evidence Library</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f4f0;color:#1a1a18;padding:2rem 1.5rem;max-width:1200px;margin:0 auto}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f4f0;color:#1a1a18}
 a{text-decoration:none}
-.nav{display:flex;gap:8px;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:0.5px solid #d3d1c7;flex-wrap:wrap}
-.nav a{padding:6px 14px;border:0.5px solid #b4b2a9;border-radius:8px;font-size:13px;background:#fff;color:#5f5e5a;font-family:inherit}
-.nav a.active{background:#1a1a18;color:#fff;border-color:#1a1a18;font-weight:500}
+.topnav{background:#0d1117;border-bottom:1px solid #30363d;padding:0 40px;display:flex;align-items:center;gap:4px;overflow-x:auto;position:sticky;top:0;z-index:100}
+.topnav a{color:#8b949e;text-decoration:none;font-size:.8rem;font-weight:500;padding:12px 14px;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.topnav a:hover{color:#e6edf3}
+.topnav a.active{color:#00c2ff;border-bottom-color:#00c2ff}
+.nav-logo{color:#00c2ff;font-weight:800;font-size:.9rem;margin-right:12px;letter-spacing:-.02em;padding:12px 0;white-space:nowrap;flex-shrink:0}
+.content{padding:2rem 1.5rem;max-width:1200px;margin:0 auto}
 .header{margin-bottom:1.5rem}
 .page-title{font-size:20px;font-weight:500;margin-bottom:.25rem}
 .page-sub{font-size:13px;color:#888780}
@@ -40,51 +43,38 @@ input[type=search]:focus{border-color:#5f5e5a}
 .card-region{font-size:11px;color:#888780}
 .card-type{font-size:11px;font-weight:500;color:#5f5e5a}
 .empty{text-align:center;padding:3rem;color:#888780;font-size:14px;grid-column:1/-1}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.controls{flex-direction:column;align-items:flex-start}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.controls{flex-direction:column;align-items:flex-start}.topnav{padding:0 14px}}
 </style>
 </head>
 <body>
 
-<div class="nav">
-  <a href="discovery.html">Discovery Guide</a>
+<nav class="topnav">
+  <span class="nav-logo">⬡ samdesk</span>
+  <a href="index.html">Home</a>
   <a href="competitive-map.html">Competitive Map</a>
-  <a href="index.html">Battle Cards</a>
+  <a href="discovery.html">Discovery</a>
+  <a href="library.html" class="active">Library</a>
+  <a href="stories.html">Customer Stories</a>
   <a href="use-cases.html">Use Cases</a>
-  <a href="library.html" class="active">Evidence Library</a>
-</div>
+</nav>
 
+<div class="content">
 <div class="header">
   <div class="page-title">Evidence Library</div>
   <div class="page-sub">All real-world samdesk examples — filter by use case, incident type, or region to find the right proof point for any conversation</div>
 </div>
 
-<div class="controls">
-  <div class="search-wrap">
-    <input type="search" id="search" placeholder="Search incidents, locations, or keywords...">
-  </div>
-</div>
-
-<div class="controls">
-  <div class="filter-label">Use case</div>
-  <div class="filter-group" id="uc-filters"></div>
-</div>
-
-<div class="controls">
-  <div class="filter-label">Type</div>
-  <div class="filter-group" id="type-filters"></div>
-</div>
-
-<div class="controls">
-  <div class="filter-label">Region</div>
-  <div class="filter-group" id="region-filters"></div>
-</div>
-
+<div class="controls"><div class="search-wrap"><input type="search" id="search" placeholder="Search incidents, locations, or keywords..."></div></div>
+<div class="controls"><div class="filter-label">Use case</div><div class="filter-group" id="uc-filters"></div></div>
+<div class="controls"><div class="filter-label">Type</div><div class="filter-group" id="type-filters"></div></div>
+<div class="controls"><div class="filter-label">Region</div><div class="filter-group" id="region-filters"></div></div>
 <div class="divider"></div>
 <div class="count" id="count"></div>
 <div class="grid" id="grid"></div>
+</div>
 
 <script>
-const incidents = [
+const incidents=[
   {title:"Active Shooter in Lewiston, Maine",desc:"Active shooter killed 18 people at a local business. samdesk alerted 2 minutes after first online chatter — 28 minutes before any other alerting platform.",stat:"28 min faster than Factal",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
   {title:"Boulder King Soopers Active Shooter",desc:"Active shooter killed 10 at a Colorado supermarket. samdesk alerted before police, Factal, and CNN.",stat:"14 min faster than Boulder PD · 1hr 4min faster than CNN",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
   {title:"Oxford High School Active Shooter",desc:"Active shooter killed 4 and injured 7 at Oxford High School, Michigan. samdesk alerted 24 minutes before Factal and over 1 hour before CNN.",stat:"24 min faster than Factal · 1hr 9min faster than CNN",uc:["Workplace Safety"],type:["Active Shooter","School Safety"],region:"North America"},
@@ -140,40 +130,22 @@ const incidents = [
 const ucList=[...new Set(incidents.flatMap(i=>i.uc))].sort();
 const typeList=[...new Set(incidents.flatMap(i=>i.type))].sort();
 const regionList=[...new Set(incidents.map(i=>i.region))].sort();
+let activeUC=[],activeType=[],activeRegion=[],searchVal='';
 
-let activeUC=[];
-let activeType=[];
-let activeRegion=[];
-let searchVal='';
-
-function makeFilters(list,container,active,toggle){
+function makeFilters(list,container,toggle){
   const el=document.getElementById(container);
   list.forEach(f=>{
     const b=document.createElement('button');
-    b.className='filter-btn';
-    b.textContent=f;
-    b.onclick=()=>{
-      toggle(f,b);
-      render();
-    };
+    b.className='filter-btn';b.textContent=f;
+    b.onclick=()=>{toggle(f,b);render();};
     el.appendChild(b);
   });
 }
-
-function toggleFilter(arr,val,btn){
-  const i=arr.indexOf(val);
-  if(i>-1){arr.splice(i,1);btn.classList.remove('active');}
-  else{arr.push(val);btn.classList.add('active');}
-}
-
-makeFilters(ucList,'uc-filters',activeUC,(f,b)=>toggleFilter(activeUC,f,b));
-makeFilters(typeList,'type-filters',activeType,(f,b)=>toggleFilter(activeType,f,b));
-makeFilters(regionList,'region-filters',activeRegion,(f,b)=>toggleFilter(activeRegion,f,b));
-
-document.getElementById('search').addEventListener('input',e=>{
-  searchVal=e.target.value.toLowerCase();
-  render();
-});
+function toggleFilter(arr,val,btn){const i=arr.indexOf(val);if(i>-1){arr.splice(i,1);btn.classList.remove('active');}else{arr.push(val);btn.classList.add('active');}}
+makeFilters(ucList,'uc-filters',(f,b)=>toggleFilter(activeUC,f,b));
+makeFilters(typeList,'type-filters',(f,b)=>toggleFilter(activeType,f,b));
+makeFilters(regionList,'region-filters',(f,b)=>toggleFilter(activeRegion,f,b));
+document.getElementById('search').addEventListener('input',e=>{searchVal=e.target.value.toLowerCase();render();});
 
 function render(){
   const filtered=incidents.filter(inc=>{
@@ -183,48 +155,22 @@ function render(){
     const matchSearch=!searchVal||(inc.title+inc.desc+inc.stat+inc.region+inc.uc.join()+inc.type.join()).toLowerCase().includes(searchVal);
     return matchUC&&matchType&&matchRegion&&matchSearch;
   });
-
   const grid=document.getElementById('grid');
   const count=document.getElementById('count');
   count.innerHTML=`Showing <strong>${filtered.length}</strong> of <strong>${incidents.length}</strong> examples`;
   grid.innerHTML='';
-
-  if(filtered.length===0){
-    grid.innerHTML='<div class="empty">No examples match your filters. Try removing a filter or clearing the search.</div>';
-    return;
-  }
-
+  if(filtered.length===0){grid.innerHTML='<div class="empty">No examples match your filters. Try removing a filter or clearing the search.</div>';return;}
   filtered.forEach(inc=>{
     const ucTags=inc.uc.map(u=>`<span class="tag tag-uc">${u}</span>`).join('');
     const typeTags=inc.type.map(t=>`<span class="tag">${t}</span>`).join('');
-    const card=document.createElement('div');
-    card.className='card';
-    const ucHash={
-      'Workplace Safety':'workplace',
-      'Physical Asset Protection':'physical',
-      'Travel Risk':'travel',
-      'Supply Chain':'supply',
-      'Executive Protection':'ep',
-      'National Defense':'defense'
-    };
-    const primaryUC=inc.uc[0];
-    const hash=ucHash[primaryUC]||'';
+    const card=document.createElement('div');card.className='card';
+    const ucHash={'Workplace Safety':'workplace','Physical Asset Protection':'physical','Travel Risk':'travel','Supply Chain':'supply','Executive Protection':'ep','National Defense':'defense'};
+    const hash=ucHash[inc.uc[0]]||'';
     const link=hash?`use-cases.html#${hash}`:'use-cases.html';
-    card.innerHTML=`
-      <div class="card-top">
-        <div class="card-title">${inc.title}</div>
-        <div class="card-desc">${inc.desc}</div>
-        <div class="card-stat">⚡ ${inc.stat}</div>
-        <div class="tags">${ucTags}${typeTags}</div>
-      </div>
-      <div class="card-bottom">
-        <div class="card-region">${inc.region}</div>
-        <a href="${link}" style="font-size:11px;color:#185fa5;text-decoration:none;font-weight:500">View use case →</a>
-      </div>`;
+    card.innerHTML=`<div class="card-top"><div class="card-title">${inc.title}</div><div class="card-desc">${inc.desc}</div><div class="card-stat">⚡ ${inc.stat}</div><div class="tags">${ucTags}${typeTags}</div></div><div class="card-bottom"><div class="card-region">${inc.region}</div><a href="${link}" style="font-size:11px;color:#185fa5;text-decoration:none;font-weight:500">View use case →</a></div>`;
     grid.appendChild(card);
   });
 }
-
 render();
 </script>
 </body>
