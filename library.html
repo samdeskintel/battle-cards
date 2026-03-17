@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMDesk Evidence Library</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f4f0;color:#1a1a18;padding:2rem 1.5rem;max-width:1200px;margin:0 auto}
+a{text-decoration:none}
+.nav{display:flex;gap:8px;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:0.5px solid #d3d1c7;flex-wrap:wrap}
+.nav a{padding:6px 14px;border:0.5px solid #b4b2a9;border-radius:8px;font-size:13px;background:#fff;color:#5f5e5a;font-family:inherit}
+.nav a.active{background:#1a1a18;color:#fff;border-color:#1a1a18;font-weight:500}
+.header{margin-bottom:1.5rem}
+.page-title{font-size:20px;font-weight:500;margin-bottom:.25rem}
+.page-sub{font-size:13px;color:#888780}
+.controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center}
+.filter-group{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:#888780;white-space:nowrap}
+.filter-btn{padding:5px 12px;border:0.5px solid #b4b2a9;border-radius:20px;font-size:12px;cursor:pointer;background:#fff;color:#5f5e5a;transition:all .15s;font-family:inherit}
+.filter-btn:hover{border-color:#5f5e5a;color:#1a1a18}
+.filter-btn.active{background:#1a1a18;color:#fff;border-color:#1a1a18}
+.search-wrap{flex:1;min-width:200px}
+input[type=search]{width:100%;padding:7px 12px;border:0.5px solid #b4b2a9;border-radius:8px;font-size:13px;font-family:inherit;background:#fff;color:#1a1a18;outline:none}
+input[type=search]:focus{border-color:#5f5e5a}
+.divider{height:0.5px;background:#d3d1c7;margin-bottom:1.25rem}
+.count{font-size:12px;color:#888780;margin-bottom:1rem}
+.count strong{color:#1a1a18}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem}
+.card{background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s}
+.card:hover{border-color:#5f5e5a}
+.card-top{padding:1rem 1.25rem;border-bottom:0.5px solid #f1efe8;flex:1}
+.card-title{font-size:14px;font-weight:500;color:#1a1a18;margin-bottom:.4rem;line-height:1.3}
+.card-desc{font-size:12px;color:#5f5e5a;line-height:1.5;margin-bottom:.65rem}
+.card-stat{font-size:12px;font-weight:500;color:#3b6d11;background:#eaf3de;padding:.3rem .65rem;border-radius:6px;display:inline-block;margin-bottom:.6rem}
+.tags{display:flex;gap:4px;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 7px;border-radius:4px;background:#f1efe8;color:#5f5e5a;border:0.5px solid #d3d1c7}
+.tag-uc{background:#e6f1fb;color:#185fa5;border-color:#b5d4f4}
+.card-bottom{padding:.6rem 1.25rem;background:#faf9f7;display:flex;justify-content:space-between;align-items:center}
+.card-region{font-size:11px;color:#888780}
+.card-type{font-size:11px;font-weight:500;color:#5f5e5a}
+.empty{text-align:center;padding:3rem;color:#888780;font-size:14px;grid-column:1/-1}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.controls{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="discovery.html">Discovery Guide</a>
+  <a href="competitive-map.html">Competitive Map</a>
+  <a href="index.html">Battle Cards</a>
+  <a href="use-cases.html">Use Cases</a>
+  <a href="library.html" class="active">Evidence Library</a>
+</div>
+
+<div class="header">
+  <div class="page-title">Evidence Library</div>
+  <div class="page-sub">All real-world samdesk examples — filter by use case, incident type, or region to find the right proof point for any conversation</div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <input type="search" id="search" placeholder="Search incidents, locations, or keywords...">
+  </div>
+</div>
+
+<div class="controls">
+  <div class="filter-label">Use case</div>
+  <div class="filter-group" id="uc-filters"></div>
+</div>
+
+<div class="controls">
+  <div class="filter-label">Type</div>
+  <div class="filter-group" id="type-filters"></div>
+</div>
+
+<div class="controls">
+  <div class="filter-label">Region</div>
+  <div class="filter-group" id="region-filters"></div>
+</div>
+
+<div class="divider"></div>
+<div class="count" id="count"></div>
+<div class="grid" id="grid"></div>
+
+<script>
+const incidents = [
+  {title:"Active Shooter in Lewiston, Maine",desc:"Active shooter killed 18 people at a local business. samdesk alerted 2 minutes after first online chatter — 28 minutes before any other alerting platform.",stat:"28 min faster than Factal",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
+  {title:"Boulder King Soopers Active Shooter",desc:"Active shooter killed 10 at a Colorado supermarket. samdesk alerted before police, Factal, and CNN.",stat:"14 min faster than Boulder PD · 1hr 4min faster than CNN",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
+  {title:"Oxford High School Active Shooter",desc:"Active shooter killed 4 and injured 7 at Oxford High School, Michigan. samdesk alerted 24 minutes before Factal and over 1 hour before CNN.",stat:"24 min faster than Factal · 1hr 9min faster than CNN",uc:["Workplace Safety"],type:["Active Shooter","School Safety"],region:"North America"},
+  {title:"MSU Active Shooter & Manhunt",desc:"Shooting at Michigan State University. samdesk's AI alerted instantly, analysts corroborated within minutes. Monitored for 2+ hours until all clear.",stat:"22 min faster than media",uc:["Workplace Safety"],type:["Active Shooter","School Safety"],region:"North America"},
+  {title:"Active Shooter at Atlanta Shopping Mall",desc:"Active shooter at Perimeter Mall, Atlanta. samdesk alerted from early social chatter before local media.",stat:"10 min faster than local media · 22 min faster than AJC article",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
+  {title:"West Edmonton Mall Lockdown & Shooting",desc:"North America's largest mall locked down. samdesk alerted 21 min before local news reported lockdown and 64 min before police confirmed.",stat:"21 min faster than news · 64 min faster than police",uc:["Workplace Safety"],type:["Active Shooter","Lockdown"],region:"North America"},
+  {title:"Active Shooter at Louisville Bank",desc:"Active shooter at Old National Bank, Louisville. samdesk alerted from early chatter about active shooter and large police presence.",stat:"6 min faster than local police · 13 min faster than media",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
+  {title:"Active Shooter in downtown Austin, Texas",desc:"Active shooter in downtown Austin. samdesk's AI detected chatter and team upgraded to active shooter within 1 minute.",stat:"13 min faster than Austin PD · 2hr 53min faster than media",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
+  {title:"Active Shooter in Los Angeles County",desc:"Off-duty firefighter shot colleague at Santa Clarita FD station. samdesk alerted within 1 minute of incident.",stat:"36 min faster than CNN · 38 min faster than ABC News",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
+  {title:"Active Shooter at Yorkdale Shopping Centre, Toronto",desc:"Active shooter at Yorkdale mall in Toronto. samdesk alerted before Toronto Police Department and national news.",stat:"12 min faster than Toronto PD · 29 min faster than City News",uc:["Workplace Safety"],type:["Active Shooter"],region:"North America"},
+  {title:"Temple University Shooting",desc:"5 people shot at a bar near Temple University. samdesk provided street-level geolocation within minutes.",stat:"7 min faster than campus police · 4 hours faster than media",uc:["Workplace Safety"],type:["Shooting","School Safety"],region:"North America"},
+  {title:"Lincoln University Shooting",desc:"Shooting at Lincoln University, Pennsylvania. samdesk monitored continuously for 5 hours until lockdown lifted.",stat:"13 min faster than local media",uc:["Workplace Safety"],type:["Shooting","School Safety"],region:"North America"},
+  {title:"Weapon Threat Closes Delaware County College",desc:"Shelter in place at Delaware County Community College. samdesk users got the real story while traditional sources had incomplete info.",stat:"21 min faster than local media",uc:["Workplace Safety"],type:["Lockdown","School Safety"],region:"North America"},
+  {title:"Manhunt after NYC Subway Shooting",desc:"AI detected smoke on NYC train, escalated to active shooter. Monitored for 30 hours until suspect in custody.",stat:"19 min faster than NYC Emergency Notification System · 27 min faster than media",uc:["Workplace Safety","Executive Protection"],type:["Shooting","Evacuation"],region:"North America"},
+  {title:"Police Officers Attacked near NYC Times Square",desc:"Stabbing and shooting involving police officers near Times Square on New Year's Eve.",stat:"18 min faster than NYPD · 26 min faster than Fox 5 NY",uc:["Executive Protection","Workplace Safety"],type:["Stabbing","Shooting"],region:"North America"},
+  {title:"MGM Resorts Cyber Attack",desc:"samdesk's AI detected anomalies indicating a cyberattack at MGM Grand Las Vegas — hours before the company acknowledged it publicly.",stat:"6hr 44min faster than media · 11hr 24min faster than MGM itself",uc:["Physical Asset Protection"],type:["Cyber Attack","Network Outage"],region:"North America"},
+  {title:"Japan Earthquake & Tsunami",desc:"Major earthquake in Ishikawa Prefecture followed by tsunami. samdesk issued tsunami warning 18 minutes before impact and 24 minutes before Japan's national broadcaster.",stat:"Tsunami warning 18 min before impact · 24 min faster than national broadcaster",uc:["Physical Asset Protection","Travel Risk"],type:["Earthquake","Tsunami","Natural Disaster"],region:"Asia Pacific"},
+  {title:"Miami Building Collapse",desc:"Partial building collapse in Surfside, Miami. samdesk alerted within minutes of first online mention.",stat:"18 min faster than Factal · 21 min faster than Miami-Dade Fire Rescue · 1hr 7min faster than CNN",uc:["Physical Asset Protection"],type:["Building Collapse"],region:"North America"},
+  {title:"Nashville Explosion",desc:"Christmas Day explosion in Nashville. samdesk alerted within 5 minutes of explosion, 1hr 36min before police.",stat:"1hr 36min faster than Metro Nashville PD · 2hr 11min faster than CNN",uc:["Physical Asset Protection"],type:["Explosion"],region:"North America"},
+  {title:"Gunman Locks Down Sacramento Airport",desc:"Standoff in airport parking garage. samdesk alerted within minutes of weapon discharge with precise location.",stat:"57 min faster than airport comms",uc:["Physical Asset Protection","Travel Risk"],type:["Shooting","Aviation"],region:"North America"},
+  {title:"Bomb Scare at University Park Airport",desc:"Explosive device found in suitcase at University Park Airport, Pennsylvania. Samdesk monitored for 5+ hours.",stat:"13 min faster than local media",uc:["Physical Asset Protection","Travel Risk"],type:["Bomb Scare","Aviation"],region:"North America"},
+  {title:"US Supreme Court Evacuation",desc:"Suspicious package shut down the US Supreme Court area. samdesk alerted at first online mention and identified road closures.",stat:"Alerted at first mention online",uc:["Physical Asset Protection","Executive Protection"],type:["Suspicious Package","Evacuation"],region:"North America"},
+  {title:"Businesses Evacuated in Sherman Oaks, California",desc:"Bomb scare forced evacuation of several businesses in Sherman Oaks. Local police provided no updates on social media.",stat:"1hr 23min faster than local media · police provided no updates",uc:["Physical Asset Protection"],type:["Bomb Scare","Evacuation"],region:"North America"},
+  {title:"Bomb Scare at Trump International Hotel, Las Vegas",desc:"Suspicious package investigation at Trump International Hotel. samdesk alerted 7 minutes before Insider Paper.",stat:"7 min faster than Insider Paper · 16 min faster than KTNV",uc:["Physical Asset Protection","Executive Protection"],type:["Bomb Scare"],region:"North America"},
+  {title:"Vehicle Explosion on the Rainbow Bridge",desc:"Vehicle explosion on Rainbow Bridge at US-Canada border. samdesk issued multiple analyst updates while other vendors were still silent.",stat:"Nearly 2 hours before AlertMedia alerted",uc:["Physical Asset Protection","Travel Risk"],type:["Explosion","Border Incident"],region:"North America"},
+  {title:"Vancouver Airport Shooting",desc:"Shooting at Vancouver International Airport causing major transit disruptions. Multi-source detection with transit impact mapped.",stat:"First mention detection with transit disruption mapping",uc:["Physical Asset Protection","Travel Risk"],type:["Shooting","Aviation"],region:"North America"},
+  {title:"Communications Cable Cut in Baltic Sea",desc:"Deep-sea communications cable between Finland and Germany cut — shutting down Finland's only communication link to the rest of Europe. Intentional damage confirmed.",stat:"Fast verified alerts · intentional damage identified",uc:["Supply Chain","National Defense"],type:["Infrastructure","Maritime"],region:"Europe"},
+  {title:"Crimea Bridge Explosion",desc:"Explosion on the only bridge connecting Crimea to Russia. Russia claimed minimal damage — samdesk had visuals of the collapsed bridge section within minutes.",stat:"Russian disinformation disproved in real time · repairs ongoing 6+ months",uc:["Supply Chain","National Defense"],type:["Explosion","Infrastructure","Disinformation"],region:"Europe"},
+  {title:"Southwest Airlines Network Outage",desc:"All Southwest Airlines flights grounded due to network outage. samdesk confirmed scope 1hr 18min before media.",stat:"1hr 18min faster than media · scope of disruption confirmed early",uc:["Supply Chain"],type:["Network Outage","Aviation"],region:"North America"},
+  {title:"Public Disorder at Charles de Gaulle Airport",desc:"Airport employees' strike blocked Terminal 2E and delayed flights. Detected from French-language social chatter before any English media.",stat:"21 min faster than BFM TV · 1hr 40min faster than Irish Examiner",uc:["Travel Risk","Supply Chain"],type:["Civil Unrest","Aviation"],region:"Europe"},
+  {title:"Crash in Sonora, Mexico",desc:"Bus collision killed 10 and injured 20. Detected from Spanish-language sources 3+ hours before local media.",stat:"3hr 12min faster than local news · 5hr 20min faster than Reforma",uc:["Travel Risk","Supply Chain"],type:["Crash","Transport"],region:"Latin America"},
+  {title:"Explosion in London — Elephant & Castle",desc:"Large fire and explosions at Elephant and Castle train station. samdesk alerted from Snapchat and Twitter chatter.",stat:"30 min faster than London Fire Brigade · 1hr 17min faster than Crisis24",uc:["Travel Risk","Physical Asset Protection"],type:["Explosion","Fire"],region:"Europe"},
+  {title:"Plane Crash in California",desc:"Small plane crashed near high school in Santee, sparking fires and local lockdowns.",stat:"1hr 55min faster than Factal · 2hr 50min faster than CNN",uc:["Travel Risk","Physical Asset Protection"],type:["Crash","Aviation"],region:"North America"},
+  {title:"Shooting in Vienna, Austria",desc:"Gunman attacked bars and restaurants in Vienna. samdesk alerted from German-language sources.",stat:"30 min faster than Factal · 44 min faster than Sky News",uc:["Travel Risk"],type:["Shooting","Terror"],region:"Europe"},
+  {title:"Protecting U.S. Embassies — Bahrain",desc:"Protesters heading toward U.S. Embassy in Bahrain during Israel-Gaza conflict. samdesk alerted before the crowd reached the embassy perimeter.",stat:"Alerted before crowd reached embassy · 4+ hours of updates",uc:["Executive Protection","National Defense"],type:["Civil Unrest","Embassy"],region:"Middle East"},
+  {title:"Italian Ambassador Killed — DRC Congo",desc:"Italian ambassador killed in gun attack on UN convoy near Goma. samdesk provided immediate multilingual alert.",stat:"Industry-leading alert times · multilingual detection",uc:["Executive Protection","National Defense"],type:["Armed Attack","Shooting"],region:"Africa"},
+  {title:"Ukraine / Russia War — 17 Days of Advance Warning",desc:"samdesk detected troop movements in Belarus and near Ukraine's border from Feb 6, 2022 — 17 days before the invasion began on Feb 24. 26,324 incidents tracked in 18 months.",stat:"17 days advance warning before invasion · 26,324 verified incidents",uc:["National Defense"],type:["Military Action","Geopolitical"],region:"Europe"},
+  {title:"Iran Strikes Al Udeid Air Base, Qatar",desc:"Iran launched missiles at Al Udeid Air Base in retaliation for US strikes on Iranian nuclear facilities. samdesk geo-located reports, detected early airspace I&W, and tagged misleading information. June 2025.",stat:"Early I&W of airspace closure · disinformation tagged in real time",uc:["National Defense"],type:["Military Action","Missile Strike","Disinformation"],region:"Middle East"},
+  {title:"Wagner Group Rebellion in Russia",desc:"samdesk monitored the Wagner Group's march toward Moscow, providing 43 updates across 6 events over 2 days.",stat:"43 updates across 6 events over 2 days",uc:["National Defense"],type:["Military Action","Armed Clash"],region:"Europe"},
+  {title:"High Altitude Device Shot Down over Alaska",desc:"Airspace closure over Alaska ahead of US military shooting down a high-altitude device. Detected before all major news networks.",stat:"45 min faster than Fox News · 48 min faster than BBC · 50 min faster than CNN",uc:["National Defense"],type:["Military Action","Aviation"],region:"North America"},
+  {title:"Conflict in Myanmar — Railyard Gunfire",desc:"Gunfire at railyard in Myanmar. samdesk alerted more than 5 hours before any news outlet broke the story.",stat:"5hr 42min faster than any news outlet",uc:["National Defense","Supply Chain"],type:["Armed Clash","Military Action"],region:"Asia Pacific"},
+  {title:"Madagascar Coup d'état",desc:"Military joined protesters and took control of armed forces in Antananarivo. samdesk detected from local sources and monitored over multiple days.",stat:"Local sources detected by AI · multi-day multi-platform coverage",uc:["National Defense","Travel Risk"],type:["Coup","Armed Clash"],region:"Africa"},
+  {title:"Tracking North Korea Missile Tests",desc:"Since 2022, samdesk has alerted to 4,500+ military incidents in East Asia. All missile test alerts prioritized, corroborated, and enhanced with points of impact.",stat:"4,500+ military incidents tracked in East Asia since 2022",uc:["National Defense"],type:["Military Action","Missile Strike"],region:"Asia Pacific"},
+  {title:"Ukraine / Russia — Dedicated Analyst Coverage",desc:"26,324 events tracked in the first 18 months of the Ukraine war. Dedicated analysts corroborated and verified events 24/7. Disinformation flagged and dismissed.",stat:"26,324 verified events · 300+ briefings issued",uc:["National Defense"],type:["Military Action","Disinformation"],region:"Europe"},
+  {title:"Ukraine Hospital Air Strike",desc:"Russia claimed the hospital was a military installation. samdesk users knew immediately from visuals that the initial reports were misinformation.",stat:"Disinformation disproved from visual media in real time",uc:["National Defense"],type:["Missile Strike","Disinformation"],region:"Europe"},
+  {title:"Did Someone Bomb the Pentagon?",desc:"Fake images of a Pentagon explosion went viral — even credible outlets published the story. samdesk detected, investigated, and dismissed the alert as fabricated.",stat:"AI detected · analysts dismissed as fake · continued monitoring for further false reports",uc:["National Defense","Executive Protection"],type:["Disinformation"],region:"North America"},
+  {title:"EU Defense Org — Niger Coup",desc:"Sole EU officer in the region used samdesk to brief US and French military partners on the unfolding coup. Samdesk alerts were the primary intelligence feed for allied presence in the region.",stat:"Primary intel feed for US + French military · one officer, entire region",uc:["National Defense"],type:["Coup","Military Action"],region:"Africa"},
+  {title:"U.S. Army National Guard — Wisconsin",desc:"Wisconsin National Guard uses samdesk as their primary open-source awareness system across 7 functional teams including EM, AT, PS, SF, CST, JOC, and CERFP. Works without CAC or military network.",stat:"\"We rely on it every day.\" — National Guard Officer",uc:["National Defense"],type:["Military Action","Emergency Management"],region:"North America"},
+  {title:"Dallas Ransomware Attack",desc:"City of Dallas servers compromised with ransomware. samdesk alerted from the first mention online and monitored until resolved.",stat:"Alerted from first mention online",uc:["Physical Asset Protection"],type:["Cyber Attack","Ransomware"],region:"North America"},
+  {title:"Active Shooter — 1 Killed in Officer-Involved Shooting, Oregon",desc:"Armed carjacking in Salem, Oregon escalated to officer-involved shooting. samdesk alerted before Salem PD posted publicly.",stat:"29 min faster than Salem PD",uc:["Workplace Safety"],type:["Shooting"],region:"North America"},
+];
+
+const ucList=[...new Set(incidents.flatMap(i=>i.uc))].sort();
+const typeList=[...new Set(incidents.flatMap(i=>i.type))].sort();
+const regionList=[...new Set(incidents.map(i=>i.region))].sort();
+
+let activeUC=[];
+let activeType=[];
+let activeRegion=[];
+let searchVal='';
+
+function makeFilters(list,container,active,toggle){
+  const el=document.getElementById(container);
+  list.forEach(f=>{
+    const b=document.createElement('button');
+    b.className='filter-btn';
+    b.textContent=f;
+    b.onclick=()=>{
+      toggle(f,b);
+      render();
+    };
+    el.appendChild(b);
+  });
+}
+
+function toggleFilter(arr,val,btn){
+  const i=arr.indexOf(val);
+  if(i>-1){arr.splice(i,1);btn.classList.remove('active');}
+  else{arr.push(val);btn.classList.add('active');}
+}
+
+makeFilters(ucList,'uc-filters',activeUC,(f,b)=>toggleFilter(activeUC,f,b));
+makeFilters(typeList,'type-filters',activeType,(f,b)=>toggleFilter(activeType,f,b));
+makeFilters(regionList,'region-filters',activeRegion,(f,b)=>toggleFilter(activeRegion,f,b));
+
+document.getElementById('search').addEventListener('input',e=>{
+  searchVal=e.target.value.toLowerCase();
+  render();
+});
+
+function render(){
+  const filtered=incidents.filter(inc=>{
+    const matchUC=activeUC.length===0||activeUC.some(u=>inc.uc.includes(u));
+    const matchType=activeType.length===0||activeType.some(t=>inc.type.includes(t));
+    const matchRegion=activeRegion.length===0||activeRegion.includes(inc.region);
+    const matchSearch=!searchVal||(inc.title+inc.desc+inc.stat+inc.region+inc.uc.join()+inc.type.join()).toLowerCase().includes(searchVal);
+    return matchUC&&matchType&&matchRegion&&matchSearch;
+  });
+
+  const grid=document.getElementById('grid');
+  const count=document.getElementById('count');
+  count.innerHTML=`Showing <strong>${filtered.length}</strong> of <strong>${incidents.length}</strong> examples`;
+  grid.innerHTML='';
+
+  if(filtered.length===0){
+    grid.innerHTML='<div class="empty">No examples match your filters. Try removing a filter or clearing the search.</div>';
+    return;
+  }
+
+  filtered.forEach(inc=>{
+    const ucTags=inc.uc.map(u=>`<span class="tag tag-uc">${u}</span>`).join('');
+    const typeTags=inc.type.map(t=>`<span class="tag">${t}</span>`).join('');
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <div class="card-top">
+        <div class="card-title">${inc.title}</div>
+        <div class="card-desc">${inc.desc}</div>
+        <div class="card-stat">⚡ ${inc.stat}</div>
+        <div class="tags">${ucTags}${typeTags}</div>
+      </div>
+      <div class="card-bottom">
+        <div class="card-region">${inc.region}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
