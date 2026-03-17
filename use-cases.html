@@ -6,11 +6,16 @@
 <title>SAMDesk Use Case Conversation Guide</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+
+/* ── Dark top nav (matches stories.html) ── */
+.topnav{background:#0d1117;border-bottom:1px solid #30363d;padding:0 40px;display:flex;align-items:center;gap:4px;overflow-x:auto;position:sticky;top:0;z-index:100}
+.topnav a{color:#8b949e;text-decoration:none;font-size:.8rem;font-weight:500;padding:12px 14px;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.topnav a:hover{color:#e6edf3}
+.topnav a.active{color:#00c2ff;border-bottom-color:#00c2ff}
+.nav-logo{color:#00c2ff;font-weight:800;font-size:.9rem;margin-right:12px;letter-spacing:-.02em;padding:12px 0;white-space:nowrap;flex-shrink:0}
+
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f4f0;color:#1a1a18;padding:2rem 1.5rem;max-width:1200px;margin:0 auto}
 a{text-decoration:none}
-.nav{display:flex;gap:8px;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:0.5px solid #d3d1c7;flex-wrap:wrap}
-.nav a{padding:6px 14px;border:0.5px solid #b4b2a9;border-radius:8px;font-size:13px;background:#fff;color:#5f5e5a;font-family:inherit}
-.nav a.active{background:#1a1a18;color:#fff;border-color:#1a1a18;font-weight:500}
 .header{margin-bottom:1.5rem}
 .page-title{font-size:20px;font-weight:500;margin-bottom:.25rem}
 .page-sub{font-size:13px;color:#888780}
@@ -24,8 +29,6 @@ a{text-decoration:none}
 .card-pad{padding:1.25rem 1.5rem}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
 .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
-
-/* Incident cards */
 .incident{background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;overflow:hidden;margin-bottom:1.25rem}
 .incident-header{padding:1rem 1.25rem;border-bottom:0.5px solid #d3d1c7;background:#1a1a18}
 .incident-title{font-size:16px;font-weight:500;color:#fff;margin-bottom:.25rem}
@@ -33,8 +36,6 @@ a{text-decoration:none}
 .tag{font-size:10px;padding:2px 8px;border-radius:4px;background:#2c2c2a;color:#d3d1c7;font-weight:500}
 .incident-body{padding:1.25rem 1.5rem}
 .incident-desc{font-size:13px;color:#5f5e5a;line-height:1.6;margin-bottom:1rem}
-
-/* ADAR timeline */
 .adar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:0.5px solid #d3d1c7;border-radius:8px;overflow:hidden;margin-bottom:1rem}
 .adar-phase{padding:.75rem 1rem;border-right:0.5px solid #d3d1c7}
 .adar-phase:last-child{border-right:none}
@@ -42,13 +43,9 @@ a{text-decoration:none}
 .adar-name{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#888780;margin-bottom:.4rem}
 .adar-text{font-size:12px;color:#5f5e5a;line-height:1.4}
 .adar-stat{font-size:11px;font-weight:500;color:#3b6d11;margin-top:.3rem;padding:.2rem .5rem;background:#eaf3de;border-radius:4px;display:inline-block}
-
-/* Stat pills */
 .stats{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
 .stat-pill{font-size:12px;padding:.3rem .75rem;border-radius:6px;background:#f1efe8;border:0.5px solid #d3d1c7;color:#1a1a18}
 .stat-pill strong{color:#3b6d11}
-
-/* Discovery + pitch */
 .dq-list{display:flex;flex-direction:column;gap:.5rem}
 .dq-item{display:flex;gap:.6rem;font-size:13px;color:#5f5e5a;line-height:1.5;align-items:flex-start}
 .dq-num{min-width:20px;height:20px;border-radius:50%;background:#f1efe8;border:0.5px solid #d3d1c7;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#888780;flex-shrink:0;margin-top:2px}
@@ -67,18 +64,23 @@ a{text-decoration:none}
 .obj-q{font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:3px}
 .obj-a{font-size:13px;color:#5f5e5a;line-height:1.55;padding-left:.75rem;border-left:2px solid #d3d1c7}
 .section-divider{height:0.5px;background:#d3d1c7;margin:1.25rem 0}
-@media(max-width:700px){.two-col,.three-col{grid-template-columns:1fr}.adar-grid{grid-template-columns:1fr 1fr}.adar-phase:nth-child(2){border-right:none}.adar-phase:nth-child(3),.adar-phase:nth-child(4){border-top:0.5px solid #d3d1c7}}
+@media(max-width:700px){.two-col,.three-col{grid-template-columns:1fr}.adar-grid{grid-template-columns:1fr 1fr}.adar-phase:nth-child(2){border-right:none}.adar-phase:nth-child(3),.adar-phase:nth-child(4){border-top:0.5px solid #d3d1c7}.topnav{padding:0 14px}}
 </style>
 </head>
-<body>
+<body style="padding:0;max-width:100%">
 
-<div class="nav">
-  <a href="discovery.html">Discovery Guide</a>
+<!-- ── Dark top nav ── -->
+<nav class="topnav">
+  <span class="nav-logo">⬡ samdesk</span>
+  <a href="index.html">Home</a>
   <a href="competitive-map.html">Competitive Map</a>
-  <a href="index.html">Battle Cards</a>
+  <a href="discovery.html">Discovery</a>
+  <a href="library.html">Library</a>
+  <a href="stories.html">Customer Stories</a>
   <a href="use-cases.html" class="active">Use Cases</a>
-  <a href="library.html">Evidence Library</a>
-</div>
+</nav>
+
+<div style="padding:2rem 1.5rem;max-width:1200px;margin:0 auto">
 
 <div class="header">
   <div class="page-title">Use Case Conversation Guide</div>
@@ -88,379 +90,84 @@ a{text-decoration:none}
 <div class="tabs" id="tabs"></div>
 <div id="panes"></div>
 
+</div><!-- end content wrapper -->
+
 <script>
 const useCases = [
 {
-  id:"workplace",
-  label:"Workplace Safety",
+  id:"workplace",label:"Workplace Safety",
   intro:"Security teams responsible for workplace safety need to detect threats in real time — active shooters, civil unrest, bomb threats — and get accurate information to the right people before situations escalate. The challenge is speed, accuracy, and organizational impact assessment simultaneously.",
   incidents:[
-    {
-      title:"Active Shooter in Lewiston, Maine",
-      tags:["Active Shooter","Public Safety","Multi-location"],
-      desc:"On October 25, an active shooter entered a local business in Lewiston and opened fire, killing 18 individuals. Initial reports were conflicting and hard to contextualize. samdesk's AI and human analysts quickly alerted and monitored, providing ongoing updates.",
-      stats:["Online chatter: 19:19 EST","samdesk alert: 19:21 EST","4 analyst updates by 19:49","Factal alert: 19:49 EST — <strong>28 min behind</strong>"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"Early online chatter detected at 19:19 — 2 min before alert issued. AI identified active shooter pattern from conflicting unverified signals."},
-        {l:"D",n:"Detect",t:"Alert issued 19:21. Verified shooting with location update by 19:24. Other platforms issued first alert 28 minutes later.",s:"19:21 — 28 min ahead of Factal"},
-        {l:"A",n:"Analyze",t:"4 official analyst updates tracking shooter locations, impacted areas, and police activity across multiple sites as situation evolved."},
-        {l:"R",n:"Resolve",t:"Continuous monitoring through manhunt. Users received final all-clear with confirmed custody, enabling security teams to stand down with confidence."}
-      ]
-    },
-    {
-      title:"Boulder King Soopers Active Shooter",
-      tags:["Active Shooter","Public Safety","Colorado"],
-      desc:"On March 22, an active shooter at a Boulder King Soopers supermarket killed 10 people. samdesk produced an alert at 20:35 GMT, faster than all official sources and major media.",
-      stats:["samdesk alert: 20:35 GMT","Boulder PD: <strong>14 min later</strong>","Factal: <strong>19 min later</strong>","CNN Breaking: <strong>1hr 4min later</strong>"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI picked up scanner traffic and social chatter about emergency crews responding to King Soopers before any official communication."},
-        {l:"D",n:"Detect",t:"Alert issued 20:35 from early social signal. Verified and upgraded within minutes. Police didn't post publicly until 20:49.",s:"14 min faster than police"},
-        {l:"A",n:"Analyze",t:"Geo-precise location mapping allowed security teams to determine proximity to facilities, travelers, and employees in Boulder area."},
-        {l:"R",n:"Resolve",t:"Continuous monitoring provided updates on casualty counts, suspect status, and area closures enabling coordinated organizational response."}
-      ]
-    }
+    {title:"Active Shooter in Lewiston, Maine",tags:["Active Shooter","Public Safety","Multi-location"],desc:"On October 25, an active shooter entered a local business in Lewiston and opened fire, killing 18 individuals. Initial reports were conflicting and hard to contextualize. samdesk's AI and human analysts quickly alerted and monitored, providing ongoing updates.",stats:["Online chatter: 19:19 EST","samdesk alert: 19:21 EST","4 analyst updates by 19:49","Factal alert: 19:49 EST — <strong>28 min behind</strong>"],adar:[{l:"A",n:"Anticipate",t:"Early online chatter detected at 19:19 — 2 min before alert issued. AI identified active shooter pattern from conflicting unverified signals."},{l:"D",n:"Detect",t:"Alert issued 19:21. Verified shooting with location update by 19:24. Other platforms issued first alert 28 minutes later.",s:"19:21 — 28 min ahead of Factal"},{l:"A",n:"Analyze",t:"4 official analyst updates tracking shooter locations, impacted areas, and police activity across multiple sites as situation evolved."},{l:"R",n:"Resolve",t:"Continuous monitoring through manhunt. Users received final all-clear with confirmed custody, enabling security teams to stand down with confidence."}]},
+    {title:"Boulder King Soopers Active Shooter",tags:["Active Shooter","Public Safety","Colorado"],desc:"On March 22, an active shooter at a Boulder King Soopers supermarket killed 10 people. samdesk produced an alert at 20:35 GMT, faster than all official sources and major media.",stats:["samdesk alert: 20:35 GMT","Boulder PD: <strong>14 min later</strong>","Factal: <strong>19 min later</strong>","CNN Breaking: <strong>1hr 4min later</strong>"],adar:[{l:"A",n:"Anticipate",t:"AI picked up scanner traffic and social chatter about emergency crews responding to King Soopers before any official communication."},{l:"D",n:"Detect",t:"Alert issued 20:35 from early social signal. Verified and upgraded within minutes. Police didn't post publicly until 20:49.",s:"14 min faster than police"},{l:"A",n:"Analyze",t:"Geo-precise location mapping allowed security teams to determine proximity to facilities, travelers, and employees in Boulder area."},{l:"R",n:"Resolve",t:"Continuous monitoring provided updates on casualty counts, suspect status, and area closures enabling coordinated organizational response."}]}
   ],
-  discovery:[
-    "Walk me through what happens in your organization when an active threat is detected near one of your facilities — who gets notified and how?",
-    "How does your team currently distinguish a real active threat from a false alarm before escalating to leadership?",
-    "When an incident occurs, how long does it typically take to determine whether your employees are in the affected area?",
-    "How confident is your security team in the accuracy of the alerts they're acting on today?",
-    "If an incident happens at 2am in a city where you have staff, what does your response look like without someone watching a dashboard?"
-  ],
-  pitch:[
-    {n:1,t:"Open with the problem",s:"Most workplace security teams are managing alerts reactively — they find out the same time as the public, or later. The risk window is between when something happens and when your team has enough confidence to act."},
-    {n:2,t:"Introduce the speed advantage",s:"samdesk consistently alerts 15–60 minutes before official sources and major media. In a workplace safety context, those minutes determine whether your team can influence outcome or only document it."},
-    {n:3,t:"Show the verification story",s:"Speed without accuracy creates panic. samdesk's AI + analyst model means alerts are verified before they reach your team. Show the Lewiston timeline — 4 analyst updates before Factal issued its first alert."},
-    {n:4,t:"Connect to org impact",s:"The question isn't just 'did we know about it' — it's 'did we know which of our people were affected.' samdesk maps events to your employee and facility footprint automatically."},
-    {n:5,t:"Paint the agentic future",s:"Today samdesk speeds up your team. Tomorrow, Impact Agents can trigger notifications, route employees, and brief security leadership autonomously the moment a threshold is crossed."}
-  ],
-  demo:[
-    {i:"→",t:"Show a real event detection in the samdesk platform",w:"Start with the Lewiston or Boulder event — walk through how the alert appeared before official sources, with verified context."},
-    {i:"→",t:"Show geo-precision and proximity analysis",w:"Demonstrate how the platform maps an incident to a facility radius — 'here are the employees within 2 miles of this event.'"},
-    {i:"→",t:"Show the incident window consolidation",w:"One view with all updates, visuals, and context — not 10 separate alerts. This is the time-saving story."},
-    {i:"→",t:"Show an Impact Agent in action",w:"Demonstrate autonomous analysis: 'the system detected, verified, and identified impact without anyone logging in.'"}
-  ],
-  objections:[
-    {q:`"We already have an alert tool for this."`,a:`"That's exactly what we hear most. The question is whether your current tool is telling you before or after your employees already know — and whether it's telling you which of your specific people are affected, or just that something happened nearby. Those are different problems."`},
-    {q:`"We have a security team monitoring this."`,a:`"Great — samdesk makes that team dramatically more effective. Instead of monitoring dashboards and validating alerts, they're spending time on decisions. Our customers consistently report their analysts shift from triage work to strategic response."`},
-    {q:`"False positives are our biggest problem."`,a:`"That's the most common complaint we hear about first-generation alert tools. samdesk's viability attestation and AI + human verification model means your team only sees what's real. The Lewiston case is a perfect example — conflicting reports, but samdesk had verified context while others were still uncertain."`}
-  ]
+  discovery:["Walk me through what happens in your organization when an active threat is detected near one of your facilities — who gets notified and how?","How does your team currently distinguish a real active threat from a false alarm before escalating to leadership?","When an incident occurs, how long does it typically take to determine whether your employees are in the affected area?","How confident is your security team in the accuracy of the alerts they're acting on today?","If an incident happens at 2am in a city where you have staff, what does your response look like without someone watching a dashboard?"],
+  pitch:[{n:1,t:"Open with the problem",s:"Most workplace security teams are managing alerts reactively — they find out the same time as the public, or later. The risk window is between when something happens and when your team has enough confidence to act."},{n:2,t:"Introduce the speed advantage",s:"samdesk consistently alerts 15–60 minutes before official sources and major media. In a workplace safety context, those minutes determine whether your team can influence outcome or only document it."},{n:3,t:"Show the verification story",s:"Speed without accuracy creates panic. samdesk's AI + analyst model means alerts are verified before they reach your team. Show the Lewiston timeline — 4 analyst updates before Factal issued its first alert."},{n:4,t:"Connect to org impact",s:"The question isn't just 'did we know about it' — it's 'did we know which of our people were affected.' samdesk maps events to your employee and facility footprint automatically."},{n:5,t:"Paint the agentic future",s:"Today samdesk speeds up your team. Tomorrow, Impact Agents can trigger notifications, route employees, and brief security leadership autonomously the moment a threshold is crossed."}],
+  demo:[{i:"→",t:"Show a real event detection in the samdesk platform",w:"Start with the Lewiston or Boulder event — walk through how the alert appeared before official sources, with verified context."},{i:"→",t:"Show geo-precision and proximity analysis",w:"Demonstrate how the platform maps an incident to a facility radius — 'here are the employees within 2 miles of this event.'"},{i:"→",t:"Show the incident window consolidation",w:"One view with all updates, visuals, and context — not 10 separate alerts. This is the time-saving story."},{i:"→",t:"Show an Impact Agent in action",w:"Demonstrate autonomous analysis: 'the system detected, verified, and identified impact without anyone logging in.'"}],
+  objections:[{q:`"We already have an alert tool for this."`,a:`"That's exactly what we hear most. The question is whether your current tool is telling you before or after your employees already know — and whether it's telling you which of your specific people are affected, or just that something happened nearby. Those are different problems."`},{q:`"We have a security team monitoring this."`,a:`"Great — samdesk makes that team dramatically more effective. Instead of monitoring dashboards and validating alerts, they're spending time on decisions. Our customers consistently report their analysts shift from triage work to strategic response."`},{q:`"False positives are our biggest problem."`,a:`"That's the most common complaint we hear about first-generation alert tools. samdesk's viability attestation and AI + human verification model means your team only sees what's real. The Lewiston case is a perfect example — conflicting reports, but samdesk had verified context while others were still uncertain."`}]
 },
 {
-  id:"physical",
-  label:"Physical Asset Protection",
+  id:"physical",label:"Physical Asset Protection",
   intro:"Physical security teams protecting facilities, infrastructure, and assets need early warning of threats — not just active events, but approaching risks. From cyberattacks that affect physical operations to natural disasters to infrastructure incidents, the challenge is knowing before it's too late to act.",
   incidents:[
-    {
-      title:"Cyber Attack Targets MGM Resorts",
-      tags:["Cyber Attack","Network Outage","Las Vegas"],
-      desc:"On September 11, 2023, samdesk's AI detected anomalies indicating a network outage disrupting operations at MGM Grand in Las Vegas. The platform quickly corroborated that the outage was the result of a cyberattack — hours before the company acknowledged it publicly.",
-      stats:["samdesk alert: 11:31 PDT","Local media: <strong>6hr 44min later</strong>","MGM Resorts: <strong>11hr 24min later</strong>","Monitored for <strong>16+ hours</strong>"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected early anomaly signals indicating a network disruption at a major property. Recognized the pattern as consistent with a cyberattack before any confirmation.",s:"Detected before any public signal"},
-        {l:"D",n:"Detect",t:"Alert issued 11:31 PDT. Team corroborated within minutes that the network outage was the result of a cyber attack — not a routine outage.",s:"6hr 44min faster than media"},
-        {l:"A",n:"Analyze",t:"Continuous updates over 16 hours clarified scope — which systems were affected, which properties, and the nature of the attack for security and operations teams."},
-        {l:"R",n:"Resolve",t:"Users received a consolidated, evolving picture of what was happening and the organizational impact — enabling security and IT teams to make informed decisions throughout."}
-      ]
-    },
-    {
-      title:"Japan Earthquake & Tsunami",
-      tags:["Earthquake","Tsunami","Natural Disaster","Japan"],
-      desc:"On January 1, 2024, our AI picked up the first chatter about an earthquake warning in Ishikawa Prefecture, Japan. samdesk alerted to the incoming tsunami 18 minutes before it occurred — and 24 minutes before Japan's national broadcaster.",
-      stats:["Tsunami warning: <strong>18 min before impact</strong>","Japan broadcaster: <strong>24 min behind</strong>","14 updates over 7 hours","Infrastructure disruptions mapped across multiple locations"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected first earthquake chatter from local Japanese sources. System identified escalating seismic pattern and issued early warning before official communications.",s:"Anticipate phase: before national broadcaster"},
-        {l:"D",n:"Detect",t:"Tsunami warning issued 18 minutes before the wave hit. Safety alerts and infrastructure disruption reports monitored across multiple locations in real time.",s:"18 min tsunami advance warning"},
-        {l:"A",n:"Analyze",t:"Analysts monitored local sources to identify ongoing safety and infrastructure disruptions — power outages, road closures, facility damage — across the affected region."},
-        {l:"R",n:"Resolve",t:"14 updates over 7 hours provided a continuously evolving picture of the situation, enabling organizations to track the safety of employees and assets across the region."}
-      ]
-    }
+    {title:"Cyber Attack Targets MGM Resorts",tags:["Cyber Attack","Network Outage","Las Vegas"],desc:"On September 11, 2023, samdesk's AI detected anomalies indicating a network outage disrupting operations at MGM Grand in Las Vegas. The platform quickly corroborated that the outage was the result of a cyberattack — hours before the company acknowledged it publicly.",stats:["samdesk alert: 11:31 PDT","Local media: <strong>6hr 44min later</strong>","MGM Resorts: <strong>11hr 24min later</strong>","Monitored for <strong>16+ hours</strong>"],adar:[{l:"A",n:"Anticipate",t:"AI detected early anomaly signals indicating a network disruption at a major property. Recognized the pattern as consistent with a cyberattack before any confirmation.",s:"Detected before any public signal"},{l:"D",n:"Detect",t:"Alert issued 11:31 PDT. Team corroborated within minutes that the network outage was the result of a cyber attack — not a routine outage.",s:"6hr 44min faster than media"},{l:"A",n:"Analyze",t:"Continuous updates over 16 hours clarified scope — which systems were affected, which properties, and the nature of the attack for security and operations teams."},{l:"R",n:"Resolve",t:"Users received a consolidated, evolving picture of what was happening and the organizational impact — enabling security and IT teams to make informed decisions throughout."}]},
+    {title:"Japan Earthquake & Tsunami",tags:["Earthquake","Tsunami","Natural Disaster","Japan"],desc:"On January 1, 2024, our AI picked up the first chatter about an earthquake warning in Ishikawa Prefecture, Japan. samdesk alerted to the incoming tsunami 18 minutes before it occurred — and 24 minutes before Japan's national broadcaster.",stats:["Tsunami warning: <strong>18 min before impact</strong>","Japan broadcaster: <strong>24 min behind</strong>","14 updates over 7 hours","Infrastructure disruptions mapped across multiple locations"],adar:[{l:"A",n:"Anticipate",t:"AI detected first earthquake chatter from local Japanese sources. System identified escalating seismic pattern and issued early warning before official communications.",s:"Anticipate phase: before national broadcaster"},{l:"D",n:"Detect",t:"Tsunami warning issued 18 minutes before the wave hit. Safety alerts and infrastructure disruption reports monitored across multiple locations in real time.",s:"18 min tsunami advance warning"},{l:"A",n:"Analyze",t:"Analysts monitored local sources to identify ongoing safety and infrastructure disruptions — power outages, road closures, facility damage — across the affected region."},{l:"R",n:"Resolve",t:"14 updates over 7 hours provided a continuously evolving picture of the situation, enabling organizations to track the safety of employees and assets across the region."}]}
   ],
-  discovery:[
-    "When a critical incident occurs near one of your facilities — a cyberattack, natural disaster, or physical threat — how does your team find out, and how quickly?",
-    "How do you currently monitor for threats to your physical assets in regions where you don't have dedicated security staff?",
-    "In the last major incident affecting one of your facilities, how much time passed between the event and your team having full situational awareness?",
-    "How does your team differentiate between an incident that requires evacuation versus one that requires monitoring only?",
-    "If a cyberattack or infrastructure failure hit one of your facilities right now, what's your current detection and response timeline?"
-  ],
-  pitch:[
-    {n:1,t:"Start with the detection gap",s:"Most physical security programs have strong response protocols — the gap is in early detection. By the time an incident appears in official channels, your window to protect assets has often already narrowed."},
-    {n:2,t:"Anchor on the MGM story",s:"11 hours 24 minutes. That's how long it took MGM to publicly acknowledge a cyberattack that samdesk detected in minutes. For organizations with physical assets dependent on digital infrastructure, that gap is catastrophic."},
-    {n:3,t:"Use the tsunami story for natural disaster context",s:"18 minutes of advance warning before a tsunami. That's the difference between evacuation and exposure. For organizations with assets in high-risk regions, this is the anticipate phase working at full capability."},
-    {n:4,t:"Connect to asset-specific impact",s:"samdesk doesn't just detect the event — it maps it to your specific footprint. Which facilities are in the impact radius, which systems are at risk, which personnel need to be contacted."},
-    {n:5,t:"Show the agentic direction",s:"The future state is Impact Agents that monitor your asset footprint 24/7, detect relevant threats automatically, and trigger your response protocols without waiting for a human to log in."}
-  ],
-  demo:[
-    {i:"→",t:"Show the MGM cyber detection",w:"Walk through how samdesk detected anomalies consistent with a cyber attack hours before any public acknowledgment. This lands hard with security leaders."},
-    {i:"→",t:"Show natural disaster early warning capability",w:"Use the Japan earthquake/tsunami as a proof point — the system detected before national broadcasters and issued tsunami warning 18 min ahead of impact."},
-    {i:"→",t:"Show facility proximity mapping",w:"Demonstrate how an event is automatically mapped to nearby facilities and assets — 'here's what's in the blast radius' or 'here are the infrastructure disruptions affecting your supply routes.'"},
-    {i:"→",t:"Show continuous update consolidation",w:"One incident window that evolves over hours — not dozens of separate alerts. Show how this reduces analyst burden during a sustained incident."}
-  ],
-  objections:[
-    {q:`"We have building security and physical monitoring systems already."`,a:`"Absolutely — and those are essential for what's happening inside your facilities. samdesk monitors for what's happening outside and approaching: the cyber threat on its way in, the natural disaster heading toward your region, the civil unrest developing near your facility. It's the external intelligence layer your internal systems don't cover."`},
-    {q:`"We use a cyber threat intelligence platform for cyber incidents."`,a:`"Those tools are great for known threat actors and vulnerability monitoring. samdesk catches something different — the operational signal that a cyberattack is happening right now, from social and open-source chatter, before any official disclosure. The MGM case is a perfect example: 11 hours before the company told anyone."`},
-    {q:`"Natural disasters are handled by our business continuity plan."`,a:`"A BC plan tells you what to do after. samdesk tells you 18 minutes before the tsunami hits — which is when your BC plan actually becomes executable. Early warning is what gives your plan time to work."`}
-  ]
+  discovery:["When a critical incident occurs near one of your facilities — a cyberattack, natural disaster, or physical threat — how does your team find out, and how quickly?","How do you currently monitor for threats to your physical assets in regions where you don't have dedicated security staff?","In the last major incident affecting one of your facilities, how much time passed between the event and your team having full situational awareness?","How does your team differentiate between an incident that requires evacuation versus one that requires monitoring only?","If a cyberattack or infrastructure failure hit one of your facilities right now, what's your current detection and response timeline?"],
+  pitch:[{n:1,t:"Start with the detection gap",s:"Most physical security programs have strong response protocols — the gap is in early detection. By the time an incident appears in official channels, your window to protect assets has often already narrowed."},{n:2,t:"Anchor on the MGM story",s:"11 hours 24 minutes. That's how long it took MGM to publicly acknowledge a cyberattack that samdesk detected in minutes. For organizations with physical assets dependent on digital infrastructure, that gap is catastrophic."},{n:3,t:"Use the tsunami story for natural disaster context",s:"18 minutes of advance warning before a tsunami. That's the difference between evacuation and exposure. For organizations with assets in high-risk regions, this is the anticipate phase working at full capability."},{n:4,t:"Connect to asset-specific impact",s:"samdesk doesn't just detect the event — it maps it to your specific footprint. Which facilities are in the impact radius, which systems are at risk, which personnel need to be contacted."},{n:5,t:"Show the agentic direction",s:"The future state is Impact Agents that monitor your asset footprint 24/7, detect relevant threats automatically, and trigger your response protocols without waiting for a human to log in."}],
+  demo:[{i:"→",t:"Show the MGM cyber detection",w:"Walk through how samdesk detected anomalies consistent with a cyber attack hours before any public acknowledgment. This lands hard with security leaders."},{i:"→",t:"Show natural disaster early warning capability",w:"Use the Japan earthquake/tsunami as a proof point — the system detected before national broadcasters and issued tsunami warning 18 min ahead of impact."},{i:"→",t:"Show facility proximity mapping",w:"Demonstrate how an event is automatically mapped to nearby facilities and assets — 'here's what's in the blast radius' or 'here are the infrastructure disruptions affecting your supply routes.'"},{i:"→",t:"Show continuous update consolidation",w:"One incident window that evolves over hours — not dozens of separate alerts. Show how this reduces analyst burden during a sustained incident."}],
+  objections:[{q:`"We have building security and physical monitoring systems already."`,a:`"Absolutely — and those are essential for what's happening inside your facilities. samdesk monitors for what's happening outside and approaching: the cyber threat on its way in, the natural disaster heading toward your region, the civil unrest developing near your facility. It's the external intelligence layer your internal systems don't cover."`},{q:`"We use a cyber threat intelligence platform for cyber incidents."`,a:`"Those tools are great for known threat actors and vulnerability monitoring. samdesk catches something different — the operational signal that a cyberattack is happening right now, from social and open-source chatter, before any official disclosure. The MGM case is a perfect example: 11 hours before the company told anyone."`},{q:`"Natural disasters are handled by our business continuity plan."`,a:`"A BC plan tells you what to do after. samdesk tells you 18 minutes before the tsunami hits — which is when your BC plan actually becomes executable. Early warning is what gives your plan time to work."`}]
 },
 {
-  id:"travel",
-  label:"Travel Risk Management",
+  id:"travel",label:"Travel Risk Management",
   intro:"Travel risk programs are responsible for knowing where employees are traveling, what risks they face, and ensuring duty of care when situations develop. The challenge is getting real-time, traveler-specific intelligence — not generic country-level risk scores — fast enough to influence outcome.",
   incidents:[
-    {
-      title:"Public Disorder at Charles de Gaulle Airport, Paris",
-      tags:["Civil Unrest","Airport","Travel Disruption","French-language"],
-      desc:"On July 2, airport employees protesting pay cuts blocked a terminal and delayed flights at Charles de Gaulle Airport. samdesk detected the disruption from French-language social chatter — before any English media had the story.",
-      stats:["samdesk alert: 10:29 GMT","BFM TV (French news): <strong>21 min later</strong>","Le Point: <strong>1hr 22min later</strong>","Irish Examiner: <strong>1hr 40min later</strong>"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected early French-language chatter on Twitter about a strike at Roissy/Terminal 2E — before any official airport communication or English-language media.",s:"French-language detection: 21 min ahead of BFM TV"},
-        {l:"D",n:"Detect",t:"Alert issued 10:29 GMT with terminal-specific location. Travelers in transit or about to depart had over an hour before mainstream media reported the disruption."},
-        {l:"A",n:"Analyze",t:"Flight delay scope confirmed and updated as situation evolved. Travel risk teams could identify which travelers had flights through Terminal 2E and proactively contact them."},
-        {l:"R",n:"Resolve",t:"Continuous updates through resolution — enabling travel managers to rebook affected travelers, issue pre-departure warnings, and track situation status in real time."}
-      ]
-    },
-    {
-      title:"Japan Earthquake & Tsunami — Traveler Safety",
-      tags:["Earthquake","Tsunami","Japan","Traveler Safety"],
-      desc:"The January 1, 2024 Ishikawa earthquake and tsunami created immediate risk for travelers in the region. samdesk's 18-minute advance tsunami warning and 7 hours of continuous updates gave travel risk teams the window to locate, warn, and guide travelers before the situation became critical.",
-      stats:["Tsunami warning: <strong>18 min before impact</strong>","24 min ahead of national broadcaster","14 updates over 7 hours","Infrastructure disruptions tracked across multiple locations"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"Earthquake detected from first local chatter. System escalated alert pattern as seismic data corroborated reports — giving travel teams early awareness before official sources.",s:"Ahead of national broadcaster"},
-        {l:"D",n:"Detect",t:"Tsunami warning issued 18 minutes before impact. Travel risk teams had a window to identify travelers in the coastal impact zone and initiate contact.",s:"18 min advance tsunami warning"},
-        {l:"A",n:"Analyze",t:"Infrastructure disruptions mapped — airports, roads, ports — enabling travel managers to understand evacuation options and route travelers to safety."},
-        {l:"R",n:"Resolve",t:"7 hours of continuous updates tracked the evolving situation, giving travel risk teams a sustained, reliable picture as the crisis unfolded across the region."}
-      ]
-    }
+    {title:"Public Disorder at Charles de Gaulle Airport, Paris",tags:["Civil Unrest","Airport","Travel Disruption","French-language"],desc:"On July 2, airport employees protesting pay cuts blocked a terminal and delayed flights at Charles de Gaulle Airport. samdesk detected the disruption from French-language social chatter — before any English media had the story.",stats:["samdesk alert: 10:29 GMT","BFM TV (French news): <strong>21 min later</strong>","Le Point: <strong>1hr 22min later</strong>","Irish Examiner: <strong>1hr 40min later</strong>"],adar:[{l:"A",n:"Anticipate",t:"AI detected early French-language chatter on Twitter about a strike at Roissy/Terminal 2E — before any official airport communication or English-language media.",s:"French-language detection: 21 min ahead of BFM TV"},{l:"D",n:"Detect",t:"Alert issued 10:29 GMT with terminal-specific location. Travelers in transit or about to depart had over an hour before mainstream media reported the disruption."},{l:"A",n:"Analyze",t:"Flight delay scope confirmed and updated as situation evolved. Travel risk teams could identify which travelers had flights through Terminal 2E and proactively contact them."},{l:"R",n:"Resolve",t:"Continuous updates through resolution — enabling travel managers to rebook affected travelers, issue pre-departure warnings, and track situation status in real time."}]},
+    {title:"Japan Earthquake & Tsunami — Traveler Safety",tags:["Earthquake","Tsunami","Japan","Traveler Safety"],desc:"The January 1, 2024 Ishikawa earthquake and tsunami created immediate risk for travelers in the region. samdesk's 18-minute advance tsunami warning and 7 hours of continuous updates gave travel risk teams the window to locate, warn, and guide travelers before the situation became critical.",stats:["Tsunami warning: <strong>18 min before impact</strong>","24 min ahead of national broadcaster","14 updates over 7 hours","Infrastructure disruptions tracked across multiple locations"],adar:[{l:"A",n:"Anticipate",t:"Earthquake detected from first local chatter. System escalated alert pattern as seismic data corroborated reports — giving travel teams early awareness before official sources.",s:"Ahead of national broadcaster"},{l:"D",n:"Detect",t:"Tsunami warning issued 18 minutes before impact. Travel risk teams had a window to identify travelers in the coastal impact zone and initiate contact.",s:"18 min advance tsunami warning"},{l:"A",n:"Analyze",t:"Infrastructure disruptions mapped — airports, roads, ports — enabling travel managers to understand evacuation options and route travelers to safety."},{l:"R",n:"Resolve",t:"7 hours of continuous updates tracked the evolving situation, giving travel risk teams a sustained, reliable picture as the crisis unfolded across the region."}]}
   ],
-  discovery:[
-    "When a situation develops in a city where you have travelers — civil unrest, natural disaster, security incident — how does your travel risk team find out, and how quickly can you locate and contact affected travelers?",
-    "How does your current travel risk program handle incidents that develop overnight in a non-English speaking country?",
-    "If one of your travelers was in a terminal at CDG when a strike began, how long would it take your team to know about it and reach them?",
-    "How do you distinguish a country-level risk advisory from a specific, localized incident that requires immediate traveler action?",
-    "What does your duty of care obligation look like when an incident happens — and what's the standard you'd be held to if something went wrong?"
-  ],
-  pitch:[
-    {n:1,t:"Frame the duty of care obligation",s:"Travel risk isn't just about alerts — it's about demonstrable duty of care. The standard organizations are held to is whether they knew about the risk early enough to act, not just whether they had a contract with a risk vendor."},
-    {n:2,t:"Use CDG as the multilingual detection story",s:"A strike at Charles de Gaulle was detectable from French-language chatter 21 minutes before French national news reported it. Most travel risk tools miss non-English signals entirely. Your travelers don't only travel to English-speaking countries."},
-    {n:3,t:"Use Japan as the anticipate story",s:"18 minutes before a tsunami hits is a window. It's the difference between a travel manager seeing the alert and reaching their traveler, versus finding out at the same time as the news. That window is where samdesk operates."},
-    {n:4,t:"Connect to traveler-specific impact",s:"Country risk scores don't tell you which of your travelers is in Terminal 2E. samdesk maps live events to your traveler roster automatically — the system knows your footprint, so the impact assessment is immediate."},
-    {n:5,t:"Close on the proactive vs. reactive divide",s:"ISOS, crisis response services, and notification platforms all operate after the fact. samdesk is what gets your travelers into the evacuation queue before the situation becomes a crisis."}
-  ],
-  demo:[
-    {i:"→",t:"Show a travel disruption detection — CDG airport",w:"Walk through the strike detection from French-language sources. Emphasize the multilingual capability and the 21-minute lead over French national media."},
-    {i:"→",t:"Show traveler proximity mapping",w:"Demonstrate how samdesk maps a live event to a traveler roster — 'these 3 travelers have flights through Terminal 2E in the next 4 hours.'"},
-    {i:"→",t:"Show a pre-travel brief example",w:"Walk through the pre-trip intelligence report — country risk, current event context, and specific alerts relevant to the destination."},
-    {i:"→",t:"Show the Japan tsunami timeline",w:"The 18-minute advance warning is visceral. Walk through the timeline — first chatter, alert, tsunami warning, and the gap vs. national broadcaster."}
-  ],
-  objections:[
-    {q:`"We use International SOS for travel risk."`,a:`"ISOS is excellent at getting people out after an incident — their evacuation and medical response capabilities are unmatched. The question is whether you want to be calling them for an evacuation, or whether samdesk's early warning meant your traveler was on the last flight out before the airport closed. Our customers report getting into the ISOS queue faster because samdesk told them earlier."`},
-    {q:`"We have country risk ratings and pre-travel briefings covered."`,a:`"Country ratings tell you the background risk level. They don't tell you about the strike that started this morning at the airport your traveler is flying through tonight. samdesk is the real-time operational layer on top of your strategic risk assessments."`},
-    {q:`"Our travelers are mostly in low-risk countries."`,a:`"The CDG incident happened in France. The Nashville explosion happened in the US. The MGM cyber attack was Las Vegas. Risk doesn't only live in high-threat-rated countries — and your travelers deserve the same early warning regardless of destination."`}
-  ]
+  discovery:["When a situation develops in a city where you have travelers — civil unrest, natural disaster, security incident — how does your travel risk team find out, and how quickly can you locate and contact affected travelers?","How does your current travel risk program handle incidents that develop overnight in a non-English speaking country?","If one of your travelers was in a terminal at CDG when a strike began, how long would it take your team to know about it and reach them?","How do you distinguish a country-level risk advisory from a specific, localized incident that requires immediate traveler action?","What does your duty of care obligation look like when an incident happens — and what's the standard you'd be held to if something went wrong?"],
+  pitch:[{n:1,t:"Frame the duty of care obligation",s:"Travel risk isn't just about alerts — it's about demonstrable duty of care. The standard organizations are held to is whether they knew about the risk early enough to act, not just whether they had a contract with a risk vendor."},{n:2,t:"Use CDG as the multilingual detection story",s:"A strike at Charles de Gaulle was detectable from French-language chatter 21 minutes before French national news reported it. Most travel risk tools miss non-English signals entirely. Your travelers don't only travel to English-speaking countries."},{n:3,t:"Use Japan as the anticipate story",s:"18 minutes before a tsunami hits is a window. It's the difference between a travel manager seeing the alert and reaching their traveler, versus finding out at the same time as the news. That window is where samdesk operates."},{n:4,t:"Connect to traveler-specific impact",s:"Country risk scores don't tell you which of your travelers is in Terminal 2E. samdesk maps live events to your traveler roster automatically — the system knows your footprint, so the impact assessment is immediate."},{n:5,t:"Close on the proactive vs. reactive divide",s:"ISOS, crisis response services, and notification platforms all operate after the fact. samdesk is what gets your travelers into the evacuation queue before the situation becomes a crisis."}],
+  demo:[{i:"→",t:"Show a travel disruption detection — CDG airport",w:"Walk through the strike detection from French-language sources. Emphasize the multilingual capability and the 21-minute lead over French national media."},{i:"→",t:"Show traveler proximity mapping",w:"Demonstrate how samdesk maps a live event to a traveler roster — 'these 3 travelers have flights through Terminal 2E in the next 4 hours.'"},{i:"→",t:"Show a pre-travel brief example",w:"Walk through the pre-trip intelligence report — country risk, current event context, and specific alerts relevant to the destination."},{i:"→",t:"Show the Japan tsunami timeline",w:"The 18-minute advance warning is visceral. Walk through the timeline — first chatter, alert, tsunami warning, and the gap vs. national broadcaster."}],
+  objections:[{q:`"We use International SOS for travel risk."`,a:`"ISOS is excellent at getting people out after an incident — their evacuation and medical response capabilities are unmatched. The question is whether you want to be calling them for an evacuation, or whether samdesk's early warning meant your traveler was on the last flight out before the airport closed. Our customers report getting into the ISOS queue faster because samdesk told them earlier."`},{q:`"We have country risk ratings and pre-travel briefings covered."`,a:`"Country ratings tell you the background risk level. They don't tell you about the strike that started this morning at the airport your traveler is flying through tonight. samdesk is the real-time operational layer on top of your strategic risk assessments."`},{q:`"Our travelers are mostly in low-risk countries."`,a:`"The CDG incident happened in France. The Nashville explosion happened in the US. The MGM cyber attack was Las Vegas. Risk doesn't only live in high-threat-rated countries — and your travelers deserve the same early warning regardless of destination."`}]
 },
 {
-  id:"supply",
-  label:"Supply Chain & Logistics",
+  id:"supply",label:"Supply Chain & Logistics",
   intro:"Supply chain risk managers need to detect disruptions before they cascade — port closures, route interruptions, political instability, infrastructure failures. The window between a disruption occurring and it affecting your logistics is often hours or days, and early intelligence is the only way to stay ahead of it.",
   incidents:[
-    {
-      title:"Crimea Bridge Explosion",
-      tags:["Explosion","Infrastructure","Disinformation","Supply Route"],
-      desc:"An explosion occurred on the only bridge connecting Crimea with Russia — a critical supply route for the Ukraine invasion. Russia immediately claimed the damage was minimal and that traffic and train service would resume the same day. samdesk users had visual confirmation within minutes that a portion of the bridge had collapsed into the water — and bridge repairs were still ongoing 6+ months later.",
-      stats:["Immediate visual confirmation of collapse","Russia's claim of minimal damage: <strong>disproven in real time</strong>","Supply route impact understood instantly","Bridge repairs ongoing <strong>6+ months</strong> later"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"samdesk's monitoring of Ukraine conflict signals provided context for the strategic importance of this supply route and the likelihood of infrastructure targeting.",s:"26,324 Ukraine events tracked in 18 months"},
-        {l:"D",n:"Detect",t:"Explosion detected immediately. Visual media pulled into the alert confirmed the scale of the collapse — contradicting Russian official claims within minutes of the event."},
-        {l:"A",n:"Analyze",t:"Supply chain teams could immediately assess impact: the primary land supply route to Crimea was compromised, affecting logistics, fuel supply, and military operations for months.",s:"Route disruption confirmed, not minimized"},
-        {l:"R",n:"Resolve",t:"Continuous monitoring tracked bridge repair progress over months, giving supply chain planners an ongoing picture of route availability and the timeline for restoration."}
-      ]
-    },
-    {
-      title:"Communications Cable Cut in Baltic Sea",
-      tags:["Maritime","Utilities Damage","Critical Infrastructure","Europe"],
-      desc:"In November 2024, samdesk quickly alerted to reports that the deep-sea communications cable between Finland and Germany had been cut — shutting down Finland's only communication link to the rest of Europe. Multi-source corroboration provided clarity as suspicions of intentional damage emerged.",
-      stats:["Detected Nov 18, 2024 at 14:50 GMT","2 undersea cables confirmed cut","Finland's only link to Europe: <strong>shut down</strong>","Multi-source corroboration confirmed intentional damage","RTC team issued key updates with context and analysis"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected early reports of anomalies in Baltic Sea communications infrastructure — pattern recognition identified this as a potential critical infrastructure incident requiring immediate analyst attention.",s:"Critical infrastructure pattern detected"},
-        {l:"D",n:"Detect",t:"Alert issued rapidly with precise Baltic Sea geolocation. samdesk's OSINT tools combined with analyst corroboration to provide fast, verified alerts as the situation developed."},
-        {l:"A",n:"Analyze",t:"Multi-source corroboration provided clarity on the events as they unfolded — distinguishing between the initial single cable report and the confirmed second cable, and surfacing suspicions of intentional damage.",s:"Intentional damage identified"},
-        {l:"R",n:"Resolve",t:"RTC team issued key updates adding context and analysis — including the strategic significance of Finland's communication isolation from the rest of Europe during a period of heightened geopolitical tension."}
-      ]
-    },
-    {
-      title:"Southwest Airlines Network Outage",
-      tags:["Network Outage","Aviation","Supply Chain","Operations"],
-      desc:"Southwest Airlines flights across the U.S. were grounded due to a network outage. samdesk users were able to quickly determine the cause — and scope — of the flight disruptions, while media was still speculating.",
-      stats:["samdesk alert: <strong>1hr 18min faster than media</strong>","Scope of disruption confirmed early","Consolidated updates as info emerged","Continuous updates until incident resolved"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected early anomaly signals of flight disruptions at Southwest. Pattern recognition distinguished a systemic outage from routine weather-related delays.",s:"Systemic vs. isolated: identified early"},
-        {l:"D",n:"Detect",t:"Alert issued 1 hour 18 minutes before media reported the story. Supply chain teams dependent on Southwest for logistics had early warning to begin contingency planning.",s:"1hr 18min faster than media"},
-        {l:"A",n:"Analyze",t:"Consolidated updates confirmed the scope — all Southwest flights, not just a regional disruption. Supply chain teams could immediately assess the full operational impact."},
-        {l:"R",n:"Resolve",t:"Continuous updates tracked the outage resolution, enabling teams to time contingency logistics and rebooking against the actual system recovery rather than media speculation."}
-      ]
-    }
+    {title:"Crimea Bridge Explosion",tags:["Explosion","Infrastructure","Disinformation","Supply Route"],desc:"An explosion occurred on the only bridge connecting Crimea with Russia — a critical supply route for the Ukraine invasion. Russia immediately claimed the damage was minimal and that traffic and train service would resume the same day. samdesk users had visual confirmation within minutes that a portion of the bridge had collapsed into the water — and bridge repairs were still ongoing 6+ months later.",stats:["Immediate visual confirmation of collapse","Russia's claim of minimal damage: <strong>disproven in real time</strong>","Supply route impact understood instantly","Bridge repairs ongoing <strong>6+ months</strong> later"],adar:[{l:"A",n:"Anticipate",t:"samdesk's monitoring of Ukraine conflict signals provided context for the strategic importance of this supply route and the likelihood of infrastructure targeting.",s:"26,324 Ukraine events tracked in 18 months"},{l:"D",n:"Detect",t:"Explosion detected immediately. Visual media pulled into the alert confirmed the scale of the collapse — contradicting Russian official claims within minutes of the event."},{l:"A",n:"Analyze",t:"Supply chain teams could immediately assess impact: the primary land supply route to Crimea was compromised, affecting logistics, fuel supply, and military operations for months.",s:"Route disruption confirmed, not minimized"},{l:"R",n:"Resolve",t:"Continuous monitoring tracked bridge repair progress over months, giving supply chain planners an ongoing picture of route availability and the timeline for restoration."}]},
+    {title:"Communications Cable Cut in Baltic Sea",tags:["Maritime","Utilities Damage","Critical Infrastructure","Europe"],desc:"In November 2024, samdesk quickly alerted to reports that the deep-sea communications cable between Finland and Germany had been cut — shutting down Finland's only communication link to the rest of Europe.",stats:["Detected Nov 18, 2024 at 14:50 GMT","2 undersea cables confirmed cut","Finland's only link to Europe: <strong>shut down</strong>","Multi-source corroboration confirmed intentional damage","RTC team issued key updates with context and analysis"],adar:[{l:"A",n:"Anticipate",t:"AI detected early reports of anomalies in Baltic Sea communications infrastructure — pattern recognition identified this as a potential critical infrastructure incident.",s:"Critical infrastructure pattern detected"},{l:"D",n:"Detect",t:"Alert issued rapidly with precise Baltic Sea geolocation. samdesk's OSINT tools combined with analyst corroboration to provide fast, verified alerts."},{l:"A",n:"Analyze",t:"Multi-source corroboration provided clarity — distinguishing between the initial single cable report and the confirmed second cable, and surfacing suspicions of intentional damage.",s:"Intentional damage identified"},{l:"R",n:"Resolve",t:"RTC team issued key updates adding context and analysis — including the strategic significance of Finland's communication isolation during heightened geopolitical tension."}]},
+    {title:"Southwest Airlines Network Outage",tags:["Network Outage","Aviation","Supply Chain","Operations"],desc:"Southwest Airlines flights across the U.S. were grounded due to a network outage. samdesk users were able to quickly determine the cause — and scope — of the flight disruptions, while media was still speculating.",stats:["samdesk alert: <strong>1hr 18min faster than media</strong>","Scope of disruption confirmed early","Consolidated updates as info emerged","Continuous updates until incident resolved"],adar:[{l:"A",n:"Anticipate",t:"AI detected early anomaly signals of flight disruptions at Southwest. Pattern recognition distinguished a systemic outage from routine weather-related delays.",s:"Systemic vs. isolated: identified early"},{l:"D",n:"Detect",t:"Alert issued 1 hour 18 minutes before media reported the story. Supply chain teams dependent on Southwest for logistics had early warning to begin contingency planning.",s:"1hr 18min faster than media"},{l:"A",n:"Analyze",t:"Consolidated updates confirmed the scope — all Southwest flights, not just a regional disruption. Supply chain teams could immediately assess the full operational impact."},{l:"R",n:"Resolve",t:"Continuous updates tracked the outage resolution, enabling teams to time contingency logistics and rebooking against the actual system recovery rather than media speculation."}]}
   ],
-  discovery:[
-    "When a major logistics disruption occurs — a port closure, route interruption, or supplier incident — how does your supply chain team find out, and how quickly can you begin contingency planning?",
-    "How do you currently monitor for disruptions in regions where you have key suppliers or logistics routes, especially in non-English speaking countries?",
-    "How much time typically passes between a supply chain disruption occurring and it impacting your operations? And how much of that time is recoverable with early intelligence?",
-    "How does your team validate whether a reported disruption is real versus misinformation — especially in conflict zones or politically sensitive regions?",
-    "If a critical supplier's facility or a key logistics route was disrupted right now, what's your current detection timeline?"
-  ],
-  pitch:[
-    {n:1,t:"Frame the supply chain intelligence gap",s:"Most supply chain risk programs are watching macro risk indicators — country ratings, trade alerts, news feeds. What they're missing is the operational signal layer: the explosion that takes out a bridge, the strike that closes a port, the cyber attack that grounds an airline fleet."},
-    {n:2,t:"Use Crimea bridge as the disinformation story",s:"Russia said the damage was minimal. samdesk had visuals of the collapsed bridge section within minutes. In supply chain risk, the difference between acting on accurate intelligence and acting on disinformation can mean weeks of disruption versus hours of recovery."},
-    {n:3,t:"Use Southwest as the operational disruption story",s:"1 hour 18 minutes before media. For logistics teams dependent on airline freight or business travel, that's a planning window. The question is whether your team finds out when it matters or when everyone else does."},
-    {n:4,t:"Connect to route and supplier-specific impact",s:"samdesk doesn't just flag global events — it maps them to your specific logistics footprint. Which of your routes pass through the affected area, which suppliers are in the impact zone, and which shipments are at risk."},
-    {n:5,t:"Show the scale advantage",s:"1 million disruptions daily. No human team can monitor that signal volume for the specific events that matter to your supply chain. samdesk's AI filters and prioritizes continuously, 24/7."}
-  ],
-  demo:[
-    {i:"→",t:"Show the Southwest outage detection",w:"Walk through the timeline — 1hr 18min before media. Show how the scope confirmation arrived as a consolidated picture, not a flood of individual alerts."},
-    {i:"→",t:"Show the disinformation dismissal capability",w:"Use the Crimea bridge example — show how samdesk visuals contradicted official claims in real time. This is the trust and accuracy story."},
-    {i:"→",t:"Show route and asset proximity mapping",w:"Demonstrate how a disruption is mapped to specific logistics routes, supplier locations, or transportation hubs — 'this port closure affects your shipments X, Y, Z.'"},
-    {i:"→",t:"Show consolidated incident windows",w:"One evolving view of a supply chain event — not dozens of alerts to triage. Show how this compresses the time from signal to decision."}
-  ],
-  objections:[
-    {q:`"We have a supply chain risk platform already."`,a:`"Those tools are typically strong on predictive risk scores and supplier financial health. Where they fall short is the real-time operational signal layer — the event that just happened that affects your route or supplier right now. samdesk fills that gap."`},
-    {q:`"Our supply chain team doesn't monitor security intelligence."`,a:`"That's actually the problem. The events that cause the most supply chain disruption — explosions, civil unrest, cyberattacks, natural disasters — are security intelligence events, not trade risk reports. samdesk bridges that gap by translating security signals into supply chain impact language."`},
-    {q:`"We have media monitoring for this."`,a:`"Media monitoring tells you what journalists have verified enough to publish. samdesk tells you 1 hour 18 minutes before they do. In supply chain logistics, that's the difference between getting ahead of the disruption and scrambling to catch up."`}
-  ]
+  discovery:["When a major logistics disruption occurs — a port closure, route interruption, or supplier incident — how does your supply chain team find out, and how quickly can you begin contingency planning?","How do you currently monitor for disruptions in regions where you have key suppliers or logistics routes, especially in non-English speaking countries?","How much time typically passes between a supply chain disruption occurring and it impacting your operations? And how much of that time is recoverable with early intelligence?","How does your team validate whether a reported disruption is real versus misinformation — especially in conflict zones or politically sensitive regions?","If a critical supplier's facility or a key logistics route was disrupted right now, what's your current detection timeline?"],
+  pitch:[{n:1,t:"Frame the supply chain intelligence gap",s:"Most supply chain risk programs are watching macro risk indicators — country ratings, trade alerts, news feeds. What they're missing is the operational signal layer: the explosion that takes out a bridge, the strike that closes a port, the cyber attack that grounds an airline fleet."},{n:2,t:"Use Crimea bridge as the disinformation story",s:"Russia said the damage was minimal. samdesk had visuals of the collapsed bridge section within minutes. In supply chain risk, the difference between acting on accurate intelligence and acting on disinformation can mean weeks of disruption versus hours of recovery."},{n:3,t:"Use Southwest as the operational disruption story",s:"1 hour 18 minutes before media. For logistics teams dependent on airline freight or business travel, that's a planning window. The question is whether your team finds out when it matters or when everyone else does."},{n:4,t:"Connect to route and supplier-specific impact",s:"samdesk doesn't just flag global events — it maps them to your specific logistics footprint. Which of your routes pass through the affected area, which suppliers are in the impact zone, and which shipments are at risk."},{n:5,t:"Show the scale advantage",s:"1 million disruptions daily. No human team can monitor that signal volume for the specific events that matter to your supply chain. samdesk's AI filters and prioritizes continuously, 24/7."}],
+  demo:[{i:"→",t:"Show the Southwest outage detection",w:"Walk through the timeline — 1hr 18min before media. Show how the scope confirmation arrived as a consolidated picture, not a flood of individual alerts."},{i:"→",t:"Show the disinformation dismissal capability",w:"Use the Crimea bridge example — show how samdesk visuals contradicted official claims in real time. This is the trust and accuracy story."},{i:"→",t:"Show route and asset proximity mapping",w:"Demonstrate how a disruption is mapped to specific logistics routes, supplier locations, or transportation hubs — 'this port closure affects your shipments X, Y, Z.'"},{i:"→",t:"Show consolidated incident windows",w:"One evolving view of a supply chain event — not dozens of alerts to triage. Show how this compresses the time from signal to decision."}],
+  objections:[{q:`"We have a supply chain risk platform already."`,a:`"Those tools are typically strong on predictive risk scores and supplier financial health. Where they fall short is the real-time operational signal layer — the event that just happened that affects your route or supplier right now. samdesk fills that gap."`},{q:`"Our supply chain team doesn't monitor security intelligence."`,a:`"That's actually the problem. The events that cause the most supply chain disruption — explosions, civil unrest, cyberattacks, natural disasters — are security intelligence events, not trade risk reports. samdesk bridges that gap by translating security signals into supply chain impact language."`},{q:`"We have media monitoring for this."`,a:`"Media monitoring tells you what journalists have verified enough to publish. samdesk tells you 1 hour 18 minutes before they do. In supply chain logistics, that's the difference between getting ahead of the disruption and scrambling to catch up."`}]
 },
 {
-  id:"ep",
-  label:"Executive Protection",
+  id:"ep",label:"Executive Protection",
   intro:"Executive protection teams are responsible for the physical safety of high-profile individuals — CEOs, board members, public figures. The challenge is that threats to executives often surface in online spaces — social media, dark web, forums — before they materialize physically. Early intelligence is the difference between prevention and response.",
   incidents:[
-    {
-      title:"Protecting U.S. Embassies Abroad — Bahrain",
-      tags:["Embassy Protection","Civil Unrest","Proactive Detection","Middle East"],
-      desc:"In the midst of the Israel-Gaza conflict, samdesk alerted users to people in Bahrain protesting Israel's military activity and heading towards the U.S. Embassy. samdesk alerted to clashes with local police before the incident reached the embassy — providing 4+ hours of continuous updates.",
-      stats:["Alerted before crowd reached embassy","Clashes with police detected in advance","4+ hours of continuous updates","Photos and videos from frontlines for ground truth"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected early chatter about protest mobilization in Manama heading toward the U.S. Embassy in the context of the Israel-Gaza conflict. Threat trajectory identified before physical convergence.",s:"Detected before crowd reached embassy"},
-        {l:"D",n:"Detect",t:"Alert issued at first indication of police clashes. EP teams had advance warning to assess threat level and implement protective measures before the crowd reached the embassy perimeter."},
-        {l:"A",n:"Analyze",t:"Photos and videos from frontlines pulled into samdesk provided ground truth and full situational awareness — not just text alerts but visual confirmation of crowd size, equipment, and proximity."},
-        {l:"R",n:"Resolve",t:"4+ hours of continuous updates tracked the situation until the crowd dispersed, enabling EP teams to maintain awareness and adjust protective posture throughout the event."}
-      ]
-    },
-    {
-      title:"Police Officers Attacked Near NYC Times Square",
-      tags:["Stabbing","Law Enforcement","NYC","High-profile Area"],
-      desc:"On December 31, samdesk's AI picked up chatter about a stabbing and shooting incident involving police officers near Times Square in New York City — in one of the most heavily surveilled and high-profile locations in the world — 18 minutes before NYPD posted publicly.",
-      stats:["samdesk alert: 22:19 EST","NYPD social post: <strong>18 min later</strong>","Fox 5 New York: <strong>26 min later</strong>","Street-level geolocation provided"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected emergency scanner chatter and early social signals about a police incident at a high-profile Times Square location on New Year's Eve — peak executive and event exposure period."},
-        {l:"D",n:"Detect",t:"Alert issued 22:19 with street-level location. EP teams with principals in the Times Square area had 18+ minutes before official NYPD communication to make protective decisions.",s:"18 min faster than NYPD"},
-        {l:"A",n:"Analyze",t:"Rapid verification confirmed 2 officers injured, suspect apprehended, location precise to 8th Avenue and West 52nd Street. EP teams could assess proximity to their principal's location immediately."},
-        {l:"R",n:"Resolve",t:"Continuous monitoring through the scene until all-clear, providing EP teams with ongoing situational picture during a high-profile event period."}
-      ]
-    }
+    {title:"Protecting U.S. Embassies Abroad — Bahrain",tags:["Embassy Protection","Civil Unrest","Proactive Detection","Middle East"],desc:"In the midst of the Israel-Gaza conflict, samdesk alerted users to people in Bahrain protesting Israel's military activity and heading towards the U.S. Embassy. samdesk alerted to clashes with local police before the incident reached the embassy — providing 4+ hours of continuous updates.",stats:["Alerted before crowd reached embassy","Clashes with police detected in advance","4+ hours of continuous updates","Photos and videos from frontlines for ground truth"],adar:[{l:"A",n:"Anticipate",t:"AI detected early chatter about protest mobilization in Manama heading toward the U.S. Embassy in the context of the Israel-Gaza conflict. Threat trajectory identified before physical convergence.",s:"Detected before crowd reached embassy"},{l:"D",n:"Detect",t:"Alert issued at first indication of police clashes. EP teams had advance warning to assess threat level and implement protective measures before the crowd reached the embassy perimeter."},{l:"A",n:"Analyze",t:"Photos and videos from frontlines pulled into samdesk provided ground truth and full situational awareness — not just text alerts but visual confirmation of crowd size, equipment, and proximity."},{l:"R",n:"Resolve",t:"4+ hours of continuous updates tracked the situation until the crowd dispersed, enabling EP teams to maintain awareness and adjust protective posture throughout the event."}]},
+    {title:"Police Officers Attacked Near NYC Times Square",tags:["Stabbing","Law Enforcement","NYC","High-profile Area"],desc:"On December 31, samdesk's AI picked up chatter about a stabbing and shooting incident involving police officers near Times Square in New York City — 18 minutes before NYPD posted publicly.",stats:["samdesk alert: 22:19 EST","NYPD social post: <strong>18 min later</strong>","Fox 5 New York: <strong>26 min later</strong>","Street-level geolocation provided"],adar:[{l:"A",n:"Anticipate",t:"AI detected emergency scanner chatter and early social signals about a police incident at a high-profile Times Square location on New Year's Eve — peak executive and event exposure period."},{l:"D",n:"Detect",t:"Alert issued 22:19 with street-level location. EP teams with principals in the Times Square area had 18+ minutes before official NYPD communication to make protective decisions.",s:"18 min faster than NYPD"},{l:"A",n:"Analyze",t:"Rapid verification confirmed 2 officers injured, suspect apprehended, location precise to 8th Avenue and West 52nd Street. EP teams could assess proximity to their principal's location immediately."},{l:"R",n:"Resolve",t:"Continuous monitoring through the scene until all-clear, providing EP teams with ongoing situational picture during a high-profile event period."}]}
   ],
-  discovery:[
-    "How does your executive protection team currently monitor for threats to your executives in real time — especially when they're traveling or attending high-profile events?",
-    "When a security incident develops near a location where one of your executives is present, how quickly does your EP team find out — and through what channel?",
-    "How do you monitor for online threat signals — social media posts, forum activity — that may indicate a threat to a specific executive before it materializes physically?",
-    "If your CEO was in a hotel in Bahrain during a protest that turned violent, what would your team's awareness timeline look like?",
-    "What does your current EP program look like for executives traveling internationally to regions with elevated or rapidly changing risk?"
-  ],
-  pitch:[
-    {n:1,t:"Frame the anticipation gap in EP",s:"Most EP programs are strong on physical close protection. The gap is in the intelligence layer — knowing about a threat trajectory before it converges on your principal. The UnitedHealthcare CEO assassination is the defining example: the threat signals existed online before the physical event."},
-    {n:2,t:"Use Bahrain as the proactive detection story",s:"samdesk detected a protest heading toward the U.S. Embassy in Bahrain before the crowd reached the perimeter. EP teams had time to assess, prepare, and act. That's the anticipate phase working exactly as intended."},
-    {n:3,t:"Use Times Square as the event-period story",s:"New Year's Eve, Times Square — peak executive and event exposure. samdesk detected a stabbing and police attack 18 minutes before NYPD posted publicly. For an EP team with a principal nearby, that's a decision window."},
-    {n:4,t:"Connect to the dark web and online threat layer",s:"samdesk monitors open-source and social signals across platforms and languages. For executives with elevated threat profiles — activists, public controversies, high-visibility decisions — early online threat detection is where prevention begins."},
-    {n:5,t:"Close with the duty of care framing",s:"EP programs are increasingly held to a standard of anticipation, not just response. The question legal and leadership will ask is: did you have the tools to know earlier? samdesk is the answer to that question."}
-  ],
-  demo:[
-    {i:"→",t:"Show the Bahrain embassy detection",w:"Walk through the protest trajectory detection — how samdesk picked up mobilization signals before the crowd reached the embassy. This is the anticipate phase made concrete."},
-    {i:"→",t:"Show Times Square incident with geo-precision",w:"Street-level location — 8th Ave & West 52nd. Show how EP teams can immediately determine proximity to a principal's location from a samdesk alert."},
-    {i:"→",t:"Show executive-specific alert configuration",w:"Demonstrate how samdesk can be configured to monitor for keywords, locations, and threat categories specific to a named executive's risk profile."},
-    {i:"→",t:"Show dark web and online threat monitoring",w:"Walk through how samdesk surfaces online threat signals — forum posts, social threats, coordinated activity — that may indicate physical risk to a high-profile individual."}
-  ],
-  objections:[
-    {q:`"We have a dedicated EP team with their own intelligence sources."`,a:`"EP teams are excellent at close protection and physical security. Where samdesk adds value is in the upstream intelligence layer — detecting threats in the online environment before they become physical, and providing real-time situational awareness in unfamiliar locations during travel or events."`},
-    {q:`"Our executives don't travel to high-risk regions."`,a:`"The Bahrain incident, the Times Square attack, the Boston Marathon bombing — high-profile incidents happen in low-to-medium risk regions all the time. Risk doesn't only live in high-threat-rated countries. samdesk provides the same early warning regardless of region."`},
-    {q:`"We have private intelligence services for this."`,a:`"Private intelligence services provide excellent strategic analysis. What samdesk adds is the real-time operational signal layer — the protest mobilizing right now, the threat posted online this morning, the incident developing near your principal's hotel tonight. Those are different timeframes and different information needs."`}
-  ]
+  discovery:["How does your executive protection team currently monitor for threats to your executives in real time — especially when they're traveling or attending high-profile events?","When a security incident develops near a location where one of your executives is present, how quickly does your EP team find out — and through what channel?","How do you monitor for online threat signals — social media posts, forum activity — that may indicate a threat to a specific executive before it materializes physically?","If your CEO was in a hotel in Bahrain during a protest that turned violent, what would your team's awareness timeline look like?","What does your current EP program look like for executives traveling internationally to regions with elevated or rapidly changing risk?"],
+  pitch:[{n:1,t:"Frame the anticipation gap in EP",s:"Most EP programs are strong on physical close protection. The gap is in the intelligence layer — knowing about a threat trajectory before it converges on your principal. The UnitedHealthcare CEO assassination is the defining example: the threat signals existed online before the physical event."},{n:2,t:"Use Bahrain as the proactive detection story",s:"samdesk detected a protest heading toward the U.S. Embassy in Bahrain before the crowd reached the perimeter. EP teams had time to assess, prepare, and act. That's the anticipate phase working exactly as intended."},{n:3,t:"Use Times Square as the event-period story",s:"New Year's Eve, Times Square — peak executive and event exposure. samdesk detected a stabbing and police attack 18 minutes before NYPD posted publicly. For an EP team with a principal nearby, that's a decision window."},{n:4,t:"Connect to the dark web and online threat layer",s:"samdesk monitors open-source and social signals across platforms and languages. For executives with elevated threat profiles — activists, public controversies, high-visibility decisions — early online threat detection is where prevention begins."},{n:5,t:"Close with the duty of care framing",s:"EP programs are increasingly held to a standard of anticipation, not just response. The question legal and leadership will ask is: did you have the tools to know earlier? samdesk is the answer to that question."}],
+  demo:[{i:"→",t:"Show the Bahrain embassy detection",w:"Walk through the protest trajectory detection — how samdesk picked up mobilization signals before the crowd reached the embassy. This is the anticipate phase made concrete."},{i:"→",t:"Show Times Square incident with geo-precision",w:"Street-level location — 8th Ave & West 52nd. Show how EP teams can immediately determine proximity to a principal's location from a samdesk alert."},{i:"→",t:"Show executive-specific alert configuration",w:"Demonstrate how samdesk can be configured to monitor for keywords, locations, and threat categories specific to a named executive's risk profile."},{i:"→",t:"Show dark web and online threat monitoring",w:"Walk through how samdesk surfaces online threat signals — forum posts, social threats, coordinated activity — that may indicate physical risk to a high-profile individual."}],
+  objections:[{q:`"We have a dedicated EP team with their own intelligence sources."`,a:`"EP teams are excellent at close protection and physical security. Where samdesk adds value is in the upstream intelligence layer — detecting threats in the online environment before they become physical, and providing real-time situational awareness in unfamiliar locations during travel or events."`},{q:`"Our executives don't travel to high-risk regions."`,a:`"The Bahrain incident, the Times Square attack, the Boston Marathon bombing — high-profile incidents happen in low-to-medium risk regions all the time. Risk doesn't only live in high-threat-rated countries. samdesk provides the same early warning regardless of region."`},{q:`"We have private intelligence services for this."`,a:`"Private intelligence services provide excellent strategic analysis. What samdesk adds is the real-time operational signal layer — the protest mobilizing right now, the threat posted online this morning, the incident developing near your principal's hotel tonight. Those are different timeframes and different information needs."`}]
 },
 {
-  id:"defense",
-  label:"National Defense & Operations",
-  intro:"Defense and intelligence organizations need the earliest possible warning of military activity, geopolitical escalation, and operational threats — with verified intelligence, multilingual coverage, and the ability to cut through disinformation in real time. samdesk has been trusted by defense and government customers globally for sustained coverage of the world's most complex conflicts.",
+  id:"defense",label:"National Defense & Operations",
+  intro:"Defense and intelligence organizations need the earliest possible warning of military activity, geopolitical escalation, and operational threats — with verified intelligence, multilingual coverage, and the ability to cut through disinformation in real time.",
   incidents:[
-    {
-      title:"Ukraine/Russia War — 17 Days of Advance Warning",
-      tags:["Military Action","Troop Movements","Geopolitical Escalation","Ukraine"],
-      desc:"Beginning February 6, 2022, samdesk began alerting to 'advanced military deployments in Belarus' and significant troop movements near the Ukrainian border. On February 7, samdesk alerted to significant Russian troop movements. By February 9, samdesk was alerting to military drills and escalating tension. The invasion began on February 24 — 17 days later. Over the subsequent 18 months, samdesk produced 26,324 verified incident alerts.",
-      stats:["Feb 6: Troop movements in Belarus detected","Feb 7: Russian troop movements near Ukraine border","Feb 9: Military drills, escalating tension flagged","Invasion: Feb 24 — <strong>17 days after first alert</strong>","<strong>26,324</strong> verified incidents in 18 months"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected troop deployment signals from open-source and social chatter 17 days before the invasion. Daily briefings tracked escalation indicators — military drills, equipment movements, border activity.",s:"17 days advance warning"},
-        {l:"D",n:"Detect",t:"Alert issued Feb 6 for Belarus deployments. Escalating alerts over the following 17 days tracked the buildup. When the invasion began Feb 24, samdesk users had full context and 17 days of intelligence history.",s:"Invasion detected in real time + historical context"},
-        {l:"A",n:"Analyze",t:"Dedicated analyst team working 24/7 to corroborate and verify events. AI summary capability provided instant context for each of the 26,324 incidents tracked. Disinformation flagged and dismissed.",s:"26,324 verified incidents in 18 months"},
-        {l:"R",n:"Resolve",t:"Twice-daily briefings through the conflict. Over 300 briefings produced before moving to subscription format. Defense customers received continuously updated operational picture throughout the conflict."}
-      ]
-    },
-    {
-      title:"U.S. Army National Guard — Wisconsin",
-      tags:["Emergency Management","Physical Security","Anti-Terrorism","Defense"],
-      desc:"The Wisconsin Army National Guard uses samdesk as their go-to open-source awareness system across five active mission functions — from daily situational awareness to mission deployments to multi-team operational coordination. Used across EM, AT, PS, SF, CST, JOC, and CERFP teams. Mobile field intelligence operates without CAC or military network access.",
-      stats:["Daily situational awareness for WING assets","Mission activation support with custom streams + geofencing","Multi-team use: EM, AT, PS, SF, CST, JOC, CERFP","Mobile alerts usable <strong>without CAC or military network</strong>","Quote: <strong>\"We rely on it every day.\"</strong> — National Guard Officer"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"Persistent monitoring of national events and WING assets with real-time summaries for leadership. Custom streams provide persistent anticipatory coverage across the full area of responsibility."},
-        {l:"D",n:"Detect",t:"Primary intelligence tool during mission activations — custom streams, geofencing, and on-the-ground user access ensure detection at the point of need, in the field."},
-        {l:"A",n:"Analyze",t:"SAFs mapped and monitored with location-based alerting for threat prioritization. Multi-team use across 7 functional units enables cross-functional intelligence sharing."},
-        {l:"R",n:"Resolve",t:"Mobile field intelligence — real-time, proximity-based alerts on mobile devices, usable without CAC or military network. Teams can operate samdesk anywhere, any network.",s:"No CAC or military network required"}
-      ]
-    },
-    {
-      title:"EU Defense Org — Niger Coup",
-      tags:["Military Action","Coup","Allied Briefing","West Africa"],
-      desc:"A sole EU defense officer stationed in Niger — the only officer in their field across the entire region — used samdesk to brief US and French military partners on the unfolding coup. samdesk alerts became the primary intelligence feed for the wider allied presence in the region, supporting safer decision-making in a highly volatile and under-resourced environment.",
-      stats:["Only officer in field across entire region","Briefed <strong>US and French military</strong> partners","Primary intelligence feed for allied presence","Supported decisions in highly volatile environment"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"samdesk's continuous open-source monitoring provided early signals of political instability and military mobilization in Niger before the coup reached a critical threshold.",s:"Only intelligence source in the field"},
-        {l:"D",n:"Detect",t:"Real-time alerts gave the sole officer in the region the ability to detect events as they unfolded — without requiring a full intelligence team or infrastructure."},
-        {l:"A",n:"Analyze",t:"Alerts served as the primary intelligence feed for the wider allied presence — US and French military saw samdesk alerts directly as their source of situational awareness for the region."},
-        {l:"R",n:"Resolve",t:"Supported safer decision-making in a highly volatile, under-resourced environment. One officer, one platform, briefing multiple allied military partners on an unfolding coup.",s:"One officer briefing US + French military"}
-      ]
-    },
-    {
-      title:"Iran Strikes Al Udeid Air Base, Qatar",
-      tags:["Missile Strike","Military Action","Disinformation","Middle East","2025"],
-      desc:"On June 23rd, 2025, Iran launched missiles at Al Udeid Air Base in Qatar in retaliation for US strikes on Iranian nuclear facilities. Amongst the chaos of conflicting reports and misleading information, samdesk was able to provide clarity — geo-locating multiple reports, identifying early indicators and warnings (I&W) of airspace closures, and tagging misleading information as it emerged. Defence customers sent information up the chain to great effect.",
-      stats:["AI geo-located multiple strike reports","Early I&W of airspace closure detected","Misleading information identified and tagged","Defence customers: info sent up chain <strong>to great effect</strong>","Most recent example: <strong>June 2025</strong>"],
-      adar:[
-        {l:"A",n:"Anticipate",t:"AI detected early indicators and warnings (I&W) of airspace closure in the region — providing defence customers with advance signal before the strike was confirmed by official sources.",s:"Early I&W of airspace closure"},
-        {l:"D",n:"Detect",t:"Multiple strike reports geo-located in real time. samdesk's AI was able to determine which reports were credible and which were misleading — cutting through the fog of war within minutes."},
-        {l:"A",n:"Analyze",t:"Misleading information identified and tagged as such — including a false claim of airspace closure in Saudi Arabia. Defence customers received a verified operational picture, not a noise-contaminated feed.",s:"Disinformation dismissed in real time"},
-        {l:"R",n:"Resolve",t:"Defence customers sent verified intelligence up the chain to great effect — demonstrating how samdesk's operational intelligence translates directly into mission-critical decision support."}
-      ]
-    }
+    {title:"Ukraine/Russia War — 17 Days of Advance Warning",tags:["Military Action","Troop Movements","Geopolitical Escalation","Ukraine"],desc:"Beginning February 6, 2022, samdesk began alerting to 'advanced military deployments in Belarus' and significant troop movements near the Ukrainian border. The invasion began on February 24 — 17 days later. Over the subsequent 18 months, samdesk produced 26,324 verified incident alerts.",stats:["Feb 6: Troop movements in Belarus detected","Feb 7: Russian troop movements near Ukraine border","Feb 9: Military drills, escalating tension flagged","Invasion: Feb 24 — <strong>17 days after first alert</strong>","<strong>26,324</strong> verified incidents in 18 months"],adar:[{l:"A",n:"Anticipate",t:"AI detected troop deployment signals from open-source and social chatter 17 days before the invasion. Daily briefings tracked escalation indicators.",s:"17 days advance warning"},{l:"D",n:"Detect",t:"Alert issued Feb 6 for Belarus deployments. Escalating alerts over the following 17 days tracked the buildup.",s:"Invasion detected in real time + historical context"},{l:"A",n:"Analyze",t:"Dedicated analyst team working 24/7 to corroborate and verify events. AI summary capability provided instant context for each of the 26,324 incidents tracked.",s:"26,324 verified incidents in 18 months"},{l:"R",n:"Resolve",t:"Twice-daily briefings through the conflict. Over 300 briefings produced before moving to subscription format."}]},
+    {title:"U.S. Army National Guard — Wisconsin",tags:["Emergency Management","Physical Security","Anti-Terrorism","Defense"],desc:"The Wisconsin Army National Guard uses samdesk as their go-to open-source awareness system across five active mission functions. Mobile field intelligence operates without CAC or military network access.",stats:["Daily situational awareness for WING assets","Mission activation support with custom streams + geofencing","Multi-team use: EM, AT, PS, SF, CST, JOC, CERFP","Mobile alerts usable <strong>without CAC or military network</strong>","Quote: <strong>\"We rely on it every day.\"</strong> — National Guard Officer"],adar:[{l:"A",n:"Anticipate",t:"Persistent monitoring of national events and WING assets with real-time summaries for leadership. Custom streams provide persistent anticipatory coverage."},{l:"D",n:"Detect",t:"Primary intelligence tool during mission activations — custom streams, geofencing, and on-the-ground user access ensure detection at the point of need."},{l:"A",n:"Analyze",t:"SAFs mapped and monitored with location-based alerting for threat prioritization. Multi-team use across 7 functional units enables cross-functional intelligence sharing."},{l:"R",n:"Resolve",t:"Mobile field intelligence — real-time, proximity-based alerts on mobile devices, usable without CAC or military network.",s:"No CAC or military network required"}]},
+    {title:"EU Defense Org — Niger Coup",tags:["Military Action","Coup","Allied Briefing","West Africa"],desc:"A sole EU defense officer stationed in Niger used samdesk to brief US and French military partners on the unfolding coup. samdesk alerts became the primary intelligence feed for the wider allied presence in the region.",stats:["Only officer in field across entire region","Briefed <strong>US and French military</strong> partners","Primary intelligence feed for allied presence","Supported decisions in highly volatile environment"],adar:[{l:"A",n:"Anticipate",t:"samdesk's continuous open-source monitoring provided early signals of political instability and military mobilization in Niger before the coup reached a critical threshold.",s:"Only intelligence source in the field"},{l:"D",n:"Detect",t:"Real-time alerts gave the sole officer in the region the ability to detect events as they unfolded — without requiring a full intelligence team or infrastructure."},{l:"A",n:"Analyze",t:"Alerts served as the primary intelligence feed for the wider allied presence — US and French military saw samdesk alerts directly as their source of situational awareness."},{l:"R",n:"Resolve",t:"Supported safer decision-making in a highly volatile, under-resourced environment. One officer, one platform, briefing multiple allied military partners.",s:"One officer briefing US + French military"}]},
+    {title:"Iran Strikes Al Udeid Air Base, Qatar",tags:["Missile Strike","Military Action","Disinformation","Middle East","2025"],desc:"On June 23rd, 2025, Iran launched missiles at Al Udeid Air Base in Qatar. samdesk geo-located multiple reports, identified early indicators and warnings (I&W) of airspace closures, and tagged misleading information as it emerged.",stats:["AI geo-located multiple strike reports","Early I&W of airspace closure detected","Misleading information identified and tagged","Defence customers: info sent up chain <strong>to great effect</strong>","Most recent example: <strong>June 2025</strong>"],adar:[{l:"A",n:"Anticipate",t:"AI detected early indicators and warnings (I&W) of airspace closure in the region — providing defence customers with advance signal before the strike was confirmed.",s:"Early I&W of airspace closure"},{l:"D",n:"Detect",t:"Multiple strike reports geo-located in real time. samdesk's AI determined which reports were credible and which were misleading within minutes."},{l:"A",n:"Analyze",t:"Misleading information identified and tagged — including a false claim of airspace closure in Saudi Arabia. Defence customers received a verified operational picture.",s:"Disinformation dismissed in real time"},{l:"R",n:"Resolve",t:"Defence customers sent verified intelligence up the chain to great effect — demonstrating samdesk's operational intelligence as mission-critical decision support."}]}
   ],
-  discovery:[
-    "How does your organization currently detect early indicators of military escalation or political instability before it crosses the threshold of official reporting?",
-    "When a conflict or military incident is developing — and conflicting reports are circulating — how does your team determine what's real and what's disinformation?",
-    "For ongoing conflicts like Ukraine or the Middle East, how do you maintain a continuous, verified operational picture across thousands of events?",
-    "How quickly does intelligence reach the decision-makers who need it — and how much of their time is spent validating the intelligence vs. acting on it?",
-    "What's your current coverage capability for open-source and social signals in non-English speaking conflict zones?"
-  ],
-  pitch:[
-    {n:1,t:"Lead with the Ukraine advance warning story",s:"17 days. That's how far ahead of the Russia-Ukraine invasion samdesk detected meaningful escalation signals. For defense and intelligence organizations, the difference between 17 days of warning and zero days of warning is the entire value proposition."},
-    {n:2,t:"Use Iran strikes as the most current example",s:"June 2025 — Iran missiles on Al Udeid Air Base. samdesk geo-located strike reports, identified early airspace closure indicators, and tagged misleading information in real time. Defence customers sent verified intelligence up the chain. This is current, operational, and mission-relevant."},
-    {n:3,t:"Anchor on the disinformation capability",s:"In every major conflict, disinformation is a weapon. Russia claiming minimal damage on the Crimea bridge. Fake Pentagon explosion images going viral. samdesk's AI + analyst model identifies and dismisses false information — giving defense customers a verified picture, not a contaminated feed."},
-    {n:4,t:"Show the sustained coverage scale",s:"26,324 Ukraine incidents in 18 months. Twice-daily briefings. Dedicated analyst teams. This is not just detection — it's a sustained operational intelligence picture across the full lifecycle of a conflict."},
-    {n:5,t:"Close with the OSINT and multilingual advantage",s:"samdesk monitors signals in 150+ languages across 1M+ sources — including the platforms that matter in each conflict zone: Telegram for Eastern Europe, local WeChat for China, Arabic-language sources for Middle East. Coverage without borders."}
-  ],
-  demo:[
-    {i:"→",t:"Show the Ukraine escalation timeline",w:"Walk through the February 2022 alerts — Feb 6 Belarus deployments, Feb 7 troop movements, Feb 9 military drills — building to the Feb 24 invasion. The anticipate phase made concrete over 17 days."},
-    {i:"→",t:"Show the Iran Al Udeid detection (June 2025)",w:"Walk through the geo-location of strike reports, the early I&W of airspace closures, and the disinformation tagging. This is the most current and mission-relevant example."},
-    {i:"→",t:"Show the disinformation dismissal capability",w:"Use the Pentagon fake explosion or Crimea bridge visual verification. Show how samdesk's AI identifies and dismisses false information before it reaches decision-makers."},
-    {i:"→",t:"Show the AI summary and briefing capability",w:"Demonstrate how samdesk compresses thousands of signals into a structured, decision-ready intelligence briefing. This is the analyst time-saving story."}
-  ],
-  objections:[
-    {q:`"We have established intelligence feeds and classified sources."`,a:`"Those are essential and samdesk complements them — not replaces them. What samdesk adds is the open-source signal layer that picks up escalation indicators from social, local media, and online chatter before they appear in classified feeds. The Ukraine 17-day advance warning came entirely from open-source signals."`},
-    {q:`"We're concerned about signal accuracy in conflict environments."`,a:`"Exactly the right concern — and it's why samdesk's AI + analyst model matters in defense contexts. In the Iran Al Udeid strikes, misleading information was identified and tagged in real time. In the Crimea bridge explosion, Russia's official narrative was disproven within minutes. Accuracy in high-noise environments is a core capability."`},
-    {q:`"We need classified-level security for our intelligence tools."`,a:`"samdesk is an open-source intelligence platform — it processes publicly available information, not classified material. That means it can be used across different classification levels and shared with allied partners without security concerns. Many defense customers use samdesk specifically because it's shareable intelligence, not compartmentalized."`}
-  ]
+  discovery:["How does your organization currently detect early indicators of military escalation or political instability before it crosses the threshold of official reporting?","When a conflict or military incident is developing — and conflicting reports are circulating — how does your team determine what's real and what's disinformation?","For ongoing conflicts like Ukraine or the Middle East, how do you maintain a continuous, verified operational picture across thousands of events?","How quickly does intelligence reach the decision-makers who need it — and how much of their time is spent validating the intelligence vs. acting on it?","What's your current coverage capability for open-source and social signals in non-English speaking conflict zones?"],
+  pitch:[{n:1,t:"Lead with the Ukraine advance warning story",s:"17 days. That's how far ahead of the Russia-Ukraine invasion samdesk detected meaningful escalation signals. For defense and intelligence organizations, the difference between 17 days of warning and zero days of warning is the entire value proposition."},{n:2,t:"Use Iran strikes as the most current example",s:"June 2025 — Iran missiles on Al Udeid Air Base. samdesk geo-located strike reports, identified early airspace closure indicators, and tagged misleading information in real time. Defence customers sent verified intelligence up the chain."},{n:3,t:"Anchor on the disinformation capability",s:"In every major conflict, disinformation is a weapon. samdesk's AI + analyst model identifies and dismisses false information — giving defense customers a verified picture, not a contaminated feed."},{n:4,t:"Show the sustained coverage scale",s:"26,324 Ukraine incidents in 18 months. Twice-daily briefings. Dedicated analyst teams. This is not just detection — it's a sustained operational intelligence picture across the full lifecycle of a conflict."},{n:5,t:"Close with the OSINT and multilingual advantage",s:"samdesk monitors signals in 150+ languages across 1M+ sources — including Telegram for Eastern Europe, Arabic-language sources for Middle East. Coverage without borders."}],
+  demo:[{i:"→",t:"Show the Ukraine escalation timeline",w:"Walk through the February 2022 alerts — Feb 6 Belarus deployments, Feb 7 troop movements, Feb 9 military drills — building to the Feb 24 invasion."},{i:"→",t:"Show the Iran Al Udeid detection (June 2025)",w:"Walk through the geo-location of strike reports, the early I&W of airspace closures, and the disinformation tagging. Most current and mission-relevant example."},{i:"→",t:"Show the disinformation dismissal capability",w:"Use the Pentagon fake explosion or Crimea bridge visual verification. Show how samdesk's AI identifies and dismisses false information before it reaches decision-makers."},{i:"→",t:"Show the AI summary and briefing capability",w:"Demonstrate how samdesk compresses thousands of signals into a structured, decision-ready intelligence briefing."}],
+  objections:[{q:`"We have established intelligence feeds and classified sources."`,a:`"Those are essential and samdesk complements them — not replaces them. What samdesk adds is the open-source signal layer that picks up escalation indicators from social, local media, and online chatter before they appear in classified feeds. The Ukraine 17-day advance warning came entirely from open-source signals."`},{q:`"We're concerned about signal accuracy in conflict environments."`,a:`"Exactly the right concern — and it's why samdesk's AI + analyst model matters in defense contexts. In the Iran Al Udeid strikes, misleading information was identified and tagged in real time. Accuracy in high-noise environments is a core capability."`},{q:`"We need classified-level security for our intelligence tools."`,a:`"samdesk is an open-source intelligence platform — it processes publicly available information, not classified material. That means it can be used across different classification levels and shared with allied partners without security concerns."`}]
 }
 ];
 
@@ -483,15 +190,7 @@ useCases.forEach((uc,i)=>{
     const statsHtml=inc.stats.map(s=>`<div class="stat-pill">${s}</div>`).join('');
     const adarHtml=inc.adar.map(a=>`<div class="adar-phase"><div class="adar-letter">${a.l}</div><div class="adar-name">${a.n}</div><div class="adar-text">${a.t}</div>${a.s?`<div class="adar-stat">${a.s}</div>`:''}</div>`).join('');
     const tagsHtml=inc.tags.map(t=>`<span class="tag">${t}</span>`).join('');
-    return `<div class="incident">
-      <div class="incident-header"><div class="incident-title">${inc.title}</div><div class="incident-tags">${tagsHtml}</div></div>
-      <div class="incident-body">
-        <div class="incident-desc">${inc.desc}</div>
-        <div class="stats">${statsHtml}</div>
-        <div class="section-label">ADAR breakdown</div>
-        <div class="adar-grid">${adarHtml}</div>
-      </div>
-    </div>`;
+    return`<div class="incident"><div class="incident-header"><div class="incident-title">${inc.title}</div><div class="incident-tags">${tagsHtml}</div></div><div class="incident-body"><div class="incident-desc">${inc.desc}</div><div class="stats">${statsHtml}</div><div class="section-label">ADAR breakdown</div><div class="adar-grid">${adarHtml}</div></div></div>`;
   }).join('');
 
   const dqHtml=uc.discovery.map((q,n)=>`<div class="dq-item"><div class="dq-num">${n+1}</div><div>${q}</div></div>`).join('');
@@ -507,32 +206,18 @@ useCases.forEach((uc,i)=>{
       <div style="font-size:11px;font-weight:500;letter-spacing:.06em;color:#888780;text-transform:uppercase;margin-bottom:.4rem">Use case overview</div>
       <div style="font-size:14px;color:#f5f4f0;line-height:1.6">${uc.intro}</div>
     </div>
-    <div class="section-label">Real-world examples</div>
-    ${incidentHtml}
+    <div class="section-label">Real-world examples</div>${incidentHtml}
     <div class="two-col">
-      <div>
-        <div class="section-label">Discovery script</div>
-        <div class="card card-pad"><div class="dq-list">${dqHtml}</div></div>
-      </div>
-      <div>
-        <div class="section-label">Pitch flow</div>
-        <div class="card card-pad">${pitchHtml}</div>
-      </div>
+      <div><div class="section-label">Discovery script</div><div class="card card-pad"><div class="dq-list">${dqHtml}</div></div></div>
+      <div><div class="section-label">Pitch flow</div><div class="card card-pad">${pitchHtml}</div></div>
     </div>
     <div class="two-col">
-      <div>
-        <div class="section-label">Demo guide</div>
-        <div class="card card-pad">${demoHtml}</div>
-      </div>
-      <div>
-        <div class="section-label">Key objections</div>
-        <div class="card card-pad">${objHtml}</div>
-      </div>
+      <div><div class="section-label">Demo guide</div><div class="card card-pad">${demoHtml}</div></div>
+      <div><div class="section-label">Key objections</div><div class="card card-pad">${objHtml}</div></div>
     </div>`;
   panesEl.appendChild(pane);
 });
 
-// Activate tab from URL hash on load
 window.addEventListener('DOMContentLoaded',()=>{
   const hash=window.location.hash.replace('#','');
   if(hash){
@@ -542,7 +227,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
       document.querySelectorAll('.tab')[idx].classList.add('active');
       const target=document.getElementById('pane-'+hash);
-      if(target) target.classList.add('active');
+      if(target)target.classList.add('active');
     }
   }
 });
