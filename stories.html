@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samdesk Customer Stories</title>
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2230;--border:#30363d;
+    --accent:#00c2ff;--accent2:#7c3aed;--green:#00d084;--orange:#f59e0b;
+    --red:#ef4444;--text:#e6edf3;--muted:#8b949e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+
+  header{background:linear-gradient(135deg,#0d1117 0%,#161b22 50%,#0d1117 100%);border-bottom:1px solid var(--border);padding:24px 40px 20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+  .header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo-dot{width:10px;height:10px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px var(--accent);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+  h1{font-size:1.35rem;font-weight:700;letter-spacing:-.02em}
+  h1 span{color:var(--accent)}
+  .subtitle{font-size:.75rem;color:var(--muted);margin-top:2px}
+  .stats{display:flex;gap:20px;flex-wrap:wrap}
+  .stat{text-align:center}
+  .stat-n{font-size:1.5rem;font-weight:800;color:var(--accent);line-height:1}
+  .stat-l{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+
+  .controls{max-width:1400px;margin:20px auto 0;padding:0 40px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .search-wrap{position:relative;flex:1;min-width:200px}
+  .search-wrap input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:9px 14px 9px 36px;font-size:.85rem;outline:none;transition:border-color .2s}
+  .search-wrap input:focus{border-color:var(--accent)}
+  .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.85rem}
+  .filter-group{display:flex;gap:5px;flex-wrap:wrap}
+  .filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:5px 13px;font-size:.76rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .filter-btn:hover{background:rgba(0,194,255,.1);border-color:var(--accent);color:var(--accent)}
+  .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700}
+  .filter-btn.active-theme{background:var(--accent2);border-color:var(--accent2);color:#fff;font-weight:700}
+
+  .grid{max-width:1400px;margin:20px auto 40px;padding:0 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .2s,border-color .2s,box-shadow .2s;position:relative;overflow:hidden}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:opacity .2s}
+  .card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,194,255,.1)}
+  .card:hover::before{opacity:1}
+  .card.hidden{display:none}
+
+  .card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .customer{font-size:.95rem;font-weight:700}
+  .sector-badge{font-size:.66rem;font-weight:700;padding:3px 8px;border-radius:12px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;flex-shrink:0}
+  .sector-badge.corp{background:rgba(0,194,255,.12);color:var(--accent);border:1px solid rgba(0,194,255,.25)}
+  .sector-badge.defence{background:rgba(124,58,237,.12);color:#a78bfa;border:1px solid rgba(124,58,237,.25)}
+  .sector-badge.pub{background:rgba(0,208,132,.12);color:var(--green);border:1px solid rgba(0,208,132,.25)}
+
+  .quote{font-size:.85rem;color:#c9d1d9;line-height:1.6;border-left:3px solid var(--accent);padding-left:11px;font-style:italic}
+  .note{font-size:.78rem;color:var(--muted);line-height:1.5;border-left:3px solid var(--border);padding-left:11px}
+
+  .tags{display:flex;flex-wrap:wrap;gap:5px}
+  .tag{font-size:.68rem;padding:2px 9px;border-radius:12px;border:1px solid transparent;font-weight:500}
+  .tag-alert{background:rgba(245,158,11,.1);color:#fbbf24;border-color:rgba(245,158,11,.25)}
+  .tag-sit{background:rgba(0,208,132,.1);color:var(--green);border-color:rgba(0,208,132,.25)}
+  .tag-dash{background:rgba(0,194,255,.1);color:var(--accent);border-color:rgba(0,194,255,.25)}
+  .tag-risk{background:rgba(239,68,68,.1);color:#fca5a5;border-color:rgba(239,68,68,.25)}
+  .tag-ground{background:rgba(124,58,237,.1);color:#c4b5fd;border-color:rgba(124,58,237,.25)}
+  .tag-exec{background:rgba(251,191,36,.1);color:#fde68a;border-color:rgba(251,191,36,.25)}
+  .tag-travel{background:rgba(16,185,129,.1);color:#6ee7b7;border-color:rgba(16,185,129,.25)}
+  .tag-cs{background:rgba(99,102,241,.1);color:#a5b4fc;border-color:rgba(99,102,241,.25)}
+
+  .card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border)}
+  .date-info,.submitter{font-size:.7rem;color:var(--muted)}
+
+  .no-results{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+
+  nav{background:#0d1117;border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;gap:4px;overflow-x:auto}
+  nav a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;padding:12px 14px;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+  nav a:hover{color:var(--text)}
+  nav a.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .nav-logo{color:var(--accent);font-weight:800;font-size:.9rem;margin-right:12px;letter-spacing:-.02em;padding:12px 0;white-space:nowrap}
+
+  @media(max-width:600px){header,.controls,.grid{padding-left:14px;padding-right:14px}h1{font-size:1.1rem}nav{padding:0 14px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">⬡ samdesk</span>
+  <a href="index.html">Home</a>
+  <a href="competitive-map.html">Competitive Map</a>
+  <a href="discovery.html">Discovery</a>
+  <a href="stories.html" class="active">Customer Stories</a>
+  <a href="use-cases.html">Use Cases</a>
+</nav>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      <div>
+        <h1><span>Samdesk</span> Customer Stories</h1>
+        <div class="subtitle">Battlecard Intelligence · Sales Enablement</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="totalCount">38</div><div class="stat-l">Stories</div></div>
+      <div class="stat"><div class="stat-n" id="custCount">32</div><div class="stat-l">Customers</div></div>
+      <div class="stat"><div class="stat-n">3</div><div class="stat-l">Sectors</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search by customer, quote, or theme…">
+  </div>
+  <div class="filter-group" id="sectorFilters">
+    <button class="filter-btn active" data-sector="all">All</button>
+    <button class="filter-btn" data-sector="Corp Sec">Corp Sec</button>
+    <button class="filter-btn" data-sector="Defence">Defence</button>
+    <button class="filter-btn" data-sector="Pub Sec">Pub Sec</button>
+  </div>
+  <div class="filter-group" id="themeFilters">
+    <button class="filter-btn" data-theme="Alert Speed">⚡ Alert Speed</button>
+    <button class="filter-btn" data-theme="Situational Awareness">🎯 Sit. Awareness</button>
+    <button class="filter-btn" data-theme="Dashboard">📊 Dashboard</button>
+    <button class="filter-btn" data-theme="Ground Truth">✅ Ground Truth</button>
+    <button class="filter-btn" data-theme="Risk Assessment">🛡️ Risk</button>
+    <button class="filter-btn" data-theme="Executive Protection">👤 Exec Protect</button>
+    <button class="filter-btn" data-theme="Travel Risk">✈️ Travel Risk</button>
+    <button class="filter-btn" data-theme="Customer Success">🤝 Cust. Success</button>
+  </div>
+</div>
+
+<div class="grid" id="cardsGrid"></div>
+
+<script>
+const stories = [
+  // ── BATCH A: Stories 1–18 (first PDF set) ──────────────────────────────
+  {customer:"Georgetown University",date:"Feb 10, 2026",sector:"Pub Sec",submitter:"Tamara",
+   themes:["Alert Speed","Situational Awareness","Ground Truth","Dashboard"],
+   quote:"There was a shooting in DC on Friday about a block from union station… you all nailed it 9 minutes before the police alert came out. So we were already responding before the police they actually knew what was going on.",
+   note:"Josh Bornstein, VP Public Safety. Also called Samdesk 'like a video game' — team is fully engaged."},
+
+  {customer:"Gilead",date:"Mar 4, 2026",sector:"Corp Sec",submitter:"Chris",
+   themes:["Alert Speed","Risk Assessment"],
+   quote:"She knew before the people in the venue… it was kind of cool to be like, hey, I know what's going on because of our team back home.",
+   note:"RE: Verizon Wireless Outage at JP Morgan conference. Samdesk flagged the outage before attendees realized what was happening."},
+
+  {customer:"Ripple",date:"Jan 28, 2026",sector:"Corp Sec",submitter:"Erin",
+   themes:["Alert Speed","Dashboard"],
+   quote:"The fire alarm was at our office… And this alert came out about 8 minutes after it started. So kudos to the rapid detection and alert!",
+   note:"Megan Wolfram, Global Corporate Security. Unprompted positive outreach — 'feel like I always share when there is a problem, so here's a positive!'"},
+
+  {customer:"Fulton County Schools",date:"Jan 16, 2026",sector:"Corp Sec",submitter:"Erin",
+   themes:["Alert Speed","Dashboard"],
+   quote:"The assets are amazing, it's got to the point where they're giving me really strategic data now.",
+   note:"Dashboard enables getting the best outcomes quicker using the best data possible."},
+
+  {customer:"Marvell",date:"Jan 21, 2026",sector:"Corp Sec",submitter:"Justin",
+   themes:["Customer Success"],
+   quote:"A nice moment where they were really excited to show off their socks, big smiles as we work away together on their SOPs.",
+   note:"Strong relationship signal — deep collaborative engagement on standard operating procedures."},
+
+  {customer:"Perkins Coie",date:"Nov 26, 2025",sector:"Corp Sec",submitter:"Justin",
+   themes:["Alert Speed","Situational Awareness","Ground Truth","Executive Protection"],
+   quote:"From his conversations with counterparts elsewhere we beat Everbridge by over an hour.",
+   note:"Alert for NFL HQ shooting arrived 90 seconds after the 911 call. Beat Everbridge by 60+ min on DC National Guardsmen shooting."},
+
+  {customer:"Max Security",date:"Dec 8, 2025",sector:"Corp Sec",submitter:"Erin",
+   themes:["Dashboard","Alert Speed"],
+   quote:"Often faster than Dataminr for specific alert types.",
+   note:"Also praised: consolidated incident details, sharing tools, clean/modern UI with quick learning curve, and AI-powered summaries."},
+
+  {customer:"Torchstone",date:"Dec 8, 2025",sector:"Corp Sec",submitter:"Chris",
+   themes:["Risk Assessment","Situational Awareness","Dashboard"],
+   quote:"The look back ability is huge for us — to see what's happened in a location in the past year or 2 years.",
+   note:"Former data.by user. Deeply appreciates platform improvements for travel risk assessments."},
+
+  {customer:"P&G",date:"Dec 3, 2025",sector:"Corp Sec",submitter:"Chris",
+   themes:["Travel Risk","Risk Assessment","Situational Awareness"],
+   quote:"It's not overwhelming and it doesn't require me to look at my phone every 5 seconds. When an alert comes through, it's set up the way I want it set up.",
+   note:"Mobile app use case — targeted, non-intrusive alerts. Core duty-of-care validation for global travel programs."},
+
+  {customer:"Ripple",date:"Sep 25, 2025",sector:"Corp Sec",submitter:"Erin",
+   themes:["Alert Speed","Situational Awareness"],
+   quote:"Samdesk was much quicker to determine what it was. Which, while tragic, allowed us to determine that it was not a threat to our office.",
+   note:"Pedestrian incident outside NY office. Faster than NY Shield alert, enabling rapid threat assessment."},
+
+  {customer:"Grubhub",date:"Aug 27, 2025",sector:"Corp Sec",submitter:"Justin",
+   themes:["Alert Speed","Situational Awareness","Ground Truth","Dashboard"],
+   quote:"Utilized incident window to help inform them to extend the 1 hr pause — videos and media in incident which are helpful in knowing what is happening on the ground.",
+   note:"Shooting incident response — dashboard ground truth enabled operational decision to extend delivery pause."},
+
+  {customer:"TikTok",date:"Mar 13, 2025",sector:"Corp Sec",submitter:"Tamara",
+   themes:["Dashboard"],
+   quote:"It's just very intuitive. It doesn't take a lot of effort to learn how the system works and the alerts are put in front of them.",
+   note:"Consistent positive theme across multiple shifts during internal team review. Strong usability signal."},
+
+  {customer:"Marvell",date:"May 6, 2025",sector:"Corp Sec",submitter:"Justin",
+   themes:["Executive Protection","Travel Risk","Risk Assessment","Situational Awareness","Dashboard"],
+   quote:"It's fucking brilliant.",
+   note:"Unprompted enthusiastic endorsement covering exec protection and travel risk use cases."},
+
+  {customer:"Torchstone",date:"Jan 8, 2025",sector:"Corp Sec",submitter:"Tamara",
+   themes:["Risk Assessment","Situational Awareness"],
+   quote:"They find great value in the in-app alerts from RTC. Makes their job easier and allows faster response.",
+   note:"Real-time context (RTC) alerts highlighted as key value driver for security operations."},
+
+  {customer:"UK MoD",date:"Dec 4, 2024",sector:"Defence",submitter:"Charlotte Lynch",
+   themes:["Alert Speed","Situational Awareness","Risk Assessment","Ground Truth"],
+   quote:"They showed their Samdesk alerts to the US and French military who were able to see this user's intelligence and gain an understanding of what was happening on the ground in real-time.",
+   note:"Officer deployed in Niger 2 days before a coup — sole UK officer in the region. Samdesk became shared intel across allied forces."},
+
+  {customer:"UK MoD",date:"Dec 4, 2024",sector:"Defence",submitter:"Charlotte Lynch",
+   themes:["Alert Speed","Risk Assessment","Ground Truth"],
+   quote:"Instead of waiting for my superiors to ask me for information, I can be proactive and send them what I know as soon as it comes in.",
+   note:"Samdesk enables proactive real-time briefing — shifting the analyst from reactive to proactive posture."},
+
+  {customer:"UK MoD",date:"Dec 4, 2024",sector:"Defence",submitter:"Charlotte Lynch",
+   themes:["Risk Assessment","Situational Awareness","Ground Truth"],
+   quote:"I used Samdesk each morning to get a sense of what had happened overnight and shared that with my superiors. The information was always timely and informative.",
+   note:"Daily operational routine built around Samdesk for overnight monitoring and morning briefings."},
+
+  {customer:"UK MoD",date:"Dec 4, 2024",sector:"Defence",submitter:"Charlotte Lynch",
+   themes:["Alert Speed","Situational Awareness","Risk Assessment"],
+   quote:"I could see smoke, so I opened Samdesk to see exactly where the fire was. I saw immediately what the fire was and saved my colleagues time.",
+   note:"Field use case — rapid situational identification during live incident keeping personnel safe."},
+
+  // ── BATCH B: Stories 19–38 (second PDF set) ───────────────────────────
+  {customer:"99 Technologia Ltda",date:"Feb 3, 2026",sector:"Corp Sec",submitter:"Chris",
+   themes:["Travel Risk","Situational Awareness"],
+   quote:"The travel briefs from Samdesk are comprehensive and make it easy for us to enrich and update our own documents, saving time while improving the quality of information we share with travelers.",
+   note:"Brazil-based tech company. Travel briefs enabling city-specific, local context for employee safety programs."},
+
+  {customer:"Alberta Government (Pilot)",date:"Jan 26, 2026",sector:"Pub Sec",submitter:"Justin",
+   themes:["Risk Assessment","Situational Awareness","Ground Truth","Customer Success","Dashboard"],
+   quote:"Analysts at samdesk in the loop is huge as well, adding value and context, elevating critical alerts.",
+   note:"Daily digest praised as 'super helpful summary.' Noted cross-border relevance — events in the US directly affect Alberta sentiment."},
+
+  {customer:"AEO",date:"Sep 18, 2025",sector:"Corp Sec",submitter:"Chris",
+   themes:["Situational Awareness","Customer Success","Dashboard"],
+   quote:"Samdesk has allowed us to be more proactive. Prior to samdesk, people were calling in when their stores were impacted. Geofencing and crowdsourcing intelligence moved the needle to the other side.",
+   note:"Scott McBride, AEO. Retail security use case — shift from reactive store-level calls to proactive geofenced intelligence."},
+
+  {customer:"Anthropic",date:"Feb 25, 2026",sector:"Corp Sec",submitter:"Justin",
+   themes:["Executive Protection","Travel Risk","Situational Awareness","Alert Speed","Ground Truth","Customer Success","Dashboard"],
+   quote:"Joey runs the GSOC at Anthropic — they utilized alerts, quick RTC response on misinformation AI videos, and traffic layers while the executive was self-evacuating to tell them where road blocks were.",
+   note:"Executive in Mexico during cartel violence. Real-time traffic layers enabled guided self-evacuation. Broadest multi-feature use case in the dataset."},
+
+  {customer:"Anthropic",date:"Aug 27, 2025",sector:"Corp Sec",submitter:"Justin",
+   themes:["Travel Risk","Risk Assessment","Situational Awareness","Alert Speed","Ground Truth","Customer Success","Dashboard"],
+   quote:"Can I say the same for all these other platforms? Absolutely not. We haven't gone with absolutely any other platform. And it's a yes for me for the renewal.",
+   note:"Joey (GSOC lead) trialed nearly every competitor platform that year. Samdesk was the only one they 'don't have to worry about.' Strong renewal anchor."},
+
+  {customer:"Aritzia",date:"Mar 6, 2025",sector:"Corp Sec",submitter:"Justin",
+   themes:["Situational Awareness","Customer Success","Dashboard"],
+   quote:"Their team really prefers samdesk to Dataminr who they had previously — saying it's like day and night.",
+   note:"New onboard. Key differentiators: false reporting removed quickly, U&D events have live updates inside them, strong RTC shoutout."},
+
+  {customer:"Bell",date:"Jan 15, 2025",sector:"Corp Sec",submitter:"Tamara",
+   themes:["Situational Awareness","Customer Success"],
+   quote:"Appreciate the collaboration and how quickly we add new features — other vendors just say no, we think about it, get additional input and then surprise 2 months later we are telling them check out this new thing.",
+   note:"Competitive differentiator: Samdesk's feature velocity and responsiveness vs. slow-moving competitors."},
+
+  {customer:"Black Box Security",date:"Dec 2, 2025",sector:"Corp Sec",submitter:"Chris",
+   themes:["Dashboard"],
+   quote:"We like the column view feature, as it allows our team to monitor a greater number of reports at the same time. It has become a part of our operational setup.",
+   note:"Operational setup now includes multiple windows displaying maps and reported incidents — Samdesk as core SOC infrastructure."},
+
+  {customer:"Canada Goose",date:"Nov 5, 2025",sector:"Corp Sec",submitter:"Chris",
+   themes:["Situational Awareness","Dashboard","Customer Success"],
+   quote:"I really see a home run here, so I'm definitely looking forward to it.",
+   note:"Ron, new Head of Travel Security at Canada Goose, describing his vision to take travel security to the next level with Samdesk."},
+
+  {customer:"DoorDash",date:"Mar 17, 2025",sector:"Corp Sec",submitter:"Tamara",
+   themes:["Alert Speed","Ground Truth","Dashboard"],
+   quote:"The AI summary here actually was really helpful at this point because this got really, really loud. We utilize that AI summary to say, okay, well, here's an actual legible chain of events.",
+   note:"Multi-pin car crash incident in dense area. Multiple incident locations on screen simultaneously was a major improvement. Merchant list + dasher wellness checks enabled through Samdesk intel."},
+
+  {customer:"East-West",date:"Dec 3, 2025",sector:"Corp Sec",submitter:"Chris",
+   themes:["Travel Risk","Risk Assessment","Dashboard"],
+   quote:"That simple 2 capabilities that you all are providing has allowed me to cut one platform out of the picture and speed up our process at the same time.",
+   note:"Analytics brief + travel brief replaced a dedicated travel risk platform. Strong platform consolidation story."},
+
+  {customer:"Esri GSOC",date:"Dec 5, 2025",sector:"Corp Sec",submitter:"Justin",
+   themes:["Situational Awareness","Alert Speed","Customer Success"],
+   quote:"Carlos, who runs the GSOC at Esri, pushed to move to Samdesk from Dataminr — stressing that customer support was a huge part of that decision.",
+   note:"Quote: Dataminr's customer support 'sucks.' Support quality as a primary competitive win lever."},
+
+  {customer:"FedEx",date:"Nov 26, 2025",sector:"Corp Sec",submitter:"Justin",
+   themes:["Situational Awareness","Alert Speed","Ground Truth"],
+   quote:"They utilized the AI summary and photos from Samdesk to share information with the people internally that they needed to and got up-to-date information regarding the incident that they were not getting elsewhere.",
+   note:"FedEx truck/trailer accident in Memphis. AI summary + visual ground truth enabled rapid internal communications that other sources couldn't provide."},
+
+  {customer:"FedEx APAC",date:"Jan 26, 2026",sector:"Corp Sec",submitter:"Erin",
+   themes:["Situational Awareness","Dashboard"],
+   quote:"The Samdesk analysts' work is very well done… their explanation of the situation is helpful.",
+   note:"Mervin Tan Han Ming, APAC point of contact. Also highlighted geofences as key for VIP visit monitoring. Context: high praise despite English being a second language."},
+
+  {customer:"FEMA",date:"Jan 20, 2026",sector:"Pub Sec",submitter:"Justin",
+   themes:["Dashboard"],
+   quote:"Post-training, the FEMA lead let us know they find Samdesk more intuitive than Dataminr.",
+   note:"Competitive win signal post-training session. Usability advantage with experienced Dataminr users."},
+
+  {customer:"Fidelity Investments",date:"Jan 20, 2026",sector:"Corp Sec",submitter:"Chris",
+   themes:["Situational Awareness","Dashboard"],
+   quote:"The caution alerts are always something that catch your eye because they have the live maps, the live scheduled events and things like that. So we definitely appreciate when those come up.",
+   note:"Using Samdesk alerts in intelligence bulletins distributed broadly inside and outside the security team."},
+
+  {customer:"Fidelity",date:"Nov 18, 2025",sector:"Corp Sec",submitter:"Tamara",
+   themes:["Dashboard"],
+   quote:"They added the asset indicators on the maps outside of the proximity… It helps to get a wider view of potential impact, especially with weather and moving protests.",
+   note:"Feature request fulfilled — expanded asset view on map. Strong product iteration story showing Samdesk listens and delivers."},
+
+  {customer:"Fidelity",date:"Nov 18, 2025",sector:"Corp Sec",submitter:"Tamara",
+   themes:["Dashboard"],
+   quote:"I love the columns. It was the only good thing I thought about Dataminr. They were just drinking from a fire hose and there was so much nonsense in there.",
+   note:"Dataminr described as a 'fire hose of nonsense.' Column view and reduced clicks as the key upgrade in switching."},
+
+  {customer:"Ford",date:"Oct 15, 2025",sector:"Corp Sec",submitter:"Chris",
+   themes:["Situational Awareness","Alert Speed","Executive Protection","Dashboard"],
+   quote:"Alexander Shaver emphasized the value of Samdesk for early detection of incidents that don't receive mainstream media coverage, particularly for executive protection scenarios.",
+   note:"Role-based notification preferences (email vs mobile) across team members. Under-the-radar incident detection as a key exec protection differentiator."},
+
+  {customer:"Ford",date:"Jun 16, 2025",sector:"Corp Sec",submitter:"Justin",
+   themes:["Executive Protection","Travel Risk","Risk Assessment","Situational Awareness","Dashboard"],
+   quote:"With the polygons, they were able to quickly see what areas were affected and if any travellers were staying in or near the area. They did move one traveller's hotel and moved a car preview event to another location.",
+   note:"Riley from Ford. LA protests use case. Polygon geofencing enabled two real operational decisions — hotel relocation and event venue change."},
+];
+
+// ── Helpers ──────────────────────────────────────────────────────────────
+function tagClass(t){
+  if(t.includes("Alert Speed"))return"tag-alert";
+  if(t.includes("Situational"))return"tag-sit";
+  if(t.includes("Dashboard"))return"tag-dash";
+  if(t.includes("Risk Assessment"))return"tag-risk";
+  if(t.includes("Ground Truth"))return"tag-ground";
+  if(t.includes("Executive"))return"tag-exec";
+  if(t.includes("Travel"))return"tag-travel";
+  return"tag-cs";
+}
+function sectorClass(s){return s==="Corp Sec"?"corp":s==="Defence"?"defence":"pub"}
+
+function renderCard(s){
+  const tags=s.themes.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('');
+  return`<div class="card" data-sector="${s.sector}" data-themes="${s.themes.join('|')}" data-search="${(s.customer+' '+s.quote+' '+s.note+' '+s.themes.join(' ')).toLowerCase()}">
+    <div class="card-header"><div class="customer">${s.customer}</div><span class="sector-badge ${sectorClass(s.sector)}">${s.sector}</span></div>
+    <div class="quote">${s.quote}</div>
+    ${s.note?`<div class="note">💡 ${s.note}</div>`:''}
+    <div class="tags">${tags}</div>
+    <div class="card-footer"><span class="date-info">📅 ${s.date}</span><span class="submitter">via ${s.submitter}</span></div>
+  </div>`;
+}
+
+const grid=document.getElementById('cardsGrid');
+grid.innerHTML=stories.map(renderCard).join('');
+
+// ── Filter state ──────────────────────────────────────────────────────────
+let activeSector='all',activeTheme=null;
+
+function applyFilters(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  let vis=0;
+  document.querySelectorAll('.card').forEach(c=>{
+    const ok=(activeSector==='all'||c.dataset.sector===activeSector)&&
+             (!activeTheme||c.dataset.themes.includes(activeTheme))&&
+             (!q||c.dataset.search.includes(q));
+    c.classList.toggle('hidden',!ok);
+    if(ok)vis++;
+  });
+  document.getElementById('totalCount').textContent=vis;
+  let nr=document.querySelector('.no-results');
+  if(vis===0&&!nr){grid.insertAdjacentHTML('beforeend','<div class="no-results"><div style="font-size:2rem;margin-bottom:10px">🔍</div>No stories match your filters.</div>')}
+  else if(nr)nr.style.display=vis===0?'block':'none';
+}
+
+document.getElementById('searchInput').addEventListener('input',applyFilters);
+
+document.querySelectorAll('[data-sector]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    activeSector=btn.dataset.sector;
+    document.querySelectorAll('[data-sector]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  });
+});
+
+document.querySelectorAll('[data-theme]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    if(activeTheme===btn.dataset.theme){activeTheme=null;btn.classList.remove('active-theme')}
+    else{document.querySelectorAll('[data-theme]').forEach(b=>b.classList.remove('active-theme'));activeTheme=btn.dataset.theme;btn.classList.add('active-theme')}
+    applyFilters();
+  });
+});
+</script>
+</body>
+</html>
