@@ -5,83 +5,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAMDesk Discovery Guide</title>
 <style>
+:root{--bg:#0d1117;--surface:#161b22;--s2:#1c2230;--border:#30363d;--bl:#21262d;--accent:#00c2ff;--green:#00d084;--red:#ef4444;--text:#e6edf3;--muted:#8b949e;--faint:#6e7681}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f4f0;color:#1a1a18}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text)}
 a{text-decoration:none}
-.topnav{background:#0d1117;border-bottom:1px solid #30363d;padding:0 40px;display:flex;align-items:center;gap:4px;overflow-x:auto;position:sticky;top:0;z-index:100}
-.topnav a{color:#8b949e;text-decoration:none;font-size:.8rem;font-weight:500;padding:12px 14px;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
-.topnav a:hover{color:#e6edf3}
-.topnav a.active{color:#00c2ff;border-bottom-color:#00c2ff}
-.nav-logo{color:#00c2ff;font-weight:800;font-size:.9rem;margin-right:12px;letter-spacing:-.02em;padding:12px 0;white-space:nowrap;flex-shrink:0}
+.topnav{background:#0d1117;border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;gap:4px;overflow-x:auto;position:sticky;top:0;z-index:100}
+.topnav a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;padding:12px 14px;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.topnav a:hover{color:var(--text)}
+.topnav a.active{color:var(--accent);border-bottom-color:var(--accent)}
+.nav-logo{color:var(--accent);font-weight:800;font-size:.9rem;margin-right:12px;letter-spacing:-.02em;padding:12px 0;white-space:nowrap;flex-shrink:0}
 .content{padding:2rem 1.5rem;max-width:1200px;margin:0 auto}
-.header{margin-bottom:1.75rem}
-.page-title{font-size:20px;font-weight:500;color:#1a1a18;margin-bottom:.25rem}
-.page-sub{font-size:13px;color:#888780}
-.narrative{background:#1a1a18;color:#f5f4f0;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.75rem}
-.narrative-label{font-size:11px;font-weight:500;letter-spacing:.06em;color:#888780;text-transform:uppercase;margin-bottom:.5rem}
-.narrative-text{font-size:15px;line-height:1.6;color:#f5f4f0}
-.narrative-text strong{color:#fff;font-weight:500}
-.section-label{font-size:11px;font-weight:500;letter-spacing:.06em;color:#888780;text-transform:uppercase;margin-bottom:.75rem}
-.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:0;background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;overflow:hidden;margin-bottom:1.75rem}
-.step{padding:1rem;border-right:0.5px solid #d3d1c7;position:relative}
+.page-title{font-size:20px;font-weight:500;color:var(--text);margin-bottom:.25rem}
+.page-sub{font-size:13px;color:var(--muted);margin-bottom:1.75rem}
+.narrative{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.75rem}
+.narrative-label{font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--accent);text-transform:uppercase;margin-bottom:.5rem}
+.narrative-text{font-size:15px;line-height:1.6;color:var(--muted)}
+.narrative-text strong{color:var(--text);font-weight:500}
+.section-label{font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin-bottom:.75rem}
+.steps{display:grid;grid-template-columns:repeat(6,1fr);background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.75rem}
+.step{padding:1rem;border-right:1px solid var(--border)}
 .step:last-child{border-right:none}
-.step-num{font-size:11px;font-weight:500;color:#b4b2a9;margin-bottom:.35rem}
-.step-title{font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:.35rem;line-height:1.3}
-.step-desc{font-size:12px;color:#5f5e5a;line-height:1.4}
+.step-num{font-size:11px;font-weight:500;color:var(--faint);margin-bottom:.35rem}
+.step-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:.35rem;line-height:1.3}
+.step-desc{font-size:12px;color:var(--muted);line-height:1.4}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.75rem}
-.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:1.75rem}
-.card{background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;overflow:hidden}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .card-pad{padding:1.25rem 1.5rem}
-.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;overflow:hidden;margin-bottom:1.75rem}
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.75rem}
 .ba-col{padding:1.25rem 1.5rem}
-.ba-col-right{border-left:0.5px solid #d3d1c7}
-.ba-header{font-size:12px;font-weight:500;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:0.5px solid #f1efe8}
-.ba-header-before{color:#a32d2d}
-.ba-header-after{color:#3b6d11}
+.ba-col-right{border-left:1px solid var(--border)}
+.ba-header{font-size:12px;font-weight:500;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--bl)}
+.ba-header-before{color:var(--red)}
+.ba-header-after{color:var(--green)}
 .ba-item{display:flex;gap:.6rem;margin-bottom:.6rem;align-items:flex-start}
 .ba-item:last-child{margin-bottom:0}
 .ba-dot{width:5px;height:5px;border-radius:50%;margin-top:6px;flex-shrink:0}
-.ba-dot-before{background:#d85a30}
-.ba-dot-after{background:#639922}
-.ba-text{font-size:12px;color:#1a1a18;line-height:1.4;flex:1}
-.ba-sub{font-size:11px;color:#888780;margin-top:1px}
-.ba-q{font-size:12px;color:#185fa5;line-height:1.4;margin-bottom:.4rem;padding-left:.75rem;border-left:2px solid #b5d4f4}
+.ba-dot-before{background:var(--red)}
+.ba-dot-after{background:var(--green)}
+.ba-text{font-size:12px;color:var(--text);line-height:1.4;flex:1}
+.ba-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.ba-q{font-size:12px;color:var(--accent);line-height:1.4;margin-bottom:.4rem;padding-left:.75rem;border-left:2px solid rgba(0,194,255,.3)}
 .ba-q:last-child{margin-bottom:0}
-.adar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;overflow:hidden;margin-bottom:1.75rem}
-.adar-col{padding:1.1rem 1.25rem;border-right:0.5px solid #d3d1c7}
+.adar-grid{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.75rem}
+.adar-col{padding:1.1rem 1.25rem;border-right:1px solid var(--border)}
 .adar-col:last-child{border-right:none}
-.adar-letter{font-size:22px;font-weight:500;color:#1a1a18;margin-bottom:.15rem}
-.adar-word{font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:.4rem}
-.adar-desc{font-size:12px;color:#5f5e5a;line-height:1.4;margin-bottom:.6rem}
+.adar-letter{font-size:22px;font-weight:700;color:var(--accent);margin-bottom:.15rem}
+.adar-word{font-size:13px;font-weight:500;color:var(--text);margin-bottom:.4rem}
+.adar-desc{font-size:12px;color:var(--muted);line-height:1.4;margin-bottom:.6rem}
 .adar-qs{display:flex;flex-direction:column;gap:.35rem}
-.adar-q{font-size:11px;color:#185fa5;line-height:1.4;padding-left:.6rem;border-left:1.5px solid #b5d4f4}
+.adar-q{font-size:11px;color:var(--accent);line-height:1.4;padding-left:.6rem;border-left:1.5px solid rgba(0,194,255,.3)}
 .trap-table{width:100%;border-collapse:collapse;font-size:13px}
-.trap-table th{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#888780;padding:.6rem .75rem;border-bottom:0.5px solid #d3d1c7;text-align:left;background:#f5f4f0}
-.trap-table td{padding:.7rem .75rem;border-bottom:0.5px solid #f1efe8;vertical-align:top;line-height:1.4}
+.trap-table th{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:.6rem .75rem;border-bottom:1px solid var(--border);text-align:left;background:var(--s2)}
+.trap-table td{padding:.7rem .75rem;border-bottom:1px solid var(--bl);vertical-align:top;line-height:1.4}
 .trap-table tr:last-child td{border-bottom:none}
-.trap-table tr:hover td{background:#faf9f7}
-.trap-theme{font-weight:500;color:#1a1a18;font-size:12px}
-.trap-q{color:#185fa5;font-size:13px}
-.trap-exposes{color:#5f5e5a;font-size:12px}
-.programs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.75rem}
-.program-pill{padding:.4rem .9rem;border:0.5px solid #d3d1c7;border-radius:20px;font-size:12px;color:#5f5e5a;background:#fff;cursor:pointer;transition:all .15s}
-.program-pill:hover,.program-pill.active{background:#1a1a18;color:#fff;border-color:#1a1a18}
+.trap-table tr:hover td{background:var(--s2)}
+.trap-theme{font-weight:500;color:var(--text);font-size:12px}
+.trap-q{color:var(--accent);font-size:13px}
+.trap-exposes{color:var(--muted);font-size:12px}
+.programs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.program-pill{padding:.4rem .9rem;border:1px solid var(--border);border-radius:20px;font-size:12px;color:var(--muted);background:var(--s2);cursor:pointer;transition:all .15s}
+.program-pill:hover,.program-pill.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
 .dq-list{display:flex;flex-direction:column;gap:.5rem}
-.dq-item{display:flex;gap:.6rem;align-items:flex-start;font-size:13px;color:#5f5e5a;line-height:1.5}
-.dq-num{min-width:20px;height:20px;border-radius:50%;background:#f1efe8;border:0.5px solid #d3d1c7;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#888780;flex-shrink:0;margin-top:2px}
-.cta{background:#f5f4f0;border:0.5px solid #d3d1c7;border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.75rem}
-.cta-text{font-size:14px;color:#1a1a18}
-.cta-text span{color:#888780;font-size:13px;display:block;margin-top:2px}
+.dq-item{display:flex;gap:.6rem;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5}
+.dq-num{min-width:20px;height:20px;border-radius:50%;background:var(--s2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--faint);flex-shrink:0;margin-top:2px}
+.cta{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.75rem}
+.cta-text{font-size:14px;color:var(--text)}
+.cta-text span{color:var(--muted);font-size:13px;display:block;margin-top:2px}
 .cta-links{display:flex;gap:.5rem;flex-wrap:wrap}
-.cta-btn{padding:7px 16px;border:0.5px solid #1a1a18;border-radius:8px;font-size:13px;color:#1a1a18;background:#fff;cursor:pointer;font-family:inherit}
-.cta-btn:hover{background:#1a1a18;color:#fff}
-.footer{font-size:11px;color:#b4b2a9;text-align:right;padding-top:.75rem;border-top:0.5px solid #d3d1c7}
-@media(max-width:900px){.steps{grid-template-columns:repeat(3,1fr)}.step:nth-child(3){border-right:none}.step:nth-child(4),.step:nth-child(5),.step:nth-child(6){border-top:0.5px solid #d3d1c7}.adar-grid{grid-template-columns:1fr 1fr}.adar-col:nth-child(2){border-right:none}.adar-col:nth-child(3),.adar-col:nth-child(4){border-top:0.5px solid #d3d1c7}.two-col,.three-col{grid-template-columns:1fr}.topnav{padding:0 14px}}
-@media(max-width:600px){.steps{grid-template-columns:1fr}.step{border-right:none;border-bottom:0.5px solid #d3d1c7}.step:last-child{border-bottom:none}.ba-grid{grid-template-columns:1fr}.ba-col-right{border-left:none;border-top:0.5px solid #d3d1c7}.adar-grid{grid-template-columns:1fr}.adar-col{border-right:none;border-bottom:0.5px solid #d3d1c7}.adar-col:last-child{border-bottom:none}}
+.cta-btn{padding:7px 16px;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);background:var(--s2);cursor:pointer;font-family:inherit;transition:all .2s}
+.cta-btn:hover{background:var(--accent);color:#000;border-color:var(--accent)}
+.footer{font-size:11px;color:var(--faint);text-align:right;padding-top:.75rem;border-top:1px solid var(--border)}
+@media(max-width:900px){.steps{grid-template-columns:repeat(3,1fr)}.step:nth-child(3){border-right:none}.step:nth-child(4),.step:nth-child(5),.step:nth-child(6){border-top:1px solid var(--border)}.adar-grid{grid-template-columns:1fr 1fr}.adar-col:nth-child(2){border-right:none}.adar-col:nth-child(3),.adar-col:nth-child(4){border-top:1px solid var(--border)}.two-col{grid-template-columns:1fr}.topnav{padding:0 14px}}
+@media(max-width:600px){.steps{grid-template-columns:1fr}.step{border-right:none;border-bottom:1px solid var(--border)}.step:last-child{border-bottom:none}.ba-grid{grid-template-columns:1fr}.ba-col-right{border-left:none;border-top:1px solid var(--border)}.adar-grid{grid-template-columns:1fr}.adar-col{border-right:none;border-bottom:1px solid var(--border)}.adar-col:last-child{border-bottom:none}}
 </style>
 </head>
 <body>
-
 <nav class="topnav">
   <span class="nav-logo">⬡ samdesk</span>
   <a href="index.html">Home</a>
@@ -91,18 +89,13 @@ a{text-decoration:none}
   <a href="stories.html">Customer Stories</a>
   <a href="use-cases.html">Use Cases</a>
 </nav>
-
 <div class="content">
-<div class="header">
-  <div class="page-title">Discovery Guide</div>
-  <div class="page-sub">Use this before and during calls — from opening questions to ADAR storytelling to demo flow</div>
-</div>
-
+<div class="page-title">Discovery Guide</div>
+<div class="page-sub">Use this before and during calls — from opening questions to ADAR storytelling to demo flow</div>
 <div class="narrative">
   <div class="narrative-label">The decision gap — your anchor</div>
   <div class="narrative-text">Security teams don't struggle to <strong>see risk</strong> — they struggle to <strong>understand what matters and act on it in time.</strong> Most platforms detect events or broadcast them. samdesk turns signals into <strong>operational decisions</strong> — automatically, in real time, tailored to your organization.</div>
 </div>
-
 <div class="section-label">Conversation flow — discovery to demo</div>
 <div class="steps">
   <div class="step"><div class="step-num">Step 1</div><div class="step-title">Identify the program</div><div class="step-desc">Find out which security program owns the problem. Listen for the use case before going deeper.</div></div>
@@ -112,11 +105,10 @@ a{text-decoration:none}
   <div class="step"><div class="step-num">Step 5</div><div class="step-title">Demo the right tools</div><div class="step-desc">samdesk is a toolbox. Show only the capabilities that match their confirmed workflow problem.</div></div>
   <div class="step"><div class="step-num">Step 6</div><div class="step-title">Paint the future state</div><div class="step-desc">Close by showing how security operations evolve toward AI-assisted workflows — from dashboards to decisions.</div></div>
 </div>
-
 <div class="section-label">Step 1 — identify the security program</div>
 <div class="two-col">
   <div class="card card-pad">
-    <div style="font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:.75rem">Opening discovery questions</div>
+    <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:.75rem">Opening discovery questions</div>
     <div class="dq-list">
       <div class="dq-item"><div class="dq-num">1</div><div>What types of events or disruptions does your team monitor most closely today?</div></div>
       <div class="dq-item"><div class="dq-num">2</div><div>Which team is responsible for situational awareness across the organization?</div></div>
@@ -127,7 +119,7 @@ a{text-decoration:none}
     </div>
   </div>
   <div class="card card-pad">
-    <div style="font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:.75rem">What you're listening for</div>
+    <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:.75rem">What you're listening for</div>
     <div class="programs" id="programs">
       <div class="program-pill active" onclick="setProgram(this,'travel')">Travel Risk</div>
       <div class="program-pill" onclick="setProgram(this,'gsoc')">Corporate Security / GSOC</div>
@@ -135,10 +127,9 @@ a{text-decoration:none}
       <div class="program-pill" onclick="setProgram(this,'ep')">Executive Protection</div>
       <div class="program-pill" onclick="setProgram(this,'crisis')">Crisis Management</div>
     </div>
-    <div id="program-content" style="font-size:13px;color:#5f5e5a;line-height:1.6"></div>
+    <div id="program-content"></div>
   </div>
 </div>
-
 <div class="section-label">Step 2 — surface the friction: before &amp; after</div>
 <div class="ba-grid">
   <div class="ba-col">
@@ -148,7 +139,7 @@ a{text-decoration:none}
     <div class="ba-item"><div class="ba-dot ba-dot-before"></div><div><div class="ba-text">False positives and noise</div><div class="ba-sub">Teams chase signals that aren't real. Burnout. Wasted cycles. Loss of trust.</div></div></div>
     <div class="ba-item"><div class="ba-dot ba-dot-before"></div><div><div class="ba-text">Lost or missed signals</div><div class="ba-sub">Detection happens too late to affect outcomes. Operational disruption.</div></div></div>
     <div class="ba-item"><div class="ba-dot ba-dot-before"></div><div><div class="ba-text">Low confidence in alerts</div><div class="ba-sub">Teams hesitate or over-validate. Slower decisions, reduced impact.</div></div></div>
-    <div style="margin-top:1rem;padding-top:.75rem;border-top:0.5px solid #f1efe8">
+    <div style="margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--bl)">
       <div class="section-label" style="margin-bottom:.5rem">Discovery questions to surface this</div>
       <div class="ba-q">Walk me through alert to decision. Where does time get lost?</div>
       <div class="ba-q">How many tools are involved before you can act?</div>
@@ -165,20 +156,19 @@ a{text-decoration:none}
     <div class="ba-item"><div class="ba-dot ba-dot-after"></div><div><div class="ba-text">Focus on what matters</div><div class="ba-sub">Noise removed, relevance tuned. Better team performance and lower burnout.</div></div></div>
     <div class="ba-item"><div class="ba-dot ba-dot-after"></div><div><div class="ba-text">Integrated workflows</div><div class="ba-sub">Alerts flow directly into action. Faster coordinated response.</div></div></div>
     <div class="ba-item"><div class="ba-dot ba-dot-after"></div><div><div class="ba-text">Strategic security function</div><div class="ba-sub">Security guides decisions, not reactive. Executive trust and business enablement.</div></div></div>
-    <div style="margin-top:1rem;padding-top:.75rem;border-top:0.5px solid #f1efe8">
+    <div style="margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--bl)">
       <div class="section-label" style="margin-bottom:.5rem">Questions to paint the future state</div>
       <div class="ba-q">What would 30–60 minutes of lead time change for your team?</div>
       <div class="ba-q">What would it mean if alerts arrived ready to act on?</div>
       <div class="ba-q">How would reducing noise impact your team's performance?</div>
       <div class="ba-q">How seamless is alert-to-action today?</div>
-      <div class="ba-q">How would leadership view your team if time-to-outcome was faster and decisions were more confident?</div>
+      <div class="ba-q">How would leadership view your team if time-to-outcome was faster?</div>
     </div>
   </div>
 </div>
-
 <div class="section-label">Step 3 — introduce the ADAR framework</div>
-<div style="background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;padding:.85rem 1.25rem;margin-bottom:.75rem;font-size:13px;color:#5f5e5a;line-height:1.5">
-  <strong style="color:#1a1a18">How to introduce it:</strong> "Most security teams we work with are trying to reduce the time it takes to move from signals to decisions. We think about that workflow in four stages."
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.85rem 1.25rem;margin-bottom:.75rem;font-size:13px;color:var(--muted);line-height:1.5">
+  <strong style="color:var(--text)">How to introduce it:</strong> "Most security teams we work with are trying to reduce the time it takes to move from signals to decisions. We think about that workflow in four stages."
 </div>
 <div class="adar-grid">
   <div class="adar-col"><div class="adar-letter">A</div><div class="adar-word">Anticipate</div><div class="adar-desc">Surface early signals before events escalate. Proactive security posture rather than reactive response.</div><div class="adar-qs"><div class="adar-q">When do you typically become aware of incidents — before or after they escalate?</div><div class="adar-q">How much lead time does your team currently have?</div></div></div>
@@ -186,7 +176,6 @@ a{text-decoration:none}
   <div class="adar-col"><div class="adar-letter">A</div><div class="adar-word">Analyze</div><div class="adar-desc">Understand operational impact across people, assets, and regions. Automatically mapped to your org.</div><div class="adar-qs"><div class="adar-q">How do you assess what's actually impacted — people, facilities, supply chain?</div><div class="adar-q">How much manual work is needed after an alert to understand impact?</div></div></div>
   <div class="adar-col"><div class="adar-letter">R</div><div class="adar-word">Resolve</div><div class="adar-desc">Prioritize response and coordinate action. Sitrep briefs with recommended next steps.</div><div class="adar-qs"><div class="adar-q">How does information turn into a coordinated response today?</div><div class="adar-q">Who decides what action to take and how long does that take?</div></div></div>
 </div>
-
 <div class="section-label">Quick access — trap questions for any call</div>
 <div class="card" style="margin-bottom:1.75rem">
   <table class="trap-table">
@@ -203,7 +192,6 @@ a{text-decoration:none}
     </tbody>
   </table>
 </div>
-
 <div class="section-label">Required capabilities — what good looks like</div>
 <div class="card" style="margin-bottom:1.75rem">
   <table class="trap-table">
@@ -218,26 +206,20 @@ a{text-decoration:none}
     </tbody>
   </table>
 </div>
-
 <div class="cta">
   <div class="cta-text">Ready to prep for a specific competitor?<span>Use the Competitive Map to identify where they sit in the market, then go deep on the Battle Card.</span></div>
-  <div class="cta-links">
-    <a href="competitive-map.html"><button class="cta-btn">Competitive Map</button></a>
-    <a href="index.html"><button class="cta-btn">Battle Cards</button></a>
-  </div>
+  <div class="cta-links"><a href="competitive-map.html"><button class="cta-btn">Competitive Map</button></a><a href="index.html"><button class="cta-btn">Battle Cards</button></a></div>
 </div>
-
 <div class="footer">SAMDesk / ADAR — Internal sales reference only · March 2026</div>
 </div>
-
 <script>
 const programData={travel:{label:"Travel Risk",qs:["How do you currently brief travelers before high-risk trips?","When a situation escalates in a destination city, how quickly does your team find out?","How do you determine which travelers are most exposed during a live event?","What does your team do between quarterly risk briefings when something changes overnight?"]},gsoc:{label:"Corporate Security / GSOC",qs:["How many analysts are monitoring alerts at any given time — and what's their triage process?","What percentage of alerts your team investigates turn out to be irrelevant?","How do you currently determine whether a global event impacts your facilities or people?","What does your current GSOC stack look like — and where are the handoff points?"]},supply:{label:"Supply Chain Risk",qs:["How do you monitor for disruptions affecting your suppliers or logistics routes?","When a port closure or civil unrest event occurs, how quickly does that reach your supply chain team?","How do you map a live event to your specific supplier footprint?","How many tools are involved before you can determine supply chain impact?"]},ep:{label:"Executive Protection",qs:["How do you build risk profiles for specific executives traveling to elevated-risk regions?","When a threat surfaces that's relevant to a specific executive, how does that reach your EP team?","How do you monitor for threats that are specific to your executives' profiles — not just generic country risk?","What's the process for escalating an EP-relevant event to the executive and their team?"]},crisis:{label:"Crisis Management",qs:["When a crisis is developing, how long before your crisis management team has a full picture?","How do you coordinate response across multiple teams and geographies during an active event?","What does your current sitrep process look like — how are briefings assembled and distributed?","How confident is your leadership team in the information they're receiving during a live crisis?"]}};
 function setProgram(el,key){
   document.querySelectorAll('.program-pill').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
   const d=programData[key];
-  const html=d.qs.map((q,i)=>`<div class="dq-item" style="margin-bottom:.5rem"><div class="dq-num">${i+1}</div><div style="font-size:13px;color:#185fa5;line-height:1.5">${q}</div></div>`).join('');
-  document.getElementById('program-content').innerHTML=`<div style="font-size:12px;font-weight:500;color:#1a1a18;margin-bottom:.6rem">${d.label} — discovery questions</div><div class="dq-list">${html}</div>`;
+  const html=d.qs.map((q,i)=>`<div class="dq-item" style="margin-bottom:.5rem"><div class="dq-num">${i+1}</div><div style="font-size:13px;color:var(--accent);line-height:1.5">${q}</div></div>`).join('');
+  document.getElementById('program-content').innerHTML=`<div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:.6rem">${d.label} — discovery questions</div><div class="dq-list">${html}</div>`;
 }
 setProgram(document.querySelector('.program-pill'),'travel');
 </script>
