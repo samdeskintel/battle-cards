@@ -531,6 +531,18 @@ useCases.forEach((uc,i)=>{
     </div>`;
   panesEl.appendChild(pane);
 });
+
+// Activate tab from URL hash on load
+const hash=window.location.hash.replace('#','');
+if(hash){
+  const idx=useCases.findIndex(u=>u.id===hash);
+  if(idx>-1){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab')[idx].classList.add('active');
+    document.getElementById('pane-'+hash).classList.add('active');
+  }
+}
 </script>
 </body>
 </html>

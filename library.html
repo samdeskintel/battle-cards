@@ -199,6 +199,17 @@ function render(){
     const typeTags=inc.type.map(t=>`<span class="tag">${t}</span>`).join('');
     const card=document.createElement('div');
     card.className='card';
+    const ucHash={
+      'Workplace Safety':'workplace',
+      'Physical Asset Protection':'physical',
+      'Travel Risk':'travel',
+      'Supply Chain':'supply',
+      'Executive Protection':'ep',
+      'National Defense':'defense'
+    };
+    const primaryUC=inc.uc[0];
+    const hash=ucHash[primaryUC]||'';
+    const link=hash?`use-cases.html#${hash}`:'use-cases.html';
     card.innerHTML=`
       <div class="card-top">
         <div class="card-title">${inc.title}</div>
@@ -208,6 +219,7 @@ function render(){
       </div>
       <div class="card-bottom">
         <div class="card-region">${inc.region}</div>
+        <a href="${link}" style="font-size:11px;color:#185fa5;text-decoration:none;font-weight:500">View use case →</a>
       </div>`;
     grid.appendChild(card);
   });
