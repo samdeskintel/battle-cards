@@ -55,6 +55,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .lm-item{display:flex;gap:.5rem;align-items:flex-start;font-size:12px;color:var(--muted);line-height:1.5;padding:.4rem 0;border-bottom:1px solid var(--bl)}
 .lm-item:nth-last-child(-n+2){border-bottom:none}
 .lm-dot{width:5px;height:5px;border-radius:50%;background:var(--red);margin-top:6px;flex-shrink:0}
+.lm-dot-orange{width:5px;height:5px;border-radius:50%;background:var(--orange);margin-top:6px;flex-shrink:0}
 .proof-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .proof-item{display:flex;gap:.75rem;padding:.85rem 1rem;border-bottom:1px solid var(--bl);align-items:flex-start}
 .proof-item:last-child{border-bottom:none}
@@ -62,6 +63,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .proof-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px}
 .proof-desc{font-size:12px;color:var(--muted);line-height:1.4}
 .footer{font-size:11px;color:var(--faint);text-align:right;padding-top:.75rem;border-top:1px solid var(--border)}
+.am-updated{border-left:2px solid var(--orange)}
 @media(max-width:900px){.warmap-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.pivot-header,.pivot-row{grid-template-columns:90px 1fr 1fr 1fr}.topnav{padding:0 14px}}
 @media(max-width:600px){.warmap-grid{grid-template-columns:1fr}.lm-grid{grid-template-columns:1fr}.lm-item:nth-last-child(-n+2){border-bottom:1px solid var(--bl)}.lm-item:last-child{border-bottom:none}.pivot-header{display:none}.pivot-row{grid-template-columns:1fr;padding:.5rem .75rem}.pc{border-right:none;border-bottom:1px solid var(--bl);padding:.3rem 0}.pc:last-child{border-bottom:none}}
 </style>
@@ -101,7 +103,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <div class="pivot-row"><div class="pc pc-name">Dataminr</div><div class="pc pc-prospect">"Dataminr already does that."</div><div class="pc pc-disc">How long does your team spend validating alerts before acting?</div><div class="pc pc-reframe">They detect signals. <strong>samdesk delivers decision-ready context.</strong></div></div>
   <div class="pivot-row"><div class="pc pc-name">International SOS</div><div class="pc pc-prospect">"We already use them."</div><div class="pc pc-disc">When do they warn you about risk — before or after it materializes?</div><div class="pc pc-reframe">They respond to crises. <strong>samdesk helps avoid them.</strong></div></div>
   <div class="pivot-row"><div class="pc pc-name">Everbridge</div><div class="pc pc-prospect">"We use Everbridge."</div><div class="pc pc-disc">How do you decide to trigger a notification — what's the process?</div><div class="pc pc-reframe">They communicate crises. <strong>samdesk determines if it's a crisis.</strong></div></div>
-  <div class="pivot-row"><div class="pc pc-name">AlertMedia</div><div class="pc pc-prospect">"We notify employees."</div><div class="pc pc-disc">How often do you send mass alerts — and what triggers them?</div><div class="pc pc-reframe">They send messages. <strong>samdesk decides when they're needed.</strong></div></div>
+  <div class="pivot-row am-updated"><div class="pc pc-name">AlertMedia</div><div class="pc pc-prospect">"They give us an end-to-end workflow — signal to resolution."</div><div class="pc pc-disc">When a threat fires, how long does it take your team to decide what to do and who to notify?</div><div class="pc pc-reframe">They connect the steps. <strong>samdesk compresses the time between them.</strong> Connecting a workflow isn't the same as closing the decision gap.</div></div>
+  <div class="pivot-row am-updated"><div class="pc pc-name">AlertMedia</div><div class="pc pc-prospect">"They just launched AI analytics and dashboards."</div><div class="pc pc-disc">When a threat is active right now, what does a dashboard tell you to do?</div><div class="pc pc-reframe">Their analytics are backward-looking — delivery rates, KPIs, historical reporting. That's an audit trail. <strong>samdesk is decision support in the moment.</strong></div></div>
   <div class="pivot-row"><div class="pc pc-name">Factal</div><div class="pc pc-prospect">"We get alerts from Factal."</div><div class="pc pc-disc">How do you assess the operational impact of a Factal alert?</div><div class="pc pc-reframe">They verify news. <strong>samdesk determines impact.</strong></div></div>
   <div class="pivot-row"><div class="pc pc-name">Seerist</div><div class="pc pc-prospect">"We use Seerist."</div><div class="pc pc-disc">How does Seerist intelligence drive real-time operational decisions?</div><div class="pc pc-reframe">They predict risk. <strong>samdesk operationalizes it.</strong></div></div>
   <div class="pivot-row"><div class="pc pc-name">Crisis24 / Control Risks</div><div class="pc pc-prospect">"We rely on their monitoring."</div><div class="pc pc-disc">How quickly do analysts deliver updates when something is actively unfolding?</div><div class="pc pc-reframe">Advisory firms respond to crises. <strong>samdesk automates intelligence.</strong></div></div>
@@ -123,6 +126,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         <div class="lm-item"><div class="lm-dot"></div><div>The future of security operations is automation, not dashboards.</div></div>
         <div class="lm-item"><div class="lm-dot"></div><div>If analysts spend hours interpreting alerts, the system works for the software.</div></div>
         <div class="lm-item"><div class="lm-dot"></div><div>Winning platforms will turn signals into decisions automatically.</div></div>
+        <div class="lm-item"><div class="lm-dot-orange"></div><div>"End-to-end workflow" is a feature list, not a decision engine. Ask what happens in the gap between signal and action.</div></div>
+        <div class="lm-item"><div class="lm-dot-orange"></div><div>AI that drafts messages and builds reports is a productivity tool — it still depends entirely on the human to decide.</div></div>
       </div>
     </div>
   </div>
