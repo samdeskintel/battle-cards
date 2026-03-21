@@ -172,6 +172,16 @@
   </div>
   <div class="hint">Results are live web searches — best used for pre-call prep or after seeing a competitor press release.</div>
 
+  <!-- API KEY -->
+  <div id="apiKeySection">
+    <div class="section-label">Anthropic API key (session only — never stored)</div>
+    <div class="input-row">
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-…" style="font-family:monospace;font-size:0.82rem;" />
+      <button class="btn-primary" onclick="saveKey()" style="background:var(--surface);color:var(--accent);border:1px solid var(--accent);">Save</button>
+    </div>
+    <div class="hint" id="keyStatus">Key not set — searches will fail without it. Ask your admin for the shared key.</div>
+  </div>
+
   <!-- RESULTS -->
   <div id="results"></div>
 
@@ -184,6 +194,20 @@
 
 <script>
 const history = [];
+let apiKey = '';
+
+function saveKey() {
+  const v = document.getElementById('apiKeyInput').value.trim();
+  if (!v.startsWith('sk-')) {
+    document.getElementById('keyStatus').textContent = '⚠ That doesn\'t look like a valid key (should start with sk-ant-…)';
+    document.getElementById('keyStatus').style.color = 'var(--danger)';
+    return;
+  }
+  apiKey = v;
+  document.getElementById('keyStatus').textContent = '✓ Key saved for this session.';
+  document.getElementById('keyStatus').style.color = 'var(--go)';
+  document.getElementById('apiKeyInput').value = '••••••••••••••••••••••••';
+}
 
 function selectChip(el, name) {
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
@@ -198,6 +222,10 @@ function esc(s) {
 async function runSearch() {
   const raw = document.getElementById('searchInput').value.trim();
   if (!raw) return;
+  if (!apiKey) {
+    document.getElementById('results').innerHTML = `<div class="error-box">⚠ No API key set — enter your Anthropic key above first.</div>`;
+    return;
+  }
 
   const btn = document.getElementById('searchBtn');
   const out = document.getElementById('results');
@@ -248,7 +276,7 @@ Structure your response EXACTLY as:
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
