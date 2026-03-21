@@ -9,7 +9,7 @@
       --bg: #0d1117; --surface: #161b22; --surface2: #1c2128;
       --accent: #00c2ff; --accent-dim: rgba(0,194,255,0.1);
       --text: #e6edf3; --muted: #7d8590; --border: #30363d;
-      --danger: #f85149; --warn: #d29922; --go: #3fb950;
+      --danger: #f85149; --warn: #d29922; --go: #3fb950; --bl: #21262d;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
@@ -28,18 +28,27 @@
     h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
     .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 32px; line-height: 1.5; }
 
-    .pinned-alert {
+    /* PINNED SECTION */
+    #pinnedSection { margin-bottom: 32px; }
+    .pinned-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .section-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); }
+    .pinned-card {
       background: rgba(210,153,34,0.07); border: 1px solid rgba(210,153,34,0.35);
-      border-radius: 10px; padding: 16px 18px; margin-bottom: 32px;
+      border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; position: relative;
     }
-    .pinned-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .pinned-title { font-size: 0.8rem; font-weight: 700; color: var(--warn); text-transform: uppercase; letter-spacing: 0.06em; }
-    .pinned-body { font-size: 0.86rem; line-height: 1.6; color: var(--text); }
-    .pinned-body strong { color: #fff; }
-    .pinned-angle { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(210,153,34,0.2); font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
-    .pinned-angle a { color: var(--accent); text-decoration: none; }
+    .pinned-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; gap: 8px; }
+    .pinned-tag { font-size: 0.7rem; font-weight: 700; color: var(--warn); text-transform: uppercase; letter-spacing: 0.06em; }
+    .pinned-title { font-size: 0.86rem; font-weight: 600; color: #fff; }
+    .btn-unpin {
+      background: none; border: 1px solid rgba(210,153,34,0.3); color: var(--warn);
+      font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; cursor: pointer;
+      white-space: nowrap; flex-shrink: 0; transition: all 0.15s;
+    }
+    .btn-unpin:hover { background: rgba(210,153,34,0.15); }
+    .pinned-body { font-size: 0.84rem; line-height: 1.6; color: var(--text); }
+    .pinned-counter { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(210,153,34,0.2); font-size: 0.79rem; color: var(--muted); line-height: 1.5; }
 
-    .section-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin-bottom: 10px; }
+    /* CHIPS */
     .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
     .chip {
       background: var(--surface); border: 1px solid var(--border);
@@ -49,15 +58,15 @@
     .chip:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
     .chip.selected { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 
+    /* INPUT */
     .input-row { display: flex; gap: 10px; margin-bottom: 12px; }
-    input[type="text"] {
+    input[type="text"], input[type="password"] {
       flex: 1; background: var(--surface); border: 1px solid var(--border);
       color: var(--text); font-size: 0.9rem; padding: 10px 14px;
       border-radius: 8px; outline: none; transition: border-color 0.15s;
     }
-    input[type="text"]:focus { border-color: var(--accent); }
-    input[type="text"]::placeholder { color: var(--muted); }
-
+    input[type="text"]:focus, input[type="password"]:focus { border-color: var(--accent); }
+    input::placeholder { color: var(--muted); }
     .btn-primary {
       background: var(--accent); color: #0d1117; font-weight: 700;
       font-size: 0.86rem; padding: 10px 20px; border: none;
@@ -65,17 +74,15 @@
     }
     .btn-primary:hover { opacity: 0.88; }
     .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+    .hint { font-size: 0.76rem; color: var(--muted); margin-bottom: 16px; }
 
-    .hint { font-size: 0.76rem; color: var(--muted); margin-bottom: 28px; }
-
+    /* RESULT CARD */
     #results { margin-top: 8px; }
-
     .result-card {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 12px; padding: 24px; animation: fadeIn 0.3s ease;
     }
     @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-
     .result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
     .result-title { font-size: 1rem; font-weight: 600; color: var(--accent); }
     .result-meta { display: flex; align-items: center; gap: 8px; }
@@ -89,6 +96,12 @@
     .dot { width: 6px; height: 6px; background: var(--go); border-radius: 50%; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     .result-ts { font-size: 0.75rem; color: var(--muted); }
+    .btn-pin {
+      background: none; border: 1px solid rgba(210,153,34,0.4); color: var(--warn);
+      font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 6px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-pin:hover { background: rgba(210,153,34,0.1); }
 
     .r-section { margin-bottom: 16px; }
     .r-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin-bottom: 6px; }
@@ -96,7 +109,6 @@
     .r-body li { margin-left: 18px; margin-bottom: 4px; }
     .r-body p { margin-bottom: 5px; }
     .divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
-
     .landmine-block {
       background: var(--accent-dim); border: 1px solid rgba(0,194,255,0.2);
       border-radius: 8px; padding: 14px 16px;
@@ -105,15 +117,20 @@
     .loading { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 0.87rem; padding: 24px 0; }
     .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .error-box { color: var(--danger); font-size: 0.86rem; padding: 14px 16px; background: rgba(248,81,73,0.07); border-radius: 8px; border: 1px solid rgba(248,81,73,0.2); }
 
+    /* SETUP BOX */
+    .setup-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-size: 0.82rem; line-height: 1.7; color: var(--muted); margin-top: 12px; margin-bottom: 28px; }
+    .setup-box-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 8px; }
+    .setup-box a { color: var(--accent); text-decoration: none; }
+    .setup-box code { background: var(--bl); padding: 1px 5px; border-radius: 3px; font-size: 0.76rem; }
+
+    /* HISTORY */
     .history-section { margin-top: 36px; }
     .history-item {
       display: flex; align-items: center; justify-content: space-between;
       padding: 10px 14px; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; margin-bottom: 6px; cursor: pointer;
-      font-size: 0.84rem; transition: border-color 0.15s;
+      border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.84rem; transition: border-color 0.15s;
     }
     .history-item:hover { border-color: var(--accent); color: var(--accent); }
     .history-meta { color: var(--muted); font-size: 0.75rem; }
@@ -121,39 +138,40 @@
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">⬡ samdesk</a>
-  <a href="index.html">Home</a>
-    <a href="competitive-map.html">Competitive Map</a>
-  <a href="discovery.html">Discovery</a>
-  <a href="library.html">Library</a>
-  <a href="stories.html">Customer Stories</a>
-    <a href="use-cases.html">Use Cases</a>
-  <a href="competitor-intel.html" class="active">Competitor PR</a>
-</nav>
+<script src="nav.js"></script>
 
 <div class="page">
   <h1>Competitor PR</h1>
   <p class="subtitle">Live AI-powered competitive briefs. Select a competitor or paste a URL to get latest news, positioning shifts, and a ready-to-use counter-narrative.</p>
 
-  <!-- PINNED BREAKING ALERT -->
-  <div class="pinned-alert">
-    <div class="pinned-header">
-      <span>🚨</span>
-      <span class="pinned-title">Breaking · March 18, 2026</span>
+  <!-- PINNED ITEMS -->
+  <div id="pinnedSection" style="display:none;">
+    <div class="pinned-header-row">
+      <span class="section-label">📌 Pinned intel</span>
     </div>
-    <div class="pinned-body">
-      <strong>Dataminr + Crisis24 announce multi-year strategic partnership.</strong> Dataminr's real-time alert engine is being embedded into Crisis24's CEM platform — positioned as a "single pane of glass" for critical event management with agentic AI (Intel Agents, ReGenAI Live Briefs) launching at ISC West, March 25–27.
+    <div id="pinnedList"></div>
+  </div>
+
+  <!-- API KEY -->
+  <div id="apiKeySection">
+    <div class="section-label" style="margin-bottom:10px;">Anthropic API key (session only — never stored)</div>
+    <div class="input-row">
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-…" style="font-family:monospace;font-size:0.82rem;" />
+      <button class="btn-primary" onclick="saveKey()" style="background:var(--surface);color:var(--accent);border:1px solid var(--accent);">Save</button>
     </div>
-    <div class="pinned-angle">
-      <strong style="color:#e6edf3;">Samdesk angle:</strong> Two point solutions stitching together ≠ a native platform. Integration complexity, dual-vendor dependency, and handoff latency are live objections. Samdesk owns the decision gap natively — they're still building a bridge across it.
-      &nbsp;·&nbsp; <a href="https://www.dataminr.com/press/announcement/dataminr-crisis24-strategic-partnership/" target="_blank">Source ↗</a>
-      &nbsp;·&nbsp; <a href="competitive-map.html">See updated battle cards ↗</a>
+    <div class="hint" id="keyStatus">Key not set — searches will fail without it. Ask your admin for the shared key.</div>
+    <div class="setup-box">
+      <div class="setup-box-title">Setup instructions</div>
+      The API key is held in memory only — never written to storage or sent anywhere except directly to Anthropic.<br><br>
+      <strong style="color:var(--text);">1.</strong> Grab an Anthropic API key from <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> — create one under a shared team account so the whole sales team uses the same key.<br>
+      <strong style="color:var(--text);">2.</strong> Share it internally — a pinned Slack message to the sales channel works fine.<br>
+      <strong style="color:var(--text);">3.</strong> Reps paste it in when they open the page — takes 5 seconds. It stays active for the session.<br><br>
+      <span style="font-size:0.76rem;color:var(--muted);">The <code>anthropic-dangerous-direct-browser-access</code> header is required for direct browser-to-API calls — Anthropic's own mechanism for this use case (no backend needed). The key is never logged or stored.</span>
     </div>
   </div>
 
   <!-- QUICK SELECT -->
-  <div class="section-label">Quick select competitor</div>
+  <div class="section-label" style="margin-bottom:10px;">Quick select competitor</div>
   <div class="chips">
     <div class="chip" onclick="selectChip(this,'Dataminr')">Dataminr</div>
     <div class="chip" onclick="selectChip(this,'Everbridge')">Everbridge</div>
@@ -164,45 +182,88 @@
     <div class="chip" onclick="selectChip(this,'International SOS')">International SOS</div>
   </div>
 
-  <!-- INPUT -->
-  <div class="section-label">Search or paste a press release URL</div>
+  <!-- SEARCH INPUT -->
+  <div class="section-label" style="margin-bottom:10px;">Search or paste a press release URL</div>
   <div class="input-row">
     <input type="text" id="searchInput" placeholder="e.g. Everbridge  ·  or paste https://competitor.com/press/..." />
     <button class="btn-primary" id="searchBtn" onclick="runSearch()">Get Latest Intel</button>
   </div>
   <div class="hint">Results are live web searches — best used for pre-call prep or after seeing a competitor press release.</div>
 
-  <!-- API KEY -->
-  <div id="apiKeySection">
-    <div class="section-label">Anthropic API key (session only — never stored)</div>
-    <div class="input-row">
-      <input type="password" id="apiKeyInput" placeholder="sk-ant-…" style="font-family:monospace;font-size:0.82rem;" />
-      <button class="btn-primary" onclick="saveKey()" style="background:var(--surface);color:var(--accent);border:1px solid var(--accent);">Save</button>
-    </div>
-    <div class="hint" id="keyStatus">Key not set — searches will fail without it. Ask your admin for the shared key.</div>
-    <div style="margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:0.82rem;line-height:1.7;color:var(--muted);">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--accent);margin-bottom:8px;">Setup instructions</div>
-      The API key is held in memory only — never written to storage or sent anywhere except directly to Anthropic.<br><br>
-      <strong style="color:var(--text);">1.</strong> Grab an Anthropic API key from <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent);text-decoration:none;">console.anthropic.com</a> — create one under a shared team account so the whole sales team uses the same key.<br>
-      <strong style="color:var(--text);">2.</strong> Share it internally — a pinned Slack message to the sales channel works fine for an internal tool.<br>
-      <strong style="color:var(--text);">3.</strong> Reps paste it in when they open the page — takes 5 seconds. It stays active for the session.<br><br>
-      <span style="color:var(--faint);font-size:0.76rem;">The <code style="background:var(--bl);padding:1px 5px;border-radius:3px;">anthropic-dangerous-direct-browser-access</code> header is required for direct browser-to-API calls — it's Anthropic's own mechanism for this use case (no backend needed). The key is never logged or stored.</span>
-    </div>
-  </div>
-
-  <!-- RESULTS -->
   <div id="results"></div>
 
-  <!-- HISTORY -->
   <div id="historySection" class="history-section" style="display:none;">
-    <div class="section-label">Recent searches this session</div>
+    <div class="section-label" style="margin-bottom:10px;">Recent searches this session</div>
     <div id="historyList"></div>
   </div>
 </div>
 
 <script>
+// ── Pinned items (localStorage, persists across sessions) ──────────────────
+const PINS_KEY = 'samdesk_competitor_pr_pins';
+
+function loadPins() {
+  try { return JSON.parse(localStorage.getItem(PINS_KEY) || '[]'); }
+  catch { return []; }
+}
+function savePins(pins) {
+  localStorage.setItem(PINS_KEY, JSON.stringify(pins));
+}
+function renderPins() {
+  const pins = loadPins();
+  const sec = document.getElementById('pinnedSection');
+  const list = document.getElementById('pinnedList');
+  if (!pins.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  list.innerHTML = pins.map((p, i) => `
+    <div class="pinned-card">
+      <div class="pinned-card-header">
+        <div>
+          <div class="pinned-tag">📌 Pinned · ${esc(p.ts)}</div>
+          <div class="pinned-title">${esc(p.query)}</div>
+        </div>
+        <button class="btn-unpin" onclick="unpin(${i})">Unpin</button>
+      </div>
+      <div class="pinned-body">${p.summaryHtml}</div>
+      ${p.counter ? `<div class="pinned-counter"><strong style="color:var(--text)">Counter:</strong> ${esc(p.counter)}</div>` : ''}
+    </div>`).join('');
+}
+function pinResult(query, ts, summaryHtml, counter) {
+  const pins = loadPins();
+  // avoid duplicates by query
+  const idx = pins.findIndex(p => p.query === query);
+  if (idx !== -1) pins.splice(idx, 1);
+  pins.unshift({ query, ts, summaryHtml, counter });
+  savePins(pins);
+  renderPins();
+}
+function unpin(i) {
+  const pins = loadPins();
+  pins.splice(i, 1);
+  savePins(pins);
+  renderPins();
+}
+
+// Seed Dataminr alert if pins are empty (first load only)
+(function seedDefault() {
+  const pins = loadPins();
+  if (!pins.find(p => p.query === 'Dataminr')) {
+    pins.push({
+      query: 'Dataminr',
+      ts: 'March 18, 2026',
+      summaryHtml: '<strong>Dataminr + Crisis24 announce multi-year strategic partnership.</strong> Dataminr is embedding its alert engine into Crisis24\'s CEM platform — positioning as a "single pane of glass" with agentic AI features (Intel Agents, ReGenAI Live Briefs). ISC West launch March 25–27.',
+      counter: 'Two point solutions stitched together ≠ a native platform. Ask: "Who owns the SLA when Dataminr fires an alert but Crisis24\'s response workflow lags?" Integration complexity and dual-vendor dependency are live objections.'
+    });
+    savePins(pins);
+  }
+  renderPins();
+})();
+
+// ── Session state ──────────────────────────────────────────────────────────
 const history = [];
 let apiKey = '';
+// Stores the latest result for pinning
+let lastResult = null;
 
 function saveKey() {
   const v = document.getElementById('apiKeyInput').value.trim();
@@ -239,52 +300,23 @@ async function runSearch() {
   const out = document.getElementById('results');
   btn.disabled = true;
   btn.textContent = 'Searching…';
-  out.innerHTML = `<div class="loading"><div class="spinner"></div><span>Pulling latest intel on <strong>${esc(raw)}</strong> — searching the web…</span></div>`;
+  lastResult = null;
+  out.innerHTML = `<div class="loading"><div class="spinner"></div><span>Pulling latest intel on <strong>${esc(raw)}</strong>…</span></div>`;
 
   const isUrl = /^https?:\/\//i.test(raw);
   const prompt = isUrl
-    ? `Analyze this competitor press release or announcement and produce a competitive intelligence brief for Samdesk sales reps: ${raw}
-
-Structure your response EXACTLY as:
-## HEADLINE
-[1-2 sentence summary]
-
-## WHAT THEY'RE CLAIMING
-[Their positioning and key claims]
-
-## STRATEGIC IMPLICATIONS FOR SAMDESK
-[Why this matters in competitive deals]
-
-## SAMDESK COUNTER-NARRATIVE
-[3 specific talking points for a rep]
-
-## LANDMINE TO PLANT
-[One probing discovery question that exposes a gap]`
-    : `Search the web for the latest news, product launches, partnerships, and strategic moves from ${raw} in the security intelligence, risk management, or crisis response space. Focus on the last 6 months.
-
-Structure your response EXACTLY as:
-## HEADLINE
-[Single most important recent development, 1-2 sentences]
-
-## RECENT DEVELOPMENTS
-[3-5 bullet points with approximate dates]
-
-## WHAT THEY'RE CLAIMING
-[Current market positioning and key messages]
-
-## STRATEGIC IMPLICATIONS FOR SAMDESK
-[What this means for competitive deals — what to watch]
-
-## SAMDESK COUNTER-NARRATIVE
-[3 specific talking points a rep should use]
-
-## LANDMINE TO PLANT
-[One probing discovery question that exposes a gap in their approach]`;
+    ? `Analyze this competitor press release and produce a competitive intelligence brief for Samdesk sales reps: ${raw}\n\nStructure your response EXACTLY as:\n## HEADLINE\n[1-2 sentence summary]\n\n## WHAT THEY'RE CLAIMING\n[Their positioning and key claims]\n\n## STRATEGIC IMPLICATIONS FOR SAMDESK\n[Why this matters in competitive deals]\n\n## SAMDESK COUNTER-NARRATIVE\n[3 specific talking points for a rep]\n\n## LANDMINE TO PLANT\n[One probing discovery question that exposes a gap]`
+    : `Search the web for the latest news, product launches, partnerships, and strategic moves from ${raw} in the security intelligence, risk management, or crisis response space. Focus on the last 6 months.\n\nStructure your response EXACTLY as:\n## HEADLINE\n[Single most important recent development, 1-2 sentences]\n\n## RECENT DEVELOPMENTS\n[3-5 bullet points with approximate dates]\n\n## WHAT THEY'RE CLAIMING\n[Current market positioning and key messages]\n\n## STRATEGIC IMPLICATIONS FOR SAMDESK\n[What this means for competitive deals]\n\n## SAMDESK COUNTER-NARRATIVE\n[3 specific talking points a rep should use]\n\n## LANDMINE TO PLANT\n[One probing discovery question that exposes a gap]`;
 
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
@@ -301,6 +333,14 @@ Structure your response EXACTLY as:
     const ts = new Date().toLocaleString([], { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
     const rendered = renderBrief(text);
 
+    // extract headline for summary pin
+    const headlineMatch = text.match(/## HEADLINE\n([\s\S]*?)(?=\n## |$)/);
+    const headlineTxt = headlineMatch ? headlineMatch[1].trim() : '';
+    const counterMatch = text.match(/## SAMDESK COUNTER-NARRATIVE\n([\s\S]*?)(?=\n## |$)/);
+    const counterTxt = counterMatch ? counterMatch[1].trim().replace(/^[-•\d.]\s*/gm,'').split('\n')[0] : '';
+
+    lastResult = { query: raw, ts, summaryHtml: `<strong>${esc(raw)}:</strong> ${esc(headlineTxt)}`, counter: counterTxt };
+
     out.innerHTML = `
       <div class="result-card">
         <div class="result-header">
@@ -308,6 +348,7 @@ Structure your response EXACTLY as:
           <span class="result-meta">
             <span class="live-badge"><span class="dot"></span>Live</span>
             <span class="result-ts">${ts}</span>
+            <button class="btn-pin" onclick="doPinLast()">📌 Pin this</button>
           </span>
         </div>
         ${rendered}
@@ -325,16 +366,22 @@ Structure your response EXACTLY as:
   }
 }
 
+function doPinLast() {
+  if (!lastResult) return;
+  pinResult(lastResult.query, lastResult.ts, lastResult.summaryHtml, lastResult.counter);
+  document.querySelector('.btn-pin').textContent = '✓ Pinned';
+  document.querySelector('.btn-pin').disabled = true;
+}
+
 function renderBrief(text) {
   const defs = [
     { key: 'HEADLINE', label: 'Headline' },
     { key: 'RECENT DEVELOPMENTS', label: 'Recent Developments' },
-    { key: 'WHAT THEY\'RE CLAIMING', label: "What They're Claiming" },
+    { key: "WHAT THEY'RE CLAIMING", label: "What They're Claiming" },
     { key: 'STRATEGIC IMPLICATIONS FOR SAMDESK', label: 'Strategic Implications for Samdesk' },
     { key: 'SAMDESK COUNTER-NARRATIVE', label: 'Counter-Narrative' },
     { key: 'LANDMINE TO PLANT', label: '🪤 Landmine to Plant' },
   ];
-
   let html = '';
   for (let i = 0; i < defs.length; i++) {
     const { key, label } = defs[i];
@@ -342,34 +389,21 @@ function renderBrief(text) {
     const marker = `## ${key}`;
     const si = text.indexOf(marker);
     if (si === -1) continue;
-
     let ei = text.length;
-    if (nextKey) {
-      const ni = text.indexOf(`## ${nextKey}`, si + marker.length);
-      if (ni !== -1) ei = ni;
-    }
-
+    if (nextKey) { const ni = text.indexOf(`## ${nextKey}`, si + marker.length); if (ni !== -1) ei = ni; }
     const raw = text.slice(si + marker.length, ei).trim();
     const body = raw.split('\n').map(l => {
       l = l.trim(); if (!l) return '';
-      if (l.startsWith('- ') || l.startsWith('• ') || l.match(/^\d+\.\s/)) {
-        const content = l.replace(/^[-•]\s|^\d+\.\s/, '');
-        return `<li>${esc(content)}</li>`;
-      }
+      if (l.startsWith('- ') || l.startsWith('• ') || l.match(/^\d+\.\s/)) return `<li>${esc(l.replace(/^[-•]\s|^\d+\.\s/, ''))}</li>`;
       return `<p>${esc(l)}</p>`;
     }).filter(Boolean).join('');
-
     const isLandmine = key === 'LANDMINE TO PLANT';
-    const isLast = i === defs.length - 1 || defs.slice(i+1).every(d => text.indexOf(`## ${d.key}`) === -1);
-
-    html += `
-      ${i > 0 && !isLandmine ? '<hr class="divider">' : ''}
+    html += `${i > 0 && !isLandmine ? '<hr class="divider">' : ''}
       <div class="r-section ${isLandmine ? 'landmine-block' : ''}">
         <div class="r-label">${esc(label)}</div>
         <div class="r-body">${body || `<p>${esc(raw)}</p>`}</div>
       </div>`;
   }
-
   return html || `<div class="r-body" style="white-space:pre-wrap;">${esc(text)}</div>`;
 }
 
@@ -398,9 +432,7 @@ function restore(i) {
     </div>`;
 }
 
-document.getElementById('searchInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') runSearch();
-});
+document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(); });
 </script>
 </body>
 </html>
