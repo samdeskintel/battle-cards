@@ -1,6 +1,6 @@
 (function() {
   const links = [
-    { href: 'index.html',            label: 'Home' },
+    { href: 'index.html',            label: 'Battle Cards' },
     { href: 'competitive-map.html',  label: 'Competitive Map' },
     { href: 'discovery.html',        label: 'Discovery' },
     { href: 'use-cases.html',        label: 'Use Cases' },
