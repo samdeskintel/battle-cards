@@ -124,11 +124,10 @@
 <nav>
   <a href="index.html" class="nav-logo">⬡ samdesk</a>
   <a href="index.html">Home</a>
-  <a href="competitive-map.html">Competitive Map</a>
   <a href="discovery.html">Discovery</a>
-  <a href="library.html">Library</a>
-  <a href="stories.html">Customer Stories</a>
   <a href="use-cases.html">Use Cases</a>
+  <a href="library.html">Library</a>
+  <a href="stories.html">Stories</a>
   <a href="competitor-intel.html" class="active">Competitor PR</a>
 </nav>
 
@@ -180,6 +179,14 @@
       <button class="btn-primary" onclick="saveKey()" style="background:var(--surface);color:var(--accent);border:1px solid var(--accent);">Save</button>
     </div>
     <div class="hint" id="keyStatus">Key not set — searches will fail without it. Ask your admin for the shared key.</div>
+    <div style="margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:0.82rem;line-height:1.7;color:var(--muted);">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--accent);margin-bottom:8px;">Setup instructions</div>
+      The API key is held in memory only — never written to storage or sent anywhere except directly to Anthropic.<br><br>
+      <strong style="color:var(--text);">1.</strong> Grab an Anthropic API key from <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent);text-decoration:none;">console.anthropic.com</a> — create one under a shared team account so the whole sales team uses the same key.<br>
+      <strong style="color:var(--text);">2.</strong> Share it internally — a pinned Slack message to the sales channel works fine for an internal tool.<br>
+      <strong style="color:var(--text);">3.</strong> Reps paste it in when they open the page — takes 5 seconds. It stays active for the session.<br><br>
+      <span style="color:var(--faint);font-size:0.76rem;">The <code style="background:var(--bl);padding:1px 5px;border-radius:3px;">anthropic-dangerous-direct-browser-access</code> header is required for direct browser-to-API calls — it's Anthropic's own mechanism for this use case (no backend needed). The key is never logged or stored.</span>
+    </div>
   </div>
 
   <!-- RESULTS -->
