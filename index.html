@@ -56,6 +56,12 @@ h1{font-size:20px;font-weight:500;color:var(--text);margin-bottom:.25rem}
 .win-them{text-align:center;width:60px;color:var(--red)}
 .win-us{text-align:center;width:60px;color:var(--green)}
 .updated{font-size:11px;color:var(--faint);padding:.75rem 1.5rem;border-top:1px solid var(--bl);text-align:right}
+.intel-alert{background:rgba(210,153,34,0.07);border-bottom:1px solid var(--border);padding:1rem 1.5rem}
+.intel-alert-inner{border:1px solid rgba(210,153,34,0.35);border-radius:8px;padding:12px 16px}
+.intel-tag{font-size:10px;font-weight:700;color:#d29922;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.intel-body{font-size:13px;line-height:1.55;color:var(--text)}
+.intel-counter{font-size:12px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid rgba(210,153,34,0.2);line-height:1.5}
+.intel-counter em{color:var(--text);font-style:italic}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.section-right{border-left:none}.card-header{flex-direction:column}.topnav{padding:0 14px}}
 </style>
 </head>
@@ -63,11 +69,10 @@ h1{font-size:20px;font-weight:500;color:var(--text);margin-bottom:.25rem}
 <nav class="topnav">
   <span class="nav-logo">⬡ samdesk</span>
   <a href="index.html" class="active">Home</a>
-  <a href="competitive-map.html">Competitive Map</a>
   <a href="discovery.html">Discovery</a>
-  <a href="library.html">Library</a>
-  <a href="stories.html">Customer Stories</a>
   <a href="use-cases.html">Use Cases</a>
+  <a href="library.html">Library</a>
+  <a href="stories.html">Stories</a>
   <a href="competitor-intel.html">Intel Feed</a>
 </nav>
 <div class="content">
@@ -79,6 +84,7 @@ h1{font-size:20px;font-weight:500;color:var(--text);margin-bottom:.25rem}
 <script>
 const competitors=[
 {name:"Dataminr",type:"AI threat detection & intelligence",snap:{HQ:"New York, NY",Founded:"2009",Employees:"~800",Revenue:"~$200M",Customers:"Fortune 50/100, gov agencies"},
+intel:{date:"March 18, 2026",body:"<strong>Dataminr + Crisis24 announce multi-year strategic partnership.</strong> Dataminr is embedding its alert engine into Crisis24's CEM platform — positioning as a \"single pane of glass\" with agentic AI features (Intel Agents, ReGenAI Live Briefs). ISC West launch March 25–27.",counter:"Two point solutions stitched together ≠ a native platform. Ask: <em>\"Who owns the SLA when Dataminr fires an alert but Crisis24's response workflow lags?\"</em> Integration complexity and dual-vendor dependency are live objections."},
 killShot:`"Dataminr tells you the building is on fire. SAMDesk tells you which of your people are inside, what the exits are, and has already started calling them — before you've opened the alert."`,
 killNB:`<strong>NB for reps:</strong> This comparison refers specifically to geo-precision. Dataminr drops a pin at the centre of a city — the analyst still has to go verify and locate the exact address. SAMDesk's AI models include automatic geo-precision as part of detection, so impact mapping against assets and travelers is immediate. That's what drives the 2–6 hour triage difference.`,
 landmines:[
@@ -86,16 +92,19 @@ landmines:[
 {q:"Has speed ever cost you?",a:`"Has there been a situation where you got an alert but weren't able to act fast enough? What they lack is trust and faster understanding."`},
 {q:"Alert overload",a:`"The biggest complaint we hear about alert tools is overload and manual triage — time spent validating alerts instead of acting on them."`},
 {q:"Geo-precision gap",a:`"When Dataminr fires an alert, how precise is the location? Do your analysts have to go verify and pin the exact address before they can assess impact on your people? That verification step is where time-to-decision bleeds out."`},
-{q:"Agentic reality check",a:`"They use the word agentic — can you walk me through what their agent actually does autonomously for you today, without a human in the loop?"`}
+{q:"Agentic reality check",a:`"They use the word agentic — can you walk me through what their agent actually does autonomously for you today, without a human in the loop?"`},
+{q:"Crisis24 integration complexity",a:`"Now that they're partnering with Crisis24 — when a Dataminr alert fires, how many handoffs happen before your team takes action? Who owns the SLA across two vendor contracts?"`}
 ],
 objections:[
 {q:`"We're happy with Dataminr."`,a:`"Most of our customers were too before they looked at what they were spending downstream. How much manual analysis does your team do after getting a Dataminr alert? On average, our customers save 2–6 hours of analysis per incident depending on complexity — largely because geo-precision, viability attestation, and impact mapping are handled automatically. What would your team do with that time?"`},
-{q:`"Dataminr also has AI agents now."`,a:`"They've announced an agentic roadmap — the question is what's live today. Our Impact Agents are in production running detect-to-resolve workflows right now. Are they showing you a live demo of autonomous action, or a vision slide?"`}
+{q:`"Dataminr also has AI agents now."`,a:`"They've announced an agentic roadmap — the question is what's live today. Our Impact Agents are in production running detect-to-resolve workflows right now. Are they showing you a live demo of autonomous action, or a vision slide?"`},
+{q:`"The Dataminr + Crisis24 partnership gives us everything in one place."`,a:`"That's two separate contracts, two separate platforms, and a seam in the middle where the detect-to-resolve workflow has to hand off between vendors. Samdesk owns that entire workflow natively — there's no integration to manage, no SLA gap between alert and response, and no second vendor to negotiate with when something breaks at 2am."`}
 ],
 discovery:["When you get an alert from Dataminr, what happens next? How long before someone acts on it?","How much manual analysis and verification time does your team put in after getting a Dataminr alert?","When Dataminr fires an alert, how precise is the location — do analysts have to go verify the exact address before they can assess impact?","Are you able to build automated workflows off Dataminr alerts today, or does someone have to manually trigger the next step?","How does your current system account for traveler-specific or executive-specific risk profiles?","What does your GSOC staffing look like — are you trying to do more with the same team or looking to grow headcount?"],
-wins:[["Detection speed","✓","✓"],["Geo-precision (automatic)","✗","✓"],["Analyst-free triage","✗","✓"],["Agentic response (live)","✗","✓"],["Org impact mapping","✗","✓"],["Traveler profile-aware","~","✓"],["Detect → resolve workflow","✗","✓"]]},
+wins:[["Detection speed","✓","✓"],["Geo-precision (automatic)","✗","✓"],["Analyst-free triage","✗","✓"],["Agentic response (live)","✗","✓"],["Org impact mapping","✗","✓"],["Traveler profile-aware","~","✓"],["Detect → resolve workflow","✗","✓"],["Single-vendor end-to-end","✗","✓"]]},
 
 {name:"Everbridge",type:"Critical event management & mass notification",snap:{HQ:"Boston, MA",Founded:"2002",Employees:"~1,000",Product:"Everbridge 360™",Customers:"6,500+"},
+intel:null,
 killShot:`"Everbridge is the best tool for getting a message out once you've already decided to send it. The question is: what decided the message was needed, who it should go to, and what it should say? That's the ADAR problem — and Everbridge doesn't touch it."`,
 killNB:null,
 landmines:[
@@ -109,12 +118,13 @@ objections:[
 {q:`"Everbridge has strong native detection."`,a:`"Worth pressure-testing that. Their detection capability has had reliability issues since they lost access to key third-party data feeds. Ask them specifically where their threat intelligence originates and when it was last independently benchmarked. SAMDesk was benchmarked by KPMG — faster detection than the leading alternative in 15 of 20 events tested."`},
 {q:`"Everbridge has travel risk built in."`,a:`"Travel Protector is solid for locating and notifying travelers once something happens. It doesn't build a tailored risk picture for each traveler before they go — that's the gap ADAR fills."`},
 {q:`"They're a Forrester Wave Leader."`,a:`"Proven for CEM and notifications — no argument. But Forrester's CEM Wave isn't evaluating what we do. Make sure your intelligence layer is as strong as your comms layer. They're different categories."`},
-{q:`"Switching platforms feels risky."`,a:`"That's exactly where our Customer Success practice earns its keep. We own the transition — configuring your streams, migrating your profiles, training your team, and running health checks over time as your practice matures. We're not a software vendor that hands you a manual. Most customers are fully operational faster than they expected."`,nb:null}
+{q:`"Switching platforms feels risky."`,a:`"That's exactly where our Customer Success practice earns its keep. We own the transition — configuring your streams, migrating your profiles, training your team, and running health checks over time as your practice matures. We're not a software vendor that hands you a manual. Most customers are fully operational faster than they expected."`}
 ],
 discovery:["When you receive a threat alert in Everbridge, where did that intelligence originate — is it coming from inside Everbridge or from a separate source?","When an alert fires, how much manual work does your team do before taking action?","Is your Travel Protector deployment giving you pre-travel risk briefs, or is it primarily used for in-incident traveler location and notification?","How many of the Everbridge modules you're licensed for are actively used versus shelfware?","Who owns the Everbridge relationship in your org — and are they the same people who own your security intelligence program?"],
 wins:[["Mass notification & comms","✓","~"],["Native AI threat intelligence","✗","✓"],["Detection reliability","~","✓"],["Agentic automation","✗","✓"],["Org impact mapping","✗","✓"],["GSOC security workflow","~","✓"],["Proactive threat anticipation","✗","✓"]]},
 
 {name:"Factal",type:"Human-verified breaking news intelligence",snap:{HQ:"Seattle, WA",Founded:"2018",Employees:"~50",Funding:"Series A $3.3M",Heritage:"NBC BreakingNews founders"},
+intel:null,
 killShot:`"If you find out accurately but late, your security team can document what happened. If you find out early enough, your security team can change what happens. Factal chose accuracy. ADAR chose both."`,
 killNB:null,
 landmines:[
@@ -132,6 +142,7 @@ discovery:["When a Factal alert fires, how much time typically passes before you
 wins:[["Detection speed","✓","✓"],["Scale (~1M signals/day)","✗","✓"],["AI disambiguation","✗","✓"],["Agentic response","✗","✓"],["Org impact mapping","✗","✓"],["Traveler profile-aware","✗","✓"]]},
 
 {name:"Seerist",type:"Strategic risk intelligence (owned by Control Risks)",snap:{HQ:"Reston, VA",Ownership:"Control Risks",Customers:"400+ Global 2000","Gov clients":"50 agencies","Key AI":"PulseAI, DiscoverAI"},
+intel:null,
 killShot:`"Seerist tells you the weather forecast for the season. SAMDesk tells you lightning is about to strike your building right now — and starts moving your people before you ask."`,
 killNB:null,
 landmines:[
@@ -149,6 +160,7 @@ discovery:["How does your security team currently bridge the gap between Seerist
 wins:[["Strategic geopolitical foresight","✓","~"],["Real-time operational detection","~","✓"],["Signal volume (~1M/day)","✗","✓"],["Org-specific impact (auto)","~","✓"],["Agentic automation","✗","✓"],["Speed to operational action","~","✓"]]},
 
 {name:"AlertMedia",type:"Emergency communications & response coordination",snap:{HQ:"Austin, TX",Founded:"2013","Employees protected":"8M+",Countries:"150+",Note:"Borrowing our narrative"},
+intel:null,
 killShot:`"AlertMedia connects the steps of incident response. SAMDesk removes the decision gap between them. Their AI drafts messages and builds reports — ours detects, analyzes, and drives action without waiting for a human to catch up."`,
 killNB:null,
 landmines:[
@@ -169,24 +181,28 @@ discovery:["When AlertMedia surfaces a threat alert, where did that intelligence
 wins:[["Mass notification & comms","✓","~"],["Native AI threat intelligence","✗","✓"],["Agentic automation","✗","✓"],["Org impact mapping","✗","✓"],["Traveler profile-aware","~","✓"],["RTC analyst response (60s)","✗","✓"],["Autonomous 24/7 coverage","✗","✓"]]},
 
 {name:"Crisis24",type:"End-to-end security services + CEM platform (GardaWorld)",snap:{HQ:"Global",Ownership:"GardaWorld",Analysts:"200+",Platform:"TopoONE + Horizon",Customers:"Fortune 500, NGOs, universities, NYU (travel risk)"},
+intel:{date:"March 18, 2026",body:"<strong>Crisis24 partners with Dataminr for real-time intelligence.</strong> Crisis24 is licensing Dataminr's alerts to fill their detection gap — an implicit acknowledgment that their own intelligence capability was insufficient. Positioned as a \"single pane of glass\" CEM platform. ISC West launch March 25–27.",counter:"Crisis24 just told the market they need to buy detection capability externally. Samdesk's ADAR is a single native platform — no third-party dependency, no dual-vendor contract, no seam in the detect-to-resolve workflow. Ask: <em>\"How do your teams manage incidents that require coordination between two separate vendor portals?\"</em>"},
 killShot:`"Crisis24's answer to the analyst shortage is to rent you their analysts. ADAR's answer is to build AI that means you need fewer analysts in the first place — and the ones you have are working on decisions, not triage."`,
 killNB:null,
 landmines:[
 {q:"Platform vs. services split",a:`"Of your current Crisis24 engagement, how much is platform software versus embedded services? How do you see that balance evolving over the next two years?"`},
 {q:"Analyst time on triage",a:`"When your embedded Crisis24 analysts are monitoring TopoONE, what percentage of their time is triage and filtering versus actual decision-making?"`},
 {q:"Org impact automation",a:`"How does TopoONE determine which events are relevant to your specific people and assets — is that automated or operator-driven?"`},
-{q:"Vendor independence",a:`"Is the platform built to make you independent, or to make you dependent on their people? Every capability gap in the software is a potential consulting engagement."`}
+{q:"Vendor independence",a:`"Is the platform built to make you independent, or to make you dependent on their people? Every capability gap in the software is a potential consulting engagement."`},
+{q:"Dataminr dependency",a:`"Now that Crisis24's real-time intelligence is powered by Dataminr — what happens to your detection capability if that partnership changes? You'd be dependent on the health of two vendor relationships simultaneously."`}
 ],
 objections:[
 {q:`"Crisis24 gives us everything — software, analysts, medevac — in one place."`,a:`"That's genuinely valuable for organizations that need all those services. The question is whether you're optimizing for vendor consolidation, or for the best outcome in each layer. Crisis24's platform is built to support their services model. ADAR is built to reduce your dependency on any services model."`},
 {q:`"We have Crisis24 analysts embedded in our GSOC."`,a:`"Strong setup for today. The agentic layer — automated detection, impact assessment, response triggering — is what frees your embedded analysts to work on the judgment-intensive problems they're trained for. ADAR doesn't replace your people; it handles the volume so your people handle the decisions."`},
 {q:`"Crisis24 has AI with AiiA."`,a:`"Worth understanding what AiiA does in your deployment. Our read is it accelerates analyst work — a productivity tool. The distinction is whether the AI speeds up a human's task, or performs the task autonomously. Is AiiA doing anything without a human initiating it?"`},
-{q:`"Switching feels like a big lift."`,a:`"We own the transition end-to-end. SAMDesk's Customer Success team configures your streams to your specific profiles, migrates from your existing setup, trains your team, and runs ongoing health checks as your practice matures. As our product team ships continuously, your CS partner makes sure you're actually using what's new. You don't lose institutional knowledge in the switch — you rebuild it better."`}
+{q:`"Crisis24 + Dataminr gives us best-of-breed."`,a:`"Best-of-breed assumes the integration is seamless and the SLA is shared. When a Dataminr alert fires and the response workflow lives in TopoONE, who owns the handoff? ADAR owns that entire chain natively — there's no seam, no dual-vendor escalation, no contract gap to manage at 2am."`},
+{q:`"Switching feels like a big lift."`,a:`"We own the transition end-to-end. SAMDesk's Customer Success team configures your streams to your specific profiles, migrates from your existing setup, trains your team, and runs ongoing health checks as your practice matures. You don't lose institutional knowledge in the switch — you rebuild it better."`}
 ],
-discovery:["Of your current Crisis24 engagement, how much is platform software versus embedded services — and how do you see that balance evolving over the next two years?","When your embedded Crisis24 analysts are monitoring TopoONE, what percentage of their time is spent on triage and filtering versus actual decision-making?","How does TopoONE determine which events are relevant to your specific people and assets — is that automated or operator-driven?","As you look toward building a more autonomous security operation, where does your current setup fall short of that vision?","If you could reduce the manual triage burden on your team by 60-70%, what would those analysts be doing with that recovered time?"],
-wins:[["End-to-end security services","✓","~"],["SOC staffing & setup","✓","~"],["AI-native signal detection","~","✓"],["Agentic automation","✗","✓"],["Builds client independence","✗","✓"],["Org-specific impact (auto)","~","✓"],["Customer success & onboarding","~","✓"]]},
+discovery:["Of your current Crisis24 engagement, how much is platform software versus embedded services — and how do you see that balance evolving over the next two years?","When your embedded Crisis24 analysts are monitoring TopoONE, what percentage of their time is spent on triage and filtering versus actual decision-making?","How does TopoONE determine which events are relevant to your specific people and assets — is that automated or operator-driven?","Now that Crisis24 is sourcing real-time intelligence from Dataminr — how do you feel about your detection capability being dependent on a third-party partnership?","As you look toward building a more autonomous security operation, where does your current setup fall short of that vision?","If you could reduce the manual triage burden on your team by 60-70%, what would those analysts be doing with that recovered time?"],
+wins:[["End-to-end security services","✓","~"],["SOC staffing & setup","✓","~"],["AI-native signal detection","~","✓"],["Agentic automation","✗","✓"],["Builds client independence","✗","✓"],["Org-specific impact (auto)","~","✓"],["Single-vendor detect→resolve","✗","✓"],["Customer success & onboarding","~","✓"]]},
 
 {name:"International SOS",type:"Human-led travel risk & medical assistance services",snap:{HQ:"London / Singapore",Founded:"1985",Employees:"13,000+",Model:"Services + subscription",Customers:"Fortune 500, multinationals, NGOs"},
+intel:null,
 killShot:`"International SOS is great at getting people out after something goes wrong. SAMDesk is what keeps your people from being in the wrong place to begin with — and when things do go wrong, your team is already in the queue, not calling a hotline."`,
 killNB:null,
 landmines:[
@@ -217,8 +233,9 @@ competitors.forEach((c,i)=>{
   const discHtml=c.discovery.map((d,n)=>`<div class="disc-item"><div class="disc-num">${n+1}</div><div>${d}</div></div>`).join('');
   const winRows=c.wins.map(([label,them,us])=>`<div class="win-row"><span class="win-label">${label}</span><span class="win-them">${them}</span><span class="win-us">${us}</span></div>`).join('');
   const nbHtml=c.killNB?`<div class="kill-nb">${c.killNB}</div>`:'';
+  const intelHtml=c.intel?`<div class="intel-alert"><div class="intel-alert-inner"><div class="intel-tag">🚨 Latest Intel · ${c.intel.date}</div><div class="intel-body">${c.intel.body}</div><div class="intel-counter"><strong style="color:var(--text)">Counter:</strong> ${c.intel.counter}</div></div></div>`:'';
   const card=document.createElement('div');card.className='card'+(i===0?' active':'');card.id='card-'+i;
-  card.innerHTML=`<div class="card-header"><div><div class="comp-name">${c.name}</div><div class="comp-type">${c.type}</div></div><div class="snapshot">${snapHtml}</div></div><div class="kill-shot"><div class="kill-label">Kill shot</div><blockquote>${c.killShot}</blockquote>${nbHtml}</div><div class="grid"><div class="section"><div class="section-label">Landmines to lay</div><div class="landmine">${lmHtml}</div></div><div class="section section-right"><div class="section-label">Objection handling</div>${objHtml}</div></div><div class="grid"><div class="section"><div class="section-label">Discovery questions</div><div class="disc-list">${discHtml}</div></div><div class="section section-right"><div class="section-label">Head to head</div><div class="win-header"><span style="flex:1">Dimension</span><span style="width:60px;text-align:center">Them</span><span style="width:60px;text-align:center">Us</span></div>${winRows}<div style="display:flex;gap:1rem;margin-top:.75rem;font-size:11px;color:var(--faint)"><span><span style="color:var(--red)">✓/~</span> = partial or strong</span><span><span style="color:var(--red)">✗</span> = not capable</span><span><span style="color:var(--green)">✓</span> = SAMDesk wins</span></div></div></div><div class="updated">SAMDesk / ADAR — Internal use only · March 2026</div>`;
+  card.innerHTML=`<div class="card-header"><div><div class="comp-name">${c.name}</div><div class="comp-type">${c.type}</div></div><div class="snapshot">${snapHtml}</div></div>${intelHtml}<div class="kill-shot"><div class="kill-label">Kill shot</div><blockquote>${c.killShot}</blockquote>${nbHtml}</div><div class="grid"><div class="section"><div class="section-label">Landmines to lay</div><div class="landmine">${lmHtml}</div></div><div class="section section-right"><div class="section-label">Objection handling</div>${objHtml}</div></div><div class="grid"><div class="section"><div class="section-label">Discovery questions</div><div class="disc-list">${discHtml}</div></div><div class="section section-right"><div class="section-label">Head to head</div><div class="win-header"><span style="flex:1">Dimension</span><span style="width:60px;text-align:center">Them</span><span style="width:60px;text-align:center">Us</span></div>${winRows}<div style="display:flex;gap:1rem;margin-top:.75rem;font-size:11px;color:var(--faint)"><span><span style="color:var(--red)">✓/~</span> = partial or strong</span><span><span style="color:var(--red)">✗</span> = not capable</span><span><span style="color:var(--green)">✓</span> = SAMDesk wins</span></div></div></div><div class="updated">SAMDesk / ADAR — Internal use only · March 2026</div>`;
   cardsEl.appendChild(card);
 });
 </script>
