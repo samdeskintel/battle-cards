@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intel Feed | samdesk</title>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #1c2128;
+      --accent: #00c2ff; --accent-dim: rgba(0,194,255,0.1);
+      --text: #e6edf3; --muted: #7d8590; --border: #30363d;
+      --danger: #f85149; --warn: #d29922; --go: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 4px; padding: 0 24px; height: 52px; overflow-x: auto;
+    }
+    .nav-logo { color: var(--accent); font-weight: 700; font-size: 1rem; text-decoration: none; margin-right: 8px; flex-shrink: 0; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+    nav a:hover { color: var(--text); }
+    nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); border-radius: 0; }
+
+    .page { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+    h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 32px; line-height: 1.5; }
+
+    .pinned-alert {
+      background: rgba(210,153,34,0.07); border: 1px solid rgba(210,153,34,0.35);
+      border-radius: 10px; padding: 16px 18px; margin-bottom: 32px;
+    }
+    .pinned-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .pinned-title { font-size: 0.8rem; font-weight: 700; color: var(--warn); text-transform: uppercase; letter-spacing: 0.06em; }
+    .pinned-body { font-size: 0.86rem; line-height: 1.6; color: var(--text); }
+    .pinned-body strong { color: #fff; }
+    .pinned-angle { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(210,153,34,0.2); font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .pinned-angle a { color: var(--accent); text-decoration: none; }
+
+    .section-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin-bottom: 10px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .chip {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text); font-size: 0.83rem; padding: 6px 14px;
+      border-radius: 20px; cursor: pointer; transition: all 0.15s;
+    }
+    .chip:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+    .chip.selected { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+    .input-row { display: flex; gap: 10px; margin-bottom: 12px; }
+    input[type="text"] {
+      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      color: var(--text); font-size: 0.9rem; padding: 10px 14px;
+      border-radius: 8px; outline: none; transition: border-color 0.15s;
+    }
+    input[type="text"]:focus { border-color: var(--accent); }
+    input[type="text"]::placeholder { color: var(--muted); }
+
+    .btn-primary {
+      background: var(--accent); color: #0d1117; font-weight: 700;
+      font-size: 0.86rem; padding: 10px 20px; border: none;
+      border-radius: 8px; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; flex-shrink: 0;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .hint { font-size: 0.76rem; color: var(--muted); margin-bottom: 28px; }
+
+    #results { margin-top: 8px; }
+
+    .result-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+    .result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+    .result-title { font-size: 1rem; font-weight: 600; color: var(--accent); }
+    .result-meta { display: flex; align-items: center; gap: 8px; }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(63,185,80,0.1); color: var(--go);
+      border: 1px solid rgba(63,185,80,0.25);
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 3px 8px; border-radius: 4px;
+    }
+    .dot { width: 6px; height: 6px; background: var(--go); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .result-ts { font-size: 0.75rem; color: var(--muted); }
+
+    .r-section { margin-bottom: 16px; }
+    .r-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin-bottom: 6px; }
+    .r-body { font-size: 0.87rem; line-height: 1.65; color: var(--text); }
+    .r-body li { margin-left: 18px; margin-bottom: 4px; }
+    .r-body p { margin-bottom: 5px; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+    .landmine-block {
+      background: var(--accent-dim); border: 1px solid rgba(0,194,255,0.2);
+      border-radius: 8px; padding: 14px 16px;
+    }
+
+    .loading { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 0.87rem; padding: 24px 0; }
+    .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-box { color: var(--danger); font-size: 0.86rem; padding: 14px 16px; background: rgba(248,81,73,0.07); border-radius: 8px; border: 1px solid rgba(248,81,73,0.2); }
+
+    .history-section { margin-top: 36px; }
+    .history-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; margin-bottom: 6px; cursor: pointer;
+      font-size: 0.84rem; transition: border-color 0.15s;
+    }
+    .history-item:hover { border-color: var(--accent); color: var(--accent); }
+    .history-meta { color: var(--muted); font-size: 0.75rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">⬡ samdesk</a>
+  <a href="index.html">Hub</a>
+  <a href="discovery.html">Discovery</a>
+  <a href="competitive-map.html">Battle Cards</a>
+  <a href="use-cases.html">Use Cases</a>
+  <a href="library.html">Evidence</a>
+  <a href="stories.html">Stories</a>
+  <a href="competitor-intel.html" class="active">Intel Feed</a>
+</nav>
+
+<div class="page">
+  <h1>Competitor Intel Feed</h1>
+  <p class="subtitle">Live AI-powered competitive briefs. Select a competitor or paste a URL to get latest news, positioning shifts, and a ready-to-use counter-narrative.</p>
+
+  <!-- PINNED BREAKING ALERT -->
+  <div class="pinned-alert">
+    <div class="pinned-header">
+      <span>🚨</span>
+      <span class="pinned-title">Breaking · March 18, 2026</span>
+    </div>
+    <div class="pinned-body">
+      <strong>Dataminr + Crisis24 announce multi-year strategic partnership.</strong> Dataminr's real-time alert engine is being embedded into Crisis24's CEM platform — positioned as a "single pane of glass" for critical event management with agentic AI (Intel Agents, ReGenAI Live Briefs) launching at ISC West, March 25–27.
+    </div>
+    <div class="pinned-angle">
+      <strong style="color:#e6edf3;">Samdesk angle:</strong> Two point solutions stitching together ≠ a native platform. Integration complexity, dual-vendor dependency, and handoff latency are live objections. Samdesk owns the decision gap natively — they're still building a bridge across it.
+      &nbsp;·&nbsp; <a href="https://www.dataminr.com/press/announcement/dataminr-crisis24-strategic-partnership/" target="_blank">Source ↗</a>
+      &nbsp;·&nbsp; <a href="competitive-map.html">See updated battle cards ↗</a>
+    </div>
+  </div>
+
+  <!-- QUICK SELECT -->
+  <div class="section-label">Quick select competitor</div>
+  <div class="chips">
+    <div class="chip" onclick="selectChip(this,'Dataminr')">Dataminr</div>
+    <div class="chip" onclick="selectChip(this,'Everbridge')">Everbridge</div>
+    <div class="chip" onclick="selectChip(this,'Factal')">Factal</div>
+    <div class="chip" onclick="selectChip(this,'Seerist')">Seerist</div>
+    <div class="chip" onclick="selectChip(this,'AlertMedia')">AlertMedia</div>
+    <div class="chip" onclick="selectChip(this,'Crisis24')">Crisis24</div>
+    <div class="chip" onclick="selectChip(this,'International SOS')">International SOS</div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="section-label">Search or paste a press release URL</div>
+  <div class="input-row">
+    <input type="text" id="searchInput" placeholder="e.g. Everbridge  ·  or paste https://competitor.com/press/..." />
+    <button class="btn-primary" id="searchBtn" onclick="runSearch()">Get Latest Intel</button>
+  </div>
+  <div class="hint">Results are live web searches — best used for pre-call prep or after seeing a competitor press release.</div>
+
+  <!-- RESULTS -->
+  <div id="results"></div>
+
+  <!-- HISTORY -->
+  <div id="historySection" class="history-section" style="display:none;">
+    <div class="section-label">Recent searches this session</div>
+    <div id="historyList"></div>
+  </div>
+</div>
+
+<script>
+const history = [];
+
+function selectChip(el, name) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('searchInput').value = name;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+async function runSearch() {
+  const raw = document.getElementById('searchInput').value.trim();
+  if (!raw) return;
+
+  const btn = document.getElementById('searchBtn');
+  const out = document.getElementById('results');
+  btn.disabled = true;
+  btn.textContent = 'Searching…';
+  out.innerHTML = `<div class="loading"><div class="spinner"></div><span>Pulling latest intel on <strong>${esc(raw)}</strong> — searching the web…</span></div>`;
+
+  const isUrl = /^https?:\/\//i.test(raw);
+  const prompt = isUrl
+    ? `Analyze this competitor press release or announcement and produce a competitive intelligence brief for Samdesk sales reps: ${raw}
+
+Structure your response EXACTLY as:
+## HEADLINE
+[1-2 sentence summary]
+
+## WHAT THEY'RE CLAIMING
+[Their positioning and key claims]
+
+## STRATEGIC IMPLICATIONS FOR SAMDESK
+[Why this matters in competitive deals]
+
+## SAMDESK COUNTER-NARRATIVE
+[3 specific talking points for a rep]
+
+## LANDMINE TO PLANT
+[One probing discovery question that exposes a gap]`
+    : `Search the web for the latest news, product launches, partnerships, and strategic moves from ${raw} in the security intelligence, risk management, or crisis response space. Focus on the last 6 months.
+
+Structure your response EXACTLY as:
+## HEADLINE
+[Single most important recent development, 1-2 sentences]
+
+## RECENT DEVELOPMENTS
+[3-5 bullet points with approximate dates]
+
+## WHAT THEY'RE CLAIMING
+[Current market positioning and key messages]
+
+## STRATEGIC IMPLICATIONS FOR SAMDESK
+[What this means for competitive deals — what to watch]
+
+## SAMDESK COUNTER-NARRATIVE
+[3 specific talking points a rep should use]
+
+## LANDMINE TO PLANT
+[One probing discovery question that exposes a gap in their approach]`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        system: `You are a competitive intelligence analyst for Samdesk, an AI-powered security intelligence platform. Core differentiators: ADAR framework (Anticipate, Detect, Analyze, Resolve), Impact Agents that autonomously close the "decision gap" between alert and action. Competitor categories: alert monitoring (Dataminr, Factal), crisis comms (Everbridge, AlertMedia), strategic intelligence (Seerist), managed services (Crisis24, International SOS). Always frame analysis to help Samdesk reps win deals. Be specific, blunt, and actionable.`,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n');
+    const ts = new Date().toLocaleString([], { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    const rendered = renderBrief(text);
+
+    out.innerHTML = `
+      <div class="result-card">
+        <div class="result-header">
+          <span class="result-title">${esc(raw)}</span>
+          <span class="result-meta">
+            <span class="live-badge"><span class="dot"></span>Live</span>
+            <span class="result-ts">${ts}</span>
+          </span>
+        </div>
+        ${rendered}
+      </div>`;
+
+    history.unshift({ query: raw, ts, rendered });
+    if (history.length > 6) history.pop();
+    renderHistory();
+
+  } catch(e) {
+    out.innerHTML = `<div class="error-box">⚠ ${esc(e.message || 'Search failed — please try again.')}</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Get Latest Intel';
+  }
+}
+
+function renderBrief(text) {
+  const defs = [
+    { key: 'HEADLINE', label: 'Headline' },
+    { key: 'RECENT DEVELOPMENTS', label: 'Recent Developments' },
+    { key: 'WHAT THEY\'RE CLAIMING', label: "What They're Claiming" },
+    { key: 'STRATEGIC IMPLICATIONS FOR SAMDESK', label: 'Strategic Implications for Samdesk' },
+    { key: 'SAMDESK COUNTER-NARRATIVE', label: 'Counter-Narrative' },
+    { key: 'LANDMINE TO PLANT', label: '🪤 Landmine to Plant' },
+  ];
+
+  let html = '';
+  for (let i = 0; i < defs.length; i++) {
+    const { key, label } = defs[i];
+    const nextKey = defs[i+1]?.key;
+    const marker = `## ${key}`;
+    const si = text.indexOf(marker);
+    if (si === -1) continue;
+
+    let ei = text.length;
+    if (nextKey) {
+      const ni = text.indexOf(`## ${nextKey}`, si + marker.length);
+      if (ni !== -1) ei = ni;
+    }
+
+    const raw = text.slice(si + marker.length, ei).trim();
+    const body = raw.split('\n').map(l => {
+      l = l.trim(); if (!l) return '';
+      if (l.startsWith('- ') || l.startsWith('• ') || l.match(/^\d+\.\s/)) {
+        const content = l.replace(/^[-•]\s|^\d+\.\s/, '');
+        return `<li>${esc(content)}</li>`;
+      }
+      return `<p>${esc(l)}</p>`;
+    }).filter(Boolean).join('');
+
+    const isLandmine = key === 'LANDMINE TO PLANT';
+    const isLast = i === defs.length - 1 || defs.slice(i+1).every(d => text.indexOf(`## ${d.key}`) === -1);
+
+    html += `
+      ${i > 0 && !isLandmine ? '<hr class="divider">' : ''}
+      <div class="r-section ${isLandmine ? 'landmine-block' : ''}">
+        <div class="r-label">${esc(label)}</div>
+        <div class="r-body">${body || `<p>${esc(raw)}</p>`}</div>
+      </div>`;
+  }
+
+  return html || `<div class="r-body" style="white-space:pre-wrap;">${esc(text)}</div>`;
+}
+
+function renderHistory() {
+  const sec = document.getElementById('historySection');
+  const list = document.getElementById('historyList');
+  if (!history.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  list.innerHTML = history.map((h, i) => `
+    <div class="history-item" onclick="restore(${i})">
+      <span>${esc(h.query)}</span>
+      <span class="history-meta">${h.ts}</span>
+    </div>`).join('');
+}
+
+function restore(i) {
+  const h = history[i];
+  document.getElementById('searchInput').value = h.query;
+  document.getElementById('results').innerHTML = `
+    <div class="result-card">
+      <div class="result-header">
+        <span class="result-title">${esc(h.query)}</span>
+        <span class="result-ts">${h.ts}</span>
+      </div>
+      ${h.rendered}
+    </div>`;
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runSearch();
+});
+</script>
+</body>
+</html>
