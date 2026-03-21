@@ -1,11 +1,12 @@
 (function() {
   const links = [
-    { href: 'index.html',           label: 'Home' },
-    { href: 'discovery.html',       label: 'Discovery' },
-    { href: 'use-cases.html',       label: 'Use Cases' },
-    { href: 'library.html',         label: 'Library' },
-    { href: 'stories.html',         label: 'Stories' },
-    { href: 'competitor-intel.html',label: 'Competitor PR' },
+    { href: 'index.html',            label: 'Home' },
+    { href: 'competitive-map.html',  label: 'Competitive Map' },
+    { href: 'discovery.html',        label: 'Discovery' },
+    { href: 'use-cases.html',        label: 'Use Cases' },
+    { href: 'library.html',          label: 'Library' },
+    { href: 'stories.html',          label: 'Stories' },
+    { href: 'competitor-intel.html', label: 'Competitor PR' },
   ];
 
   const current = location.pathname.split('/').pop() || 'index.html';
